@@ -1,0 +1,116 @@
+* {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+section.container-menus {
+    height: 130vh;
+    width: 100%;
+
+    display: grid;
+    /* align-items: center; */
+    grid-template-rows: 0.2fr 0.8fr 0.2fr;
+}
+
+header.header-menu {
+    display: grid;
+    grid-template-rows: 0.6fr 0.4fr;
+    background-color: #022335;
+    align-items: center;
+    align-content: center;
+}
+
+.header-sub-1 {
+    grid-template-rows: 1fr;
+    place-items: center;
+}
+
+.header-sub-2 {
+    grid-template-rows: 1fr;
+    place-items: center;
+}
+
+.ul-sub-1 {
+    display: grid;
+    grid-template-columns: 0.2fr 0.1fr 0.5fr 0.1fr 0.1fr;
+    grid-gap: 20px;
+    align-items: center;
+    align-content: center;
+    padding-left: 20px;
+}
+
+form.form-wrapper {
+    display: grid;
+    grid-template-columns: 0.1fr 0.8fr 0.1fr;
+    align-items: center;
+}
+
+.form-wrapper input {
+    height: 50px;
+    outline: none;
+    border: none;
+    padding: 20px;
+}
+
+.form-wrapper button {
+    height: 50px;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: #d40a0a;
+    border: none;
+    border-right: 1px solid #000;
+    outline: none;
+    cursor: pointer;
+}
+
+#special-button {
+    border-left: 1px solid #000;
+}
+
+button.button-image {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+/* button.button-image img {
+    color: #fff;
+} */
+
+#logo {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    cursor: pointer;
+}
+
+.ul-sub-2 {
+    display: grid;
+    grid-template-columns: repeat(6, 0.15fr);
+    grid-gap: 20px;
+    place-items: center;
+    place-content: center;
+    padding-top: 10px;
+
+    /* padding-left: 20px; */
+    border-top: 2px solid #fff;
+}
+
+.ul-sub-2 li {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
