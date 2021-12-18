@@ -74,7 +74,7 @@
             <div class="main-ribbon-1">
 
                 <div class="span-wrapper">
-                    <span>Home</span>
+                    <span id="special-home">Home</span>
                     <span>/</span>
                     <span>Products</span>
                 </div>
@@ -83,6 +83,23 @@
 
             <div class="main-ribbon-2">
 
+                <div class="box-wrapper-1">
+                    <span id="number-span">150</span>
+                    <span>Products found</span>
+                </div>
+
+                <form id="filter-by-sort" autocompete="off">
+                    <label for="filter-by-type"><h3>Sorting Options:</h3></label>
+                    <select name="filter-by-sort" id="filter-by-sort">
+                        <option value="deffault">Sorting Deffault</option>
+                        <option value="price-asc">Sort by price ascending</option>
+                        <option value="price-desc">Sort by price descending</option>
+                        <option value="date-asc">Sort by oldest</option>
+                        <option value="name-asc">Sort by name ascending</option>
+                        <option value="name-desc">Sort by name descending</option>
+                    </select>
+                </form>
+ 
             </div>
 
             <div class="items-container">
@@ -91,18 +108,52 @@
 
             <div class="pagination-container">
 
+                <div class="pagination-wrapper">
+                    <button>
+                        <span>1</span>
+                    </button>
+
+                    <button>
+                        <span>2</span>
+                    </button>
+
+                    <button>
+                        <span>3</span>
+                    </button>
+
+                    <button>
+                        <span>....</span>
+                    </button>
+
+                    <button>
+                        <span>6</span>
+                    </button>
+
+                    <button id="special-button-pagination">
+                        <span>Next Page</span>
+                    </button>
+                </div>
+
             </div>
 
             <div class="aside-wrapper">
 
                 <aside class="aside-container-1">
 
+                    <ul class="ul-aside">
+                        <li id='special-aside'>Categories</li>
+                        <li><a href=''>Multivitamins & essentials minerals</a></li>
+                        <li><a href=''>Pre-Workouts</a></li>
+                        <li><a href=''>Proteins</a></li>
+                        <li><a href=''>Testosterone Boosters</a></li>
+                        <li><a href=''>Weight gainers</a></li>
+                        <li><a href=''>Aminoacids</a></li>
+                        <li><a href=''>Creatines</a></li>
+                        <li><a href=''>Weight Burner</a></li>
+                    </ul>
+
                 </aside>
-    
-                <aside class="aside-container-2">
-    
-                </aside>
-                
+
             </div>
 
         </main>
