@@ -14,12 +14,12 @@ a {
 }
 
 section.container-menus {
-    height: 130vh;
+    height: 160vh;
     width: 100%;
 
     display: grid;
     /* align-items: center; */
-    grid-template-rows: 0.2fr 0.8fr 0.2fr;
+    grid-template-rows: 0.2fr 0.85fr 0.15fr;
 }
 
 header.header-menu {
@@ -113,4 +113,49 @@ button.button-image {
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 2px;
+}
+
+main.main-menu {
+    display:grid;
+    grid-template: 
+    'main-ribbon-1 main-ribbon-1' 0.05fr
+    'main-ribbon-2 aside-wrapper' 0.1fr
+    'items-container aside-wrapper' 0.85fr
+    'pagination-container aside-wrapper' 0.05fr /
+    0.8fr 0.2fr;
+}
+
+.main-ribbon-1 {
+    grid-area: main-ribbon-1;
+    outline: 0.5px solid #000;
+}
+
+.main-ribbon-2 {
+    grid-area: main-ribbon-2;
+    outline: 0.5px solid #000;
+}
+
+.items-container {
+    grid-area: items-container;
+    outline: 0.5px solid #000;
+}
+
+.pagination-container {
+    grid-area: pagination-container;
+    outline: 0.5px solid #000;
+}
+
+.aside-wrapper {
+    grid-area: aside-wrapper;
+    outline: 0.5px solid #000;
+}
+
+.aside-container-1 {
+    grid-area: aside-container-1;
+    outline: 0.5px solid #000;
+}
+
+.aside-container-2 {
+    grid-area: aside-container-2;
+    outline: 0.5px solid #000;
 }
