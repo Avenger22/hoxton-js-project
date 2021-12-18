@@ -27,18 +27,18 @@ a {
 }
 
 section.container-menus {
-    height: 180vh;
+    height: auto;
     width: 100%;
 
     display: grid;
     /* align-items: center; */
-    grid-template-rows: 0.2fr 0.85fr 0.15fr;
+    grid-template-rows: 160px 0.95fr 50px;
     grid-gap: 20px;
 }
 
 header.header-menu {
     display: grid;
-    grid-template-rows: 0.6fr 0.4fr;
+    grid-template-rows: 0.5fr 0.5fr;
     background-color: #022335;
     align-items: center;
     align-content: center;
@@ -58,9 +58,9 @@ header.header-menu {
     display: grid;
     grid-template-columns: 0.2fr 0.1fr 0.5fr 0.1fr 0.1fr;
     grid-gap: 20px;
-    align-items: center;
-    align-content: center;
-    padding-left: 20px;
+    place-items: center;
+    place-content: center;
+    /* padding-left: 20px; */
 }
 
 form.form-wrapper {
@@ -156,8 +156,9 @@ main.main-menu {
     'items-container aside-wrapper' 0.80fr
     'pagination-container aside-wrapper' 0.05fr /
     0.80fr 0.2fr;
-    grid-gap: 30px;
+    grid-gap: 20px;
     /* align-items: center; */
+
 }
 
 .main-ribbon-1 {
@@ -236,6 +237,7 @@ main.main-menu {
 
 footer.footer-menu {
     background-color: #0d2335;
+    margin-top: -100px;
 }
 
 .main-ribbon-2 .box-wrapper-1 {
@@ -344,4 +346,53 @@ footer.footer-menu {
 
 .pagination-wrapper button:hover span {
     color: #fff;
+}
+
+footer.footer-menu {
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+}
+
+.footer-menu span {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #f1f1f1;
+}
+
+.items-container {
+    display: grid;
+    /* place-items: center; */
+    align-items: center;
+    align-content: center;
+}
+
+.store-items-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 0.25fr);
+    grid-gap: 30px;
+    align-items: center;
+    align-content: center;
+    /* place-items: center; */
+}
+
+.store-item {
+    display: grid;
+    grid-template-rows: 0.6fr 0.1fr 0.1fr 0.2fr;
+    grid-gap: 15px;
+}
+
+.store-item img {
+    height: 140px;
+    width: 140px;
+}
+
+.store-item button {
+    padding: 10px;
+    border: none;
+    outline: none;
+    color: #000;
+    background-color: #d40a0a;
+    cursor: pointer;
 }
