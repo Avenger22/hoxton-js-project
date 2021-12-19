@@ -8,7 +8,11 @@ const sectionContainerMenusEl = document.querySelector('section.container-menus'
 
 // #region 'STATE OBJECT'
 const state = {
-    store: []
+
+    //two important arrays for fetching and udapting the state
+    items: [],
+    users: []
+
 }
 
 // #endregion
@@ -16,9 +20,25 @@ const state = {
 //-----------------------------------------------------------------------------------------------------------------
 
 // #region 'SERVER FUNCTIONS'
+function getItemsArrayFromServer() {
 
+    return fetch('http://localhost:3000/items')        
+        .then(function (response) 
+        {
+            return response.json()
+        })
 
+}
 
+function getUsersArrayFromServer() {
+
+    return fetch('http://localhost:3000/users')        
+        .then(function (response) 
+        {
+            return response.json()
+        })
+
+}
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -132,7 +152,7 @@ function renderHeader() {
 
     const homeLinkEl = document.createElement('a')
     homeLinkEl.setAttribute('href', '#')
-    homeLinkEl.textContent = 'HOME'
+    homeLinkEl.textContent = 'Home'
 
     liHomeEl.append(homeLinkEl)
 
@@ -148,7 +168,7 @@ function renderHeader() {
 
     const offersLinkEl = document.createElement('a')
     offersLinkEl.setAttribute('href', '#')
-    offersLinkEl.textContent = 'OFFERS'
+    offersLinkEl.textContent = 'Offers'
 
     liOffersEl.append(offersLinkEl)
 
@@ -156,7 +176,7 @@ function renderHeader() {
 
     const aboutLinkEl = document.createElement('a')
     aboutLinkEl.setAttribute('href', '#')
-    aboutLinkEl.textContent = 'ABOUT US'
+    aboutLinkEl.textContent = 'About Us'
 
     liAboutEl.append(aboutLinkEl)
 
@@ -164,7 +184,7 @@ function renderHeader() {
 
     const blogLinkEl = document.createElement('a')
     blogLinkEl.setAttribute('href', '#')
-    blogLinkEl.textContent = 'BLOG'
+    blogLinkEl.textContent = 'Blog'
 
     liBlogEl.append(blogLinkEl)
 
@@ -172,7 +192,7 @@ function renderHeader() {
 
     const contactLinkEl = document.createElement('a')
     contactLinkEl.setAttribute('href', '#')
-    contactLinkEl.textContent = 'CONTACT'
+    contactLinkEl.textContent = 'Contact'
 
     liContactEl.append(contactLinkEl)
 
@@ -186,7 +206,7 @@ function renderHeader() {
 
 }
 
-function renderMain() {
+function renderMain(itemsArray) {
 
     const mainEl = document.createElement('main')
     mainEl.setAttribute('class', 'main-menu')
@@ -228,7 +248,7 @@ function renderMain() {
 
     const filterFormEl = document.createElement('form')
     filterFormEl.setAttribute('id', 'filter-by-sort')
-    filterFormEl.setAttribute('autocompete', 'off')
+    filterFormEl.setAttribute('autocomplete', 'off')
 
     const filterLabel = document.createElement('label')
     filterLabel.setAttribute('for', 'filter-by-type')
@@ -267,10 +287,9 @@ function renderMain() {
     option6El.textContent = 'Sort by name descending'
 
     selectEl.append(option1El, option2El, option3El, option4El, option5El, option6El)
-
     filterFormEl.append(filterLabel, selectEl)
-
     ribbon2El.append(boxWrapperEl, filterFormEl)
+
 
     const itemsDivEl = document.createElement('div')
     itemsDivEl.setAttribute('class', 'items-container')
@@ -278,35 +297,38 @@ function renderMain() {
     const itemsWrapper = document.createElement('div')
     itemsWrapper.setAttribute('class', 'store-items-wrapper')
 
-    const storeItem = document.createElement('div')
-    storeItem.setAttribute('class', 'store-item')
+    for (const item of itemsArray) {
 
-    const productImgEl = document.createElement('img')
-    productImgEl.setAttribute('src', './assets/icons/animal-pak.png')
-    productImgEl.setAttribute('alt', '')
+        const storeItem = document.createElement('div')
+        storeItem.setAttribute('class', 'store-item')
 
-    const productNameEl = document.createElement('h2')
-    productNameEl.textContent = 'Protein Powder'
+        const productImgEl = document.createElement('img')
+        productImgEl.setAttribute('src', item.image)
+        productImgEl.setAttribute('alt', '')
 
-    const divWrapperEl = document.createElement('div')
-    divWrapperEl.setAttribute('class', 'span-wrapper-item')
+        const productNameEl = document.createElement('h2')
+        productNameEl.textContent = item.name
 
-    const span1El = document.createElement('span')
-    span1El.setAttribute('class', 'span-1')
-    span1El.textContent = '50$'
+        const divWrapperEl = document.createElement('div')
+        divWrapperEl.setAttribute('class', 'span-wrapper-item')
 
-    const span2El = document.createElement('span')
-    span2El.setAttribute('class', 'span-2')
-    span2El.textContent = '30$'
+        const span1El = document.createElement('span')
+        span1El.setAttribute('class', 'span-1')
+        span1El.textContent = `price: ${item.price}`
 
-    divWrapperEl.append(span1El, span2El)
+        const span2El = document.createElement('span')
+        span2El.setAttribute('class', 'span-2')
+        span2El.textContent = `Discounted Price: ${item.price}`
 
-    const cartButton = document.createElement('button')
-    cartButton.textContent = 'Add to cart'
+        divWrapperEl.append(span1El, span2El)
 
-    storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        const cartButton = document.createElement('button')
+        cartButton.textContent = 'Add to cart'
 
-    itemsWrapper.append(storeItem)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        itemsWrapper.append(storeItem)
+
+    }
 
     itemsDivEl.append(itemsWrapper)
 
@@ -450,6 +472,7 @@ function renderMain() {
 
     sectionContainerMenusEl.append(mainEl)
 }
+
 function renderFooter() {
     const footerEl = document.createElement('footer')
     footerEl.setAttribute('class', 'footer-menu')
@@ -461,27 +484,45 @@ function renderFooter() {
 
     sectionContainerMenusEl.append(footerEl)
 }
-
-
 // #endregion
 
-// #region 'RENDERING CALL AND LOGIC ON IT'
+// #region 'RENDERING AND LOGIC ON IT'
 function render() {
+
+    //destroy everything then recreate each time you render
     sectionContainerMenusEl.innerHTML = ''
+    
     renderHeader()
-    renderMain()
+    renderMain(state.items)
     renderFooter()
+
 }
-render()
+
+function init() {
+
+    render()
+
+     //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
+    getItemsArrayFromServer().then(function (itemsArrayFromServer) {
+        state.items = itemsArrayFromServer
+        render()
+    })
+
+    getUsersArrayFromServer().then(function (usersArrayFromServer) {
+        state.users = usersArrayFromServer
+        render()
+    })
+
+}
+
 // #endregion
 
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
 
-// #region 'APP INIT AND START'
-
-
+// #region 'APP INIT CALL AND START'
+init()
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------

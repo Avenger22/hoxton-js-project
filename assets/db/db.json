@@ -135,5 +135,20 @@
             "type": "pre-workouts",
             "description": "You will feel the dark power of BLACKWEILER SHRED, which will illuminate you from within. Nothing can stop you now before you undergo the best training in your life! You stand together, you and your new ally in the fight to build your dreams. Remember one thing - you will not be prepared for what will happen now! Your muscles will fill with blood, your body will burst into sweat and your mind will open up to new sensations!"
         }
+    ],
+
+    "users": [
+        {
+          "firstName": "Jurgen",
+          "lastName": "Hasmeta",
+          "id": "jurgenhasmeta@email.com",
+          "password": "jurgen"
+        },
+        {
+          "firstName": "Desintila",
+          "lastName": "Luzi",
+          "id": "desintila@email.com",
+          "password": "desintila"
+        }
     ]
 }
