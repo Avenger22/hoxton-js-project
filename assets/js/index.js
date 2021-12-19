@@ -2,13 +2,6 @@
 
 // #region 'GLOBAL VARIABLES'
 const sectionContainerMenusEl = document.querySelector('section.container-menus')
-
-//these three divs are MODALS, so i use them here as global to acces them everywhere in the app
-const userModalEl = document.createElement('div')
-userModalEl.setAttribute('class', 'modal-user_container')
-
-const bagModalEl = document.createElement('div')
-bagModalEl.setAttribute('class', 'modal-bag_container')
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -46,8 +39,6 @@ function getUsersArrayFromServer() {
         })
 
 }
-
-
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -69,143 +60,7 @@ function getUsersArrayFromServer() {
 // #region 'RENDER FUNCTIONS'
 
 // #region 'RENDER MODALS'
-function renderUserModal() {
 
-    const divUserModalEl = document.createElement('div')
-    divUserModalEl.setAttribute('class', 'modal-user')
-
-    const headerUserModalEl = document.createElement('div')
-    headerUserModalEl.setAttribute('class', 'header-user-modal')
-
-    const divInputUser = document.createElement('div')
-    divInputUser.setAttribute('class', 'input-user-modal')
-
-    const divBtnUser = document.createElement('div')
-    divBtnUser.setAttribute('class', 'button-user-modal')
-
-    const h3El = document.createElement('h3')
-    h3El.textContent = 'Sign In'
-
-    const spanEl1 = document.createElement('span')
-    spanEl1.setAttribute('class', 'span-user-1')
-    spanEl1.textContent = 'Email:'
-
-    const inputEl1 = document.createElement('input')
-    inputEl1.setAttribute('class', 'email-input-user')
-    inputEl1.setAttribute('name', 'email')
-    inputEl1.setAttribute('required', 'true')
-    inputEl1.setAttribute('type', 'email')
-    inputEl1.placeholder = 'Enter Email'
-
-    const spanEl2 = document.createElement('span')
-    spanEl1.setAttribute('class', 'span-user-2')
-    spanEl2.textContent = 'Password:'
-
-    const inputEl2 = document.createElement('input')
-    inputEl2.setAttribute('class', 'password-input-user')
-    inputEl2.setAttribute('name', 'password')
-    inputEl2.setAttribute('required', 'true')
-    inputEl2.setAttribute('type', 'password')
-    inputEl2.placeholder = 'Enter Password'
-
-    const btnSignInEl = document.createElement('button')
-    btnSignInEl.textContent = 'Sign In'
-
-    const btnRemoveEl = document.createElement('button')
-    btnRemoveEl.textContent = 'X'
-
-    const formUser = document.createElement('form')
-    formUser.setAttribute('class', 'form-user')
-
-    headerUserModalEl.append(h3El)
-    divInputUser.append(spanEl1, inputEl1, spanEl2, inputEl2)
-    divBtnUser.append(btnSignInEl, btnRemoveEl)
-    formUser.append(divInputUser, divBtnUser)
-    divUserModalEl.append(headerUserModalEl, formUser)
-    userModalEl.append(divUserModalEl)
-    sectionMenusEl.append(userModalEl)
-
-    listenToRemoveUser(btnRemoveEl)
-    listenToSubmitUser(formUser)
-
-}
-
-function renderBagModal() {
-
-    const divEl3Modal = document.createElement('div')
-    divEl3Modal.setAttribute('class', 'modal-3')
-
-    const divHeaderEl = document.createElement('div')
-    divHeaderEl.setAttribute('class', 'header-bag')
-
-    const divModalWrapper = document.createElement('div')
-    divModalWrapper.setAttribute('class', 'modal-wrapper-3')
-
-    const h3El = document.createElement('h3')
-    h3El.textContent = 'Bag'
-    divHeaderEl.append(h3El)
-
-
-    const divItemWrapperEl = document.createElement('div')
-    divItemWrapperEl.setAttribute('class', 'wrapper-items-bag')
-    divItemWrapperEl.innerHTML = '' //destroy after each rerender then recreate
-
-    for (const item of state.bagItems) {
-
-        const divItemEl = document.createElement('div')
-        divItemEl.setAttribute('class', 'item-bag') 
-
-        const imgEl = document.createElement('img')
-        imgEl.setAttribute('src', item.image)
-        imgEl.setAttribute('alt', '')
-
-        const h4El = document.createElement('h4')
-        h4El.textContent = item.name
-
-        const spanEl1 = document.createElement('span')
-        spanEl1.setAttribute('class', 'span-1-bag')
-        spanEl1.textContent = `Price: ${item.price}`
-
-        //BUG fixed TEMPLATE LITERALS CAUSED UNDEFINED
-        const spanEl2 = document.createElement('span')
-        spanEl2.setAttribute('class', 'span-2-bag')
-        spanEl2.textContent = `Discounted Price: ${item.discountedPrice}` 
-
-        //important to get the quantity of x item with that name passed as argument
-        const quantityValue = getQuantityValue(item.name)
-
-        const spanEl3 = document.createElement('span')
-        spanEl3.setAttribute('class', 'span-3-bag')
-        spanEl3.textContent = `Quantity: ${quantityValue}`
-
-        const btnRemoveItem = document.createElement('button')
-        btnRemoveItem.textContent = 'Remove'
-
-        divItemEl.append(imgEl, h4El, spanEl1, spanEl2, spanEl3, btnRemoveItem)
-        divItemWrapperEl.append(divItemEl)
-
-        listenToRemoveBagItem(btnRemoveItem, item, divItemEl)
-
-    }
-
-    const divRemovingEl = document.createElement('div')
-    divRemovingEl.setAttribute('class', 'removing-bag')
-
-    const btnRemoveModal = document.createElement('button')
-    btnRemoveModal.textContent = 'X'
-
-    const btnPay = document.createElement('button')
-    btnPay.textContent = 'Pay now ....'
-
-    divRemovingEl.append(btnPay, btnRemoveModal)
-    divModalWrapper.append(divHeaderEl, divItemWrapperEl, divRemovingEl)
-    divEl3Modal.append(divModalWrapper)
-    divEl3.append(divEl3Modal)
-    sectionMenusEl.append(divEl3)
-
-    listenToRemoveBag(btnRemoveModal)
-
-}
 // #endregion
 
 // #region 'RENDER PAGE HTML'
@@ -634,8 +489,9 @@ function renderFooter() {
 // #region 'RENDERING AND LOGIC ON IT'
 function render() {
 
+    //destroy everything then recreate each time you render
     sectionContainerMenusEl.innerHTML = ''
-
+    
     renderHeader()
     renderMain(state.items)
     renderFooter()
