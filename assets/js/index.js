@@ -2,13 +2,24 @@
 
 // #region 'GLOBAL VARIABLES'
 const sectionContainerMenusEl = document.querySelector('section.container-menus')
+
+//these three divs are MODALS, so i use them here as global to acces them everywhere in the app
+const userModalEl = document.createElement('div')
+userModalEl.setAttribute('class', 'modal-user_container')
+
+const bagModalEl = document.createElement('div')
+bagModalEl.setAttribute('class', 'modal-bag_container')
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
 
 // #region 'STATE OBJECT'
 const state = {
-    store: []
+
+    //two important arrays for fetching and udapting the state
+    items: [],
+    users: []
+
 }
 
 // #endregion
@@ -16,7 +27,25 @@ const state = {
 //-----------------------------------------------------------------------------------------------------------------
 
 // #region 'SERVER FUNCTIONS'
+function getItemsArrayFromServer() {
 
+    return fetch('http://localhost:3000/items')        
+        .then(function (response) 
+        {
+            return response.json()
+        })
+
+}
+
+function getUsersArrayFromServer() {
+
+    return fetch('http://localhost:3000/users')        
+        .then(function (response) 
+        {
+            return response.json()
+        })
+
+}
 
 
 // #endregion
@@ -40,7 +69,143 @@ const state = {
 // #region 'RENDER FUNCTIONS'
 
 // #region 'RENDER MODALS'
+function renderUserModal() {
 
+    const divUserModalEl = document.createElement('div')
+    divUserModalEl.setAttribute('class', 'modal-user')
+
+    const headerUserModalEl = document.createElement('div')
+    headerUserModalEl.setAttribute('class', 'header-user-modal')
+
+    const divInputUser = document.createElement('div')
+    divInputUser.setAttribute('class', 'input-user-modal')
+
+    const divBtnUser = document.createElement('div')
+    divBtnUser.setAttribute('class', 'button-user-modal')
+
+    const h3El = document.createElement('h3')
+    h3El.textContent = 'Sign In'
+
+    const spanEl1 = document.createElement('span')
+    spanEl1.setAttribute('class', 'span-user-1')
+    spanEl1.textContent = 'Email:'
+
+    const inputEl1 = document.createElement('input')
+    inputEl1.setAttribute('class', 'email-input-user')
+    inputEl1.setAttribute('name', 'email')
+    inputEl1.setAttribute('required', 'true')
+    inputEl1.setAttribute('type', 'email')
+    inputEl1.placeholder = 'Enter Email'
+
+    const spanEl2 = document.createElement('span')
+    spanEl1.setAttribute('class', 'span-user-2')
+    spanEl2.textContent = 'Password:'
+
+    const inputEl2 = document.createElement('input')
+    inputEl2.setAttribute('class', 'password-input-user')
+    inputEl2.setAttribute('name', 'password')
+    inputEl2.setAttribute('required', 'true')
+    inputEl2.setAttribute('type', 'password')
+    inputEl2.placeholder = 'Enter Password'
+
+    const btnSignInEl = document.createElement('button')
+    btnSignInEl.textContent = 'Sign In'
+
+    const btnRemoveEl = document.createElement('button')
+    btnRemoveEl.textContent = 'X'
+
+    const formUser = document.createElement('form')
+    formUser.setAttribute('class', 'form-user')
+
+    headerUserModalEl.append(h3El)
+    divInputUser.append(spanEl1, inputEl1, spanEl2, inputEl2)
+    divBtnUser.append(btnSignInEl, btnRemoveEl)
+    formUser.append(divInputUser, divBtnUser)
+    divUserModalEl.append(headerUserModalEl, formUser)
+    userModalEl.append(divUserModalEl)
+    sectionMenusEl.append(userModalEl)
+
+    listenToRemoveUser(btnRemoveEl)
+    listenToSubmitUser(formUser)
+
+}
+
+function renderBagModal() {
+
+    const divEl3Modal = document.createElement('div')
+    divEl3Modal.setAttribute('class', 'modal-3')
+
+    const divHeaderEl = document.createElement('div')
+    divHeaderEl.setAttribute('class', 'header-bag')
+
+    const divModalWrapper = document.createElement('div')
+    divModalWrapper.setAttribute('class', 'modal-wrapper-3')
+
+    const h3El = document.createElement('h3')
+    h3El.textContent = 'Bag'
+    divHeaderEl.append(h3El)
+
+
+    const divItemWrapperEl = document.createElement('div')
+    divItemWrapperEl.setAttribute('class', 'wrapper-items-bag')
+    divItemWrapperEl.innerHTML = '' //destroy after each rerender then recreate
+
+    for (const item of state.bagItems) {
+
+        const divItemEl = document.createElement('div')
+        divItemEl.setAttribute('class', 'item-bag') 
+
+        const imgEl = document.createElement('img')
+        imgEl.setAttribute('src', item.image)
+        imgEl.setAttribute('alt', '')
+
+        const h4El = document.createElement('h4')
+        h4El.textContent = item.name
+
+        const spanEl1 = document.createElement('span')
+        spanEl1.setAttribute('class', 'span-1-bag')
+        spanEl1.textContent = `Price: ${item.price}`
+
+        //BUG fixed TEMPLATE LITERALS CAUSED UNDEFINED
+        const spanEl2 = document.createElement('span')
+        spanEl2.setAttribute('class', 'span-2-bag')
+        spanEl2.textContent = `Discounted Price: ${item.discountedPrice}` 
+
+        //important to get the quantity of x item with that name passed as argument
+        const quantityValue = getQuantityValue(item.name)
+
+        const spanEl3 = document.createElement('span')
+        spanEl3.setAttribute('class', 'span-3-bag')
+        spanEl3.textContent = `Quantity: ${quantityValue}`
+
+        const btnRemoveItem = document.createElement('button')
+        btnRemoveItem.textContent = 'Remove'
+
+        divItemEl.append(imgEl, h4El, spanEl1, spanEl2, spanEl3, btnRemoveItem)
+        divItemWrapperEl.append(divItemEl)
+
+        listenToRemoveBagItem(btnRemoveItem, item, divItemEl)
+
+    }
+
+    const divRemovingEl = document.createElement('div')
+    divRemovingEl.setAttribute('class', 'removing-bag')
+
+    const btnRemoveModal = document.createElement('button')
+    btnRemoveModal.textContent = 'X'
+
+    const btnPay = document.createElement('button')
+    btnPay.textContent = 'Pay now ....'
+
+    divRemovingEl.append(btnPay, btnRemoveModal)
+    divModalWrapper.append(divHeaderEl, divItemWrapperEl, divRemovingEl)
+    divEl3Modal.append(divModalWrapper)
+    divEl3.append(divEl3Modal)
+    sectionMenusEl.append(divEl3)
+
+    listenToRemoveBag(btnRemoveModal)
+
+}
 // #endregion
 
 // #region 'RENDER PAGE HTML'
@@ -132,7 +297,7 @@ function renderHeader() {
 
     const homeLinkEl = document.createElement('a')
     homeLinkEl.setAttribute('href', '#')
-    homeLinkEl.textContent = 'HOME'
+    homeLinkEl.textContent = 'Home'
 
     liHomeEl.append(homeLinkEl)
 
@@ -148,7 +313,7 @@ function renderHeader() {
 
     const offersLinkEl = document.createElement('a')
     offersLinkEl.setAttribute('href', '#')
-    offersLinkEl.textContent = 'OFFERS'
+    offersLinkEl.textContent = 'Offers'
 
     liOffersEl.append(offersLinkEl)
 
@@ -156,7 +321,7 @@ function renderHeader() {
 
     const aboutLinkEl = document.createElement('a')
     aboutLinkEl.setAttribute('href', '#')
-    aboutLinkEl.textContent = 'ABOUT US'
+    aboutLinkEl.textContent = 'About Us'
 
     liAboutEl.append(aboutLinkEl)
 
@@ -164,7 +329,7 @@ function renderHeader() {
 
     const blogLinkEl = document.createElement('a')
     blogLinkEl.setAttribute('href', '#')
-    blogLinkEl.textContent = 'BLOG'
+    blogLinkEl.textContent = 'Blog'
 
     liBlogEl.append(blogLinkEl)
 
@@ -172,7 +337,7 @@ function renderHeader() {
 
     const contactLinkEl = document.createElement('a')
     contactLinkEl.setAttribute('href', '#')
-    contactLinkEl.textContent = 'CONTACT'
+    contactLinkEl.textContent = 'Contact'
 
     liContactEl.append(contactLinkEl)
 
@@ -186,7 +351,7 @@ function renderHeader() {
 
 }
 
-function renderMain() {
+function renderMain(itemsArray) {
 
     const mainEl = document.createElement('main')
     mainEl.setAttribute('class', 'main-menu')
@@ -228,7 +393,7 @@ function renderMain() {
 
     const filterFormEl = document.createElement('form')
     filterFormEl.setAttribute('id', 'filter-by-sort')
-    filterFormEl.setAttribute('autocompete', 'off')
+    filterFormEl.setAttribute('autocomplete', 'off')
 
     const filterLabel = document.createElement('label')
     filterLabel.setAttribute('for', 'filter-by-type')
@@ -267,10 +432,9 @@ function renderMain() {
     option6El.textContent = 'Sort by name descending'
 
     selectEl.append(option1El, option2El, option3El, option4El, option5El, option6El)
-
     filterFormEl.append(filterLabel, selectEl)
-
     ribbon2El.append(boxWrapperEl, filterFormEl)
+
 
     const itemsDivEl = document.createElement('div')
     itemsDivEl.setAttribute('class', 'items-container')
@@ -278,35 +442,38 @@ function renderMain() {
     const itemsWrapper = document.createElement('div')
     itemsWrapper.setAttribute('class', 'store-items-wrapper')
 
-    const storeItem = document.createElement('div')
-    storeItem.setAttribute('class', 'store-item')
+    for (const item of itemsArray) {
 
-    const productImgEl = document.createElement('img')
-    productImgEl.setAttribute('src', './assets/icons/animal-pak.png')
-    productImgEl.setAttribute('alt', '')
+        const storeItem = document.createElement('div')
+        storeItem.setAttribute('class', 'store-item')
 
-    const productNameEl = document.createElement('h2')
-    productNameEl.textContent = 'Protein Powder'
+        const productImgEl = document.createElement('img')
+        productImgEl.setAttribute('src', item.image)
+        productImgEl.setAttribute('alt', '')
 
-    const divWrapperEl = document.createElement('div')
-    divWrapperEl.setAttribute('class', 'span-wrapper-item')
+        const productNameEl = document.createElement('h2')
+        productNameEl.textContent = item.name
 
-    const span1El = document.createElement('span')
-    span1El.setAttribute('class', 'span-1')
-    span1El.textContent = '50$'
+        const divWrapperEl = document.createElement('div')
+        divWrapperEl.setAttribute('class', 'span-wrapper-item')
 
-    const span2El = document.createElement('span')
-    span2El.setAttribute('class', 'span-2')
-    span2El.textContent = '30$'
+        const span1El = document.createElement('span')
+        span1El.setAttribute('class', 'span-1')
+        span1El.textContent = `price: ${item.price}`
 
-    divWrapperEl.append(span1El, span2El)
+        const span2El = document.createElement('span')
+        span2El.setAttribute('class', 'span-2')
+        span2El.textContent = `Discounted Price: ${item.price}`
 
-    const cartButton = document.createElement('button')
-    cartButton.textContent = 'Add to cart'
+        divWrapperEl.append(span1El, span2El)
 
-    storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        const cartButton = document.createElement('button')
+        cartButton.textContent = 'Add to cart'
 
-    itemsWrapper.append(storeItem)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        itemsWrapper.append(storeItem)
+
+    }
 
     itemsDivEl.append(itemsWrapper)
 
@@ -450,6 +617,7 @@ function renderMain() {
 
     sectionContainerMenusEl.append(mainEl)
 }
+
 function renderFooter() {
     const footerEl = document.createElement('footer')
     footerEl.setAttribute('class', 'footer-menu')
@@ -461,27 +629,44 @@ function renderFooter() {
 
     sectionContainerMenusEl.append(footerEl)
 }
-
-
 // #endregion
 
-// #region 'RENDERING CALL AND LOGIC ON IT'
+// #region 'RENDERING AND LOGIC ON IT'
 function render() {
+
     sectionContainerMenusEl.innerHTML = ''
+
     renderHeader()
-    renderMain()
+    renderMain(state.items)
     renderFooter()
+
 }
-render()
+
+function init() {
+
+    render()
+
+     //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
+    getItemsArrayFromServer().then(function (itemsArrayFromServer) {
+        state.items = itemsArrayFromServer
+        render()
+    })
+
+    getUsersArrayFromServer().then(function (usersArrayFromServer) {
+        state.users = usersArrayFromServer
+        render()
+    })
+
+}
+
 // #endregion
 
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
 
-// #region 'APP INIT AND START'
-
-
+// #region 'APP INIT CALL AND START'
+init()
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
