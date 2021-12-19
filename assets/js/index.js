@@ -1,12 +1,15 @@
 //-----------------------------------------------------------------------------------------------------------------
 
-// #region 'GLOBAL VARIABLES'
+// #region 'GLOBAL VARIABLES AND DOM ELEMENTS CATCHER'
 const sectionContainerMenusEl = document.querySelector('section.container-menus')
+let headerSub2CatcherEl = null
+let headerCatcherEl = null
+let ulSub2CatcherEl = null
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
 
-// #region 'STATE OBJECT'
+// #region 'STATE OBJECT, STATE MANAGEMENT'
 const state = {
 
     //two important arrays for fetching and udapting the state
@@ -46,7 +49,29 @@ function getUsersArrayFromServer() {
 // #region 'HELPER FUNCTIONS'
 
 // #region 'EVENT LISTENER FUNCTIONS
+window.onscroll = function() {
 
+    if (document.body.scrollTop >= 280 || document.documentElement.scrollTop >= 280) {
+        headerCatcherEl.style.display = 'grid'
+        headerCatcherEl.style.gridTemplateRows = '1fr'
+        headerSub2CatcherEl.style.display = 'none'
+        headerCatcherEl.style.height = '100px'
+    } 
+    
+    else {
+        headerCatcherEl.style.display = 'grid'
+        headerCatcherEl.style.gridTemplateRows = '0.5fr 0.5fr'
+        headerCatcherEl.style.height = '160px'
+        headerSub2CatcherEl.style.display = 'grid'
+
+        ulSub2CatcherEl.style.display = 'grid'
+        ulSub2CatcherEl.style.gridTemplateColumns = 'repeat(6,150px)'
+        ulSub2CatcherEl.style.gridGap = '20px'
+        ulSub2CatcherEl.style.placeItems = 'center'
+        ulSub2CatcherEl.style.borderTop = '2px solid #fff'
+    }
+
+}
 // #endregion
 
 // #region 'FILTER FUNCTIONS'
@@ -68,6 +93,8 @@ function renderHeader() {
 
     const headerMenuEl = document.createElement('header')
     headerMenuEl.setAttribute('class', 'header-menu')
+
+    headerCatcherEl = headerMenuEl //this makes sure when rendered i catch this DOM el and save it in global variables
 
     const subHeaderDiv = document.createElement('div')
     subHeaderDiv.setAttribute('class', 'header-sub-1')
@@ -94,19 +121,56 @@ function renderHeader() {
     hamburgerIconEl.setAttribute('alt', '')
 
     iconLiEl.append(hamburgerIconEl)
-
     buttonImageEl.append(iconLiEl)
 
     const formWrapperEl = document.createElement('form')
     formWrapperEl.setAttribute('class', 'form-wrapper')
 
-    const categoriesButtonEl = document.createElement('button')
-    categoriesButtonEl.textContent = 'Categories'
+    // #region 'CREATING SELECT MENU'
+    const categoriesSelectEl = document.createElement('select')
+    categoriesSelectEl.setAttribute('name', 'filter-by-categories')
+    categoriesSelectEl.setAttribute('id', 'filter-by-categories')
 
-    const iEl = document.createElement('i')
-    iEl.setAttribute('class', 'fas fa-arrow-down')
+    const optionCategories1El = document.createElement('option')
+    optionCategories1El.setAttribute('value', 'categories')
+    optionCategories1El.textContent = 'Categories'
 
-    categoriesButtonEl.append(iEl)
+    const optionCategories2El = document.createElement('option')
+    optionCategories2El.setAttribute('value', 'multivitamins')
+    optionCategories2El.textContent = 'MultiVitamins and essentials minerals'
+
+    const optionCategories3El = document.createElement('option')
+    optionCategories3El.setAttribute('value', 'preWorkout')
+    optionCategories3El.textContent = 'Pre-Workout'
+
+    const optionCategories4El = document.createElement('option')
+    optionCategories4El.setAttribute('value', 'proteins')
+    optionCategories4El.textContent = 'Proteins'
+
+    const optionCategories5El = document.createElement('option')
+    optionCategories5El.setAttribute('value', 'testosteroneBoosters')
+    optionCategories5El.textContent = 'Testosterone Boosters'
+
+    const optionCategories6El = document.createElement('option')
+    optionCategories6El.setAttribute('value', 'weight-gainers')
+    optionCategories6El.textContent = 'Weigh Gainers'
+
+    const optionCategories7El = document.createElement('option')
+    optionCategories7El.setAttribute('value', 'aminoacids')
+    optionCategories7El.textContent = 'Aminoacids'
+
+    const optionCategories8El = document.createElement('option')
+    optionCategories8El.setAttribute('value', 'creatines')
+    optionCategories8El.textContent = 'Creatines'
+
+    const optionCategories9El = document.createElement('option')
+    optionCategories9El.setAttribute('value', 'weightBurners')
+    optionCategories9El.textContent = 'Weigh Burners'
+
+    categoriesSelectEl.append(optionCategories1El, optionCategories2El, optionCategories3El, optionCategories4El,
+        optionCategories5El, optionCategories6El, optionCategories7El, optionCategories8El, optionCategories9El)
+
+    // #endregion
 
     const searchInputEl = document.createElement('input')
     searchInputEl.setAttribute('type', 'text')
@@ -118,7 +182,7 @@ function renderHeader() {
     searchButtonEl.setAttribute('id', 'special-button')
     searchButtonEl.textContent = 'Search'
 
-    formWrapperEl.append(categoriesButtonEl, searchInputEl, searchButtonEl)
+    formWrapperEl.append(categoriesSelectEl, searchInputEl, searchButtonEl)
 
     const userButton = document.createElement('button')
     userButton.setAttribute('class', 'button-image')
@@ -145,8 +209,12 @@ function renderHeader() {
     const subHeaderDiv2 = document.createElement('div')
     subHeaderDiv2.setAttribute('class', 'header-sub-2')
 
+    headerSub2CatcherEl = subHeaderDiv2
+
     const ulHeader2El = document.createElement('ul')
     ulHeader2El.setAttribute('class', 'ul-sub-2')
+
+    ulSub2CatcherEl = ulHeader2El //catching the DOM ELEMENT to global VARIABLE
 
     const liHomeEl = document.createElement('li')
 
@@ -297,6 +365,7 @@ function renderMain(itemsArray) {
     const itemsWrapper = document.createElement('div')
     itemsWrapper.setAttribute('class', 'store-items-wrapper')
 
+    // #region 'RENDERING MAIN ITEM IN A FOR LOOP'
     for (const item of itemsArray) {
 
         const storeItem = document.createElement('div')
@@ -331,6 +400,7 @@ function renderMain(itemsArray) {
     }
 
     itemsDivEl.append(itemsWrapper)
+    // #endregion
 
     const paginationContainerEl = document.createElement('div')
     paginationContainerEl.setAttribute('class', 'pagination-container')
@@ -474,6 +544,7 @@ function renderMain(itemsArray) {
 }
 
 function renderFooter() {
+
     const footerEl = document.createElement('footer')
     footerEl.setAttribute('class', 'footer-menu')
 
@@ -483,6 +554,7 @@ function renderFooter() {
     footerEl.append(spanEl)
 
     sectionContainerMenusEl.append(footerEl)
+
 }
 // #endregion
 
@@ -492,15 +564,14 @@ function render() {
     //destroy everything then recreate each time you render
     sectionContainerMenusEl.innerHTML = ''
     
+    //rerendering the HTML page after each render call
     renderHeader()
-    renderMain(state.items)
+    renderMain(state.items) //here we pass the state.items from server wich we saved here to loop and render
     renderFooter()
 
 }
 
 function init() {
-
-    render()
 
      //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
     getItemsArrayFromServer().then(function (itemsArrayFromServer) {
@@ -512,6 +583,8 @@ function init() {
         state.users = usersArrayFromServer
         render()
     })
+
+    render()
 
 }
 
