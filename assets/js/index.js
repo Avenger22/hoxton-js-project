@@ -111,17 +111,17 @@ function renderHeader() {
 
     liLogoEl.append(logoLinkEl)
 
-    const buttonImageEl = document.createElement('button')
-    buttonImageEl.setAttribute('class', 'button-image')
+    // const buttonImageEl = document.createElement('button')
+    // buttonImageEl.setAttribute('class', 'button-image')
 
-    const iconLiEl = document.createElement('li')
+    // const iconLiEl = document.createElement('li')
 
-    const hamburgerIconEl = document.createElement('img')
-    hamburgerIconEl.setAttribute('src', './assets/icons/hamburger.png')
-    hamburgerIconEl.setAttribute('alt', '')
+    // const hamburgerIconEl = document.createElement('img')
+    // hamburgerIconEl.setAttribute('src', './assets/icons/hamburger.png')
+    // hamburgerIconEl.setAttribute('alt', '')
 
-    iconLiEl.append(hamburgerIconEl)
-    buttonImageEl.append(iconLiEl)
+    // iconLiEl.append(hamburgerIconEl)
+    // buttonImageEl.append(iconLiEl)
 
     const formWrapperEl = document.createElement('form')
     formWrapperEl.setAttribute('class', 'form-wrapper')
@@ -202,7 +202,7 @@ function renderHeader() {
 
     shoppingBagButton.append(shoppingBagIconEl)
 
-    ulHeader1El.append(liLogoEl, buttonImageEl, formWrapperEl, userButton, shoppingBagButton)
+    ulHeader1El.append(liLogoEl, formWrapperEl, userButton, shoppingBagButton)
 
     subHeaderDiv.append(ulHeader1El)
 
