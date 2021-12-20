@@ -853,6 +853,30 @@ span.new-item-date {
     width: 500px;
     place-content: center;
 }
+
+.modal-sign_up form {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    grid-gap: 20px;
+    place-items: center;
+}
+
+.modal-sign_up form input {
+    height: 30px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.modal-sign_up form label {
+    font-size: 16px;
+}
+
+.modal-sign_up form button {
+    padding: 10px 10px;
+    border: none;
+    background-color: #d40a0a;
+}
 /* #endregion */
 
 /* #endregion */

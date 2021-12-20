@@ -185,6 +185,25 @@ function listenToRemovePopUp(btnRemovePopElParam) {
     })
 }
 
+function listenToGoToSignUp(btnSignUpElParam) {
+
+    btnSignUpElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+
+        userModalEl.classList.remove('show')
+        signUpModalEl.classList.add('show')
+
+    })
+}
+
+function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
+
+    btnRemoveSignUpElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        signUpModalEl.classList.remove('show')
+    })
+
+}
 
 function listenToBagEvent(bagElParam) {
     
@@ -384,7 +403,19 @@ function renderUserModal() {
     divBtnUser.append(btnSignInEl, btnRemoveEl)
     formUser.append(divInputUser, divBtnUser)
 
-    divUserModalEl.append(headerUserModalEl, formUser)
+    const divSignUpEl = document.createElement('div')
+    divSignUpEl.setAttribute('class', 'sign-up-div')
+
+    const spanSignUpEl = document.createElement('span')
+    spanSignUpEl.setAttribute('class', 'span-sign-up')
+    spanSignUpEl.textContent = 'If you have not an account please Sign Up'
+
+    const btnSignUpEl = document.createElement('button')
+    btnSignUpEl.textContent = 'Sign Up'
+
+    divSignUpEl.append(spanSignUpEl, btnSignUpEl)
+
+    divUserModalEl.append(headerUserModalEl, formUser, divSignUpEl)
     userModalEl.append(divUserModalEl)
 
     sectionContainerMenusEl.append(userModalEl)
@@ -392,6 +423,8 @@ function renderUserModal() {
     //event listener function call for clicking the modal to show up or adding something there from form to render etc
     listenToRemoveUser(btnRemoveEl)
     listenToSubmitUser(formUser)
+    
+    listenToGoToSignUp(btnSignUpEl)
 
 }
 
@@ -511,8 +544,47 @@ function renderSignUpModal() {
     const divSignUpModalEl = document.createElement('div')
     divSignUpModalEl.setAttribute('class', 'modal-sign_up')
 
-    payModalEl.append(divSignUpModalEl)
-    sectionContainerMenusEl.append(payModalEl)
+    const formSignUpEl = document.createElement('form')
+    formSignUpEl.setAttribute('class', 'signUp-form')
+
+    const labelNameSignUpEl = document.createElement('label')
+    labelNameSignUpEl.textContent = 'Name: '
+
+    const nameSignUpEl = document.createElement('input')
+    nameSignUpEl.setAttribute('name', 'name-signUp')
+    nameSignUpEl.setAttribute('placeholder', 'Enter name:')
+
+    const labelEmailSignUpEl = document.createElement('label')
+    labelEmailSignUpEl.textContent = 'Email: '
+
+    const emailSignUpEl = document.createElement('input')
+    emailSignUpEl.setAttribute('type', 'email')
+    emailSignUpEl.setAttribute('name', 'email-signUp')
+    emailSignUpEl.setAttribute('placeholder', 'Enter Email:')
+
+    const labelPasswordSignUpEl = document.createElement('label')
+    labelPasswordSignUpEl.textContent = 'Password: '
+
+    const passwordSignUpEl = document.createElement('input')
+    passwordSignUpEl.setAttribute('type', 'password')
+    passwordSignUpEl.setAttribute('name', 'password-signUp')
+    passwordSignUpEl.setAttribute('placeholder', 'Enter password:')
+
+    const btnSignUp = document.createElement('button')
+    btnSignUp.textContent = 'Sign Up'
+
+    const btnRemoveSignUp = document.createElement('button')
+    btnRemoveSignUp.textContent = 'X'
+
+    formSignUpEl.append(labelNameSignUpEl, nameSignUpEl, labelEmailSignUpEl, emailSignUpEl, 
+        labelPasswordSignUpEl, passwordSignUpEl, btnSignUp, btnRemoveSignUp)
+
+    divSignUpModalEl.append(formSignUpEl)
+
+    signUpModalEl.append(divSignUpModalEl)
+    sectionContainerMenusEl.append(signUpModalEl)
+
+    listenToRemoveSignUpModal(btnRemoveSignUp)
 
 }
 
@@ -521,8 +593,8 @@ function renderPayModal() {
     const divPayModalEl = document.createElement('div')
     divPayModalEl.setAttribute('class', 'modal-pay')
 
-    signUpModalEl.append(divPayModalEl)
-    sectionContainerMenusEl.append(signUpModalEl)
+    payModalEl.append(divPayModalEl)
+    sectionContainerMenusEl.append(payModalEl)
 
 }
 // #endregion
