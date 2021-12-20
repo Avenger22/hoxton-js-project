@@ -392,6 +392,18 @@ function sliceArrayFromStateToDisplay(stateArrayParam) {
       )
     
 }
+
+function checkDateEnteredNew(itemDateParam, newSpanElParam, storeItemDivParam) {
+
+    const date1 = Date.parse('2021/11/1')
+    const date2 = Date.parse(itemDateParam)
+
+    if (date2 > date1) {
+        storeItemDivParam.append(newSpanElParam)
+        storeItemDivParam.style.gridTemplateRows = '0.1fr 0.5fr 0.1fr 0.2fr 40px'
+    }
+
+}
 // #endregion
 
 // #endregion
@@ -1010,29 +1022,56 @@ function renderMain(itemsArray) {
 
         const span2El = document.createElement('span')
         span2El.setAttribute('class', 'span-2')
-        span2El.textContent = `Discounted Price: ${item.price}`
+        span2El.textContent = `Discounted Price: ${item.discountPrice}`
 
         const span3El = document.createElement('span')
-        span3El.setAttribute('class', 'span-2')
+        span3El.setAttribute('class', 'span-3-item')
         span3El.textContent = `Stock: ${item.stock}`
 
         const span4El = document.createElement('span')
-        span4El.setAttribute('class', 'span-2')
+        span4El.setAttribute('class', 'span-4-item')
         span4El.textContent = `Type: ${item.type}`
-
-        divWrapperEl.append(span1El, span2El, span3El, span4El)
 
         const cartButton = document.createElement('button')
         cartButton.textContent = 'Add to cart'
 
-        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
-        itemsWrapper.append(storeItem)
+        //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
+        const newSpanEl = document.createElement('span')
+        newSpanEl.setAttribute('class', 'new-item-date')
+        newSpanEl.textContent = 'New Item'
 
-        listenToSubmitItemToBag(cartButton, item)
+        //here i call the function to check the date, i need to pass the span, the div to append in that function and then the date from state
+        checkDateEnteredNew(item.date, newSpanEl, storeItem)
 
+        //now we check if an propery in in the object to see discounted price or not
+        if (item.hasOwnProperty('discountPrice')) {
+
+            divWrapperEl.append(span1El, span2El, span3El, span4El)
+            storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+
+            itemsWrapper.append(storeItem)
+
+            listenToSubmitItemToBag(cartButton, item)
+
+        }
+
+        else {
+
+            span1El.style.color = '#000'
+            span1El.style.textDecoration = 'none'
+
+            divWrapperEl.append(span1El, span3El, span4El)
+            storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+
+            itemsWrapper.append(storeItem)
+
+            listenToSubmitItemToBag(cartButton, item)
+
+        }
+        
     }
 
-    itemsDivEl.append(itemsWrapper)
+    itemsDivEl.append(itemsWrapper) //this append all the items in this big container box inside box
     // #endregion
 
     const paginationContainerEl = document.createElement('div')
@@ -1084,6 +1123,7 @@ function renderMain(itemsArray) {
 
     paginationButton.append(nextPageSpan)
     paginationWrapperEl.append(button1El, button2El, button3El, button4El, button6El, paginationButton)
+
     paginationContainerEl.append(paginationWrapperEl)
 
 
