@@ -13,6 +13,9 @@ bagModalEl.setAttribute('class', 'modal-bag_container')
 let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
+
+let spanUserHolderEl = null //this is important to hold the stock span EL when its rendered so i can acces it and use it in other parts of app
+let spanBagHolderEl = null //same as above
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -32,9 +35,13 @@ const state = {
     searchCatcher: [],
     userCatcher: [],
 
-    //checking to show the username after login
+    //checking to show the username after login USER SPAN
     userName: null,
     userShowClass: null,
+
+    //here checking to show the span in the page BAG SPAN
+    stockSpanValue: null,
+    stockShowClass: null,
 
     userModalClicked: false,
     bagModalClicked: false
@@ -124,10 +131,11 @@ function listenToSubmitUser(formUserElParam) {
             alert(`The email is : ${state.userCatcher[0][0].id} and also the password is : ${state.userCatcher[0][0].password}`)
         }
 
-        spanHolderEl.classList.add('show')
+        spanUserHolderEl.classList.add('show')
         state.userShowClass = 'show'
+
         state.userName = state.userCatcher[0][0].firstName
-        spanHolderEl.textContent = state.userName //fixed this BUG LINKING STATE AND DOM THEN RERENDER
+        spanUserHolderEl.textContent = state.userName //fixed this BUG LINKING STATE AND DOM THEN RERENDER
 
         render()
     })
@@ -176,10 +184,10 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         console.log("item button is Clicked, so now its ready to go to bag from page")
 
         state.stockShowClass = 'show'
-        stockHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
+        spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
 
         itemObjectParam.stock -= 1
-        stockHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
+        spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
 
         if (itemObjectParam.stock < 0) {
             itemObjectParam.stock = 0 //removing negative values from span and stock ruining the state object
@@ -220,25 +228,59 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         state.bagItems = getDeletedUsersFromBag(itemObjectParam.name)
 
         const quantity = getQuantityValue(itemObjectParam.name)
-        itemObjectParam.stock += quantity
+        itemObjectParam.stock += quantity //BUG
         state.stockSpanValue -= quantity
-        stockHolderEl.textContent = state.stockSpanValue
+        spanBagHolderEl.textContent = state.stockSpanValue
 
-        state.bagItemQuantity = getDeletedUsersFromBagQuantity(itemObjectParam.name)
+        state.bagItemQuantity = getDeletedUsersFromBagQuantity(itemObjectParam.name) //change the state
         render() //rerender the app
 
     })
 
 
 }
-
-function getStockSpanEl(stockElParam) {
-    return stockElParam
-}
 // #endregion
 
 // #region 'FILTER FUNCTIONS'
+function getBagArrayByNameFromState(objectNameParam) {
 
+    let quantityBasedOnName = []
+    return quantityBasedOnName = state.bagItemQuantity.filter((object) => object.itemName === objectNameParam)
+    
+}
+
+function getDeletedUsersFromBagQuantity(itemObjectNameParam) {
+
+    let bagQuantityArrayFiltered = []
+    return bagQuantityArrayFiltered = state.bagItemQuantity.filter((item) => item.itemName !== itemObjectNameParam)
+
+}
+
+function getDeletedUsersFromBag(itemObjectNameParam) {
+
+    let bagArrayFiltered = []
+    //my mistake BUG was here so the argument was object.name i mistaken as object.name.name and filter didnt show anythig wront
+    return bagArrayFiltered = state.bagItems.filter((item) => item.name !== itemObjectNameParam)
+
+}
+
+function getQuantityValue(objectNameParam) {
+
+    //this passes the name of the object in the filter to give me array of object filtered
+    //by its name, now i just save that array of objects and then i just .length and i have the quantity based on that item
+    const arrayLength = getBagArrayByNameFromState(objectNameParam) 
+    const quantityValueFinal = arrayLength.length
+    return quantityValueFinal
+
+}
+
+function getBagSpanEl(bagSpanElParam) {
+    return bagSpanElParam
+}
+
+function getUserSpanEl(userSpanElParam) {
+    return userSpanElParam
+}
 // #endregion
 
 // #endregion
@@ -334,7 +376,7 @@ function renderBagModal() {
     for (const item of state.bagItems) {
 
         const divBagItemEl = document.createElement('div')
-        divItemEl.setAttribute('class', 'item-bag') 
+        divBagItemEl.setAttribute('class', 'item-bag') 
 
         const imgEl = document.createElement('img')
         imgEl.setAttribute('src', item.image)
@@ -359,7 +401,7 @@ function renderBagModal() {
         spanEl3.textContent = `Quantity: ${quantityValue}`
 
         const btnRemoveItem = document.createElement('button')
-        btnRemoveItem.textContent = 'Remove'
+        btnRemoveItem.textContent = 'Remove bag item'
 
         divBagItemEl.append(imgEl, h4El, spanEl1, spanEl2, spanEl3, btnRemoveItem)
         divBagItemWrapperEl.append(divBagItemEl)
@@ -483,7 +525,12 @@ function renderHeader() {
     userIconEl.setAttribute('src', './assets/icons/user.png')
     userIconEl.setAttribute('alt', '')
 
-    userButton.append(userIconEl)
+    const spanButtonUser = document.createElement('span')
+    spanButtonUser.setAttribute('class', `span-user-login ${state.userShowClass}`)
+    spanButtonUser.textContent = state.userName
+
+    userButton.append(userIconEl, spanButtonUser)
+
 
     const shoppingBagButton = document.createElement('button')
     shoppingBagButton.setAttribute('class', 'button-image')
@@ -492,15 +539,20 @@ function renderHeader() {
     shoppingBagIconEl.setAttribute('src', './assets/icons/shopping-bag.png')
     shoppingBagIconEl.setAttribute('alt', '')
 
-    shoppingBagButton.append(shoppingBagIconEl)
+    const spanButtonBag = document.createElement('span')
+    spanButtonBag.setAttribute('class', `span-bag-stock ${state.stockShowClass}`)
+    spanButtonBag.textContent = state.stockSpanValue
+
+    shoppingBagButton.append(shoppingBagIconEl, spanButtonBag)
+
 
     //event listener for modals
     listenToUserEvent(userButton)
     listenToBagEvent(shoppingBagButton)
 
     //catching some elements wich i want to use to other functions for stock and bag calculations
-    // spanHolderEl = getSpanEl(spanUl2_2)
-    // stockHolderEl = getStockSpanEl(spanUl2_3)
+    spanUserHolderEl = getUserSpanEl(spanButtonUser)
+    spanBagHolderEl = getBagSpanEl(spanButtonBag)
 
     ulHeader1El.append(liLogoEl, formWrapperEl, userButton, shoppingBagButton)
     subHeaderDiv.append(ulHeader1El)
@@ -685,13 +737,23 @@ function renderMain(itemsArray) {
         span2El.setAttribute('class', 'span-2')
         span2El.textContent = `Discounted Price: ${item.price}`
 
-        divWrapperEl.append(span1El, span2El)
+        const span3El = document.createElement('span')
+        span3El.setAttribute('class', 'span-2')
+        span3El.textContent = `Stock: ${item.stock}`
+
+        const span4El = document.createElement('span')
+        span4El.setAttribute('class', 'span-2')
+        span4El.textContent = `Type: ${item.type}`
+
+        divWrapperEl.append(span1El, span2El, span3El, span4El)
 
         const cartButton = document.createElement('button')
         cartButton.textContent = 'Add to cart'
 
         storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
         itemsWrapper.append(storeItem)
+
+        listenToSubmitItemToBag(cartButton, item)
 
     }
 

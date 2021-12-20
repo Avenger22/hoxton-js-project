@@ -160,6 +160,27 @@ button.button-image {
     -ms-transition: 1s;
     -o-transition: 1s;
 }
+
+span.span-bag-stock {
+    display: none;
+}
+
+span.span-bag-stock.show {
+    display: grid;
+    place-self: center;
+    color: #c22048;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+span.span-user-login {
+    display: none;
+}
+
+span.span-user-login.show {
+    display: inline-block;
+    color: #1d2f55;
+}
 /* #endregion */
 
 /*------------------------------------------------------------------------------------------------------------*/
