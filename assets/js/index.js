@@ -55,7 +55,11 @@ const state = {
     userModalClicked: false,
     bagModalClicked: false,
     signUpModalClicked: false,
-    payModalClicked: false
+    payModalClicked: false,
+
+    //experimental for pagination from js not server
+    // page: 1,
+    // perPage: 10
 
 }
 
@@ -90,6 +94,8 @@ function getUsersArrayFromServer() {
 // #region 'HELPER FUNCTIONS'
 
 // #region 'EVENT LISTENER FUNCTIONS
+
+// #region 'event listener for page navbar or modal auto pop'
 window.onscroll = function() {
 
     if (document.body.scrollTop >= 280 || document.documentElement.scrollTop >= 280) {
@@ -121,8 +127,9 @@ window.onload = function() {
     }, 5000);
 
 }
+// #endregion
 
-
+// #region 'event listener for modals'
 function listenToUserEvent(userElParam) {
     
     userElParam.addEventListener('click', function(event) {
@@ -185,6 +192,7 @@ function listenToRemovePopUp(btnRemovePopElParam) {
     })
 }
 
+
 function listenToGoToSignUp(btnSignUpElParam) {
 
     btnSignUpElParam.addEventListener('click', function(event) {
@@ -204,6 +212,7 @@ function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
     })
 
 }
+
 
 function listenToBagEvent(bagElParam) {
     
@@ -290,9 +299,37 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
 
 
 }
+
+
+function listenToGoToPay(btnPayParam) {
+
+    btnPayParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        bagModalEl.classList.remove('show')
+    payModalEl.classList.add('show')
+    })
+
+}
+
+function listenToRemovePayModal(btnRemovePayElParam) {
+
+    btnRemovePayElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        payModalEl.classList.remove('show')
+    })
+
+}
+// #endregion
+
+// #region 'event listener for categories'
+
+// #endregion
+
 // #endregion
 
 // #region 'FILTER FUNCTIONS'
+
+// #region 'filter modals'
 function getBagArrayByNameFromState(objectNameParam) {
 
     let quantityBasedOnName = []
@@ -325,7 +362,6 @@ function getQuantityValue(objectNameParam) {
 
 }
 
-
 function getUserCredentialsFromStateFilter(emailParam, passwordParam) {
 
     let userCredentialsArray = []
@@ -340,6 +376,24 @@ function getBagSpanEl(bagSpanElParam) {
 function getUserSpanEl(userSpanElParam) {
     return userSpanElParam
 }
+// #endregion
+
+// #region 'filter categories'
+
+// #endregion
+
+// #region 'filter other'
+//experimental for pagination
+function sliceArrayFromStateToDisplay(stateArrayParam) {
+
+    return stateArrayParam.slice(
+        (state.page - 1) * state.perPage,
+        state.page * state.perPage
+      )
+    
+}
+// #endregion
+
 // #endregion
 
 // #endregion
@@ -498,12 +552,15 @@ function renderBagModal() {
 
     divRemovingEl.append(btnPay, btnRemoveModal)
     divBagModalWrapper.append(divBagHeaderEl, divBagItemWrapperEl, divRemovingEl)
+
     divBagModalEl.append(divBagModalWrapper)
     bagModalEl.append(divBagModalEl)
+
     sectionContainerMenusEl.append(bagModalEl)
 
     //Function call with arguments for event listener
     listenToRemoveBag(btnRemoveModal)
+    listenToGoToPay(btnPay)
 
 }
 
@@ -593,8 +650,60 @@ function renderPayModal() {
     const divPayModalEl = document.createElement('div')
     divPayModalEl.setAttribute('class', 'modal-pay')
 
+    const formPayEl = document.createElement('form')
+    formPayEl.setAttribute('class', 'form-pay')
+
+    const h4PayEl = document.createElement('h4')
+    h4PayEl.textContent = 'Payment plan: 24$ per month'
+
+    const spanPayEl = document.createElement('span')
+    spanPayEl.textContent = 'Free trial you will not be charged for 30 days'
+
+    const inputPayEl1 = document.createElement('input')
+    inputPayEl1.setAttribute('type', 'text')
+    inputPayEl1.setAttribute('id', 'input-pay-1')
+    inputPayEl1.setAttribute('name', 'name-pay')
+    inputPayEl1.placeholder = 'Name on card:'
+
+    const inputPayEl2 = document.createElement('input')
+    inputPayEl2.setAttribute('type', 'text')
+    inputPayEl2.setAttribute('id', 'input-pay-2')
+    inputPayEl2.setAttribute('name', 'number-pay')
+    inputPayEl2.placeholder = 'Card number:'
+
+    const inputPayEl3 = document.createElement('input')
+    inputPayEl3.setAttribute('type', 'date')
+    inputPayEl3.setAttribute('id', 'input-pay-3')
+    inputPayEl3.setAttribute('name', 'date-pay')
+    inputPayEl3.placeholder = 'Date:'
+
+    const inputPayEl4 = document.createElement('input')
+    inputPayEl4.setAttribute('type', 'text')
+    inputPayEl4.setAttribute('id', 'input-pay-4')
+    inputPayEl4.setAttribute('name', 'cvv-pay')
+    inputPayEl4.placeholder = 'CVV NUMBER:'
+
+    const payBtnEl = document.createElement('button')
+    payBtnEl.setAttribute('id', 'button-pay-1')
+    payBtnEl.textContent = 'Pay Now'
+
+    const btnPaywrapper = document.createElement('div')
+    btnPaywrapper.setAttribute('class', 'btn-pay-wrapper')
+
+    const removePayBtnEl = document.createElement('button')
+    removePayBtnEl.setAttribute('id', 'button-pay-2')
+    removePayBtnEl.textContent = 'X'
+
+    btnPaywrapper.append(payBtnEl, removePayBtnEl)
+    formPayEl.append(h4PayEl, spanPayEl, inputPayEl1, 
+    inputPayEl2, inputPayEl3, inputPayEl4, btnPaywrapper)
+
+    divPayModalEl.append(formPayEl)
+
     payModalEl.append(divPayModalEl)
     sectionContainerMenusEl.append(payModalEl)
+
+    listenToRemovePayModal(removePayBtnEl)
 
 }
 // #endregion
@@ -1087,7 +1196,7 @@ function renderFooter() {
 // #region 'RENDERING AND LOGIC ON IT'
 function render() {
 
-    //destroy everything then recreate each time you render
+    //destroy everything these are GLOBAL VARIABLES then recreate each time you render
     sectionContainerMenusEl.innerHTML = ''
     userModalEl.innerHTML = ''
     bagModalEl.innerHTML = ''
