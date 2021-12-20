@@ -10,6 +10,15 @@ userModalEl.setAttribute('class', 'modal-user_container')
 const bagModalEl = document.createElement('div')
 bagModalEl.setAttribute('class', 'modal-bag_container')
 
+const payModalEl = document.createElement('div')
+payModalEl.setAttribute('class', 'modal-pay-container')
+
+const signUpModalEl = document.createElement('div')
+signUpModalEl.setAttribute('class', 'modal-sign_up-container')
+
+const popUpModalEl = document.createElement('div')
+popUpModalEl.setAttribute('class', 'modal-pop_up-container')
+
 let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
@@ -44,7 +53,9 @@ const state = {
     stockShowClass: null,
 
     userModalClicked: false,
-    bagModalClicked: false
+    bagModalClicked: false,
+    signUpModalClicked: false,
+    payModalClicked: false
 
 }
 
@@ -103,6 +114,14 @@ window.onscroll = function() {
 
 }
 
+window.onload = function() {
+
+    setTimeout(function() {
+        popUpModalEl.classList.add('show');
+    }, 5000);
+
+}
+
 
 function listenToUserEvent(userElParam) {
     
@@ -155,6 +174,15 @@ function listenToRemoveUser(btnRemoveElParam) {
         // render()
     })
 
+}
+
+
+function listenToRemovePopUp(btnRemovePopElParam) {
+
+    btnRemovePopElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        popUpModalEl.classList.remove('show')
+    })
 }
 
 
@@ -446,6 +474,57 @@ function renderBagModal() {
 
 }
 
+function renderPopUpModal() {
+
+    const divPopUpModalEl = document.createElement('div')
+    divPopUpModalEl.setAttribute('class', 'modal-pop_up')
+
+    const spanPopEl = document.createElement('span')
+    spanPopEl.setAttribute('class', 'span-pop-up')
+    spanPopEl.textContent = 'If you want latest news about our shop please subscribe below'
+
+    const divWrapperSubs = document.createElement('div')
+    divWrapperSubs.setAttribute('class', 'wrapper-subs')
+
+    const btnPopEl = document.createElement('button')
+    btnPopEl.textContent = 'Subscribe'
+
+    const inputPopEl = document.createElement('input')
+    inputPopEl.setAttribute('name', 'pop-input')
+    inputPopEl.setAttribute('type', 'email')
+
+    const removePopBtnEl = document.createElement('button')
+    removePopBtnEl.textContent = 'X'
+
+    divWrapperSubs.append(spanPopEl, inputPopEl, btnPopEl)
+    divPopUpModalEl.append(divWrapperSubs, removePopBtnEl)
+
+    popUpModalEl.append(divPopUpModalEl)
+    sectionContainerMenusEl.append(popUpModalEl)
+
+    listenToRemovePopUp(removePopBtnEl)
+
+}
+
+function renderSignUpModal() {
+
+    const divSignUpModalEl = document.createElement('div')
+    divSignUpModalEl.setAttribute('class', 'modal-sign_up')
+
+    payModalEl.append(divSignUpModalEl)
+    sectionContainerMenusEl.append(payModalEl)
+
+}
+
+function renderPayModal() {
+
+    const divPayModalEl = document.createElement('div')
+    divPayModalEl.setAttribute('class', 'modal-pay')
+
+    signUpModalEl.append(divPayModalEl)
+    sectionContainerMenusEl.append(signUpModalEl)
+
+}
 // #endregion
 
 // #region 'RENDER PAGE HTML'
@@ -823,16 +902,18 @@ function renderMain(itemsArray) {
     nextPageSpan.textContent = 'Next Page'
 
     paginationButton.append(nextPageSpan)
-
     paginationWrapperEl.append(button1El, button2El, button3El, button4El, button6El, paginationButton)
-
     paginationContainerEl.append(paginationWrapperEl)
+
 
     const asideWrapperEl = document.createElement('div')
     asideWrapperEl.setAttribute('class', 'aside-wrapper')
 
     const asideContainerEl = document.createElement('aside')
     asideContainerEl.setAttribute('class', 'aside-container-1')
+
+    const asideContainerEl2 = document.createElement('aside')
+    asideContainerEl2.setAttribute('class', 'aside-container-2')
 
     const asideUl = document.createElement('ul')
     asideUl.setAttribute('class', 'ul-aside')
@@ -909,7 +990,7 @@ function renderMain(itemsArray) {
 
     asideContainerEl.append(asideUl)
 
-    asideWrapperEl.append(asideContainerEl)
+    asideWrapperEl.append(asideContainerEl, asideContainerEl2)
 
     mainEl.append(ribbon1El, ribbon2El, itemsDivEl, paginationContainerEl, asideWrapperEl)
 
@@ -938,6 +1019,9 @@ function render() {
     sectionContainerMenusEl.innerHTML = ''
     userModalEl.innerHTML = ''
     bagModalEl.innerHTML = ''
+    payModalEl.innerHTML = ''
+    popUpModalEl.innerHTML = ''
+    signUpModalEl.innerHTML = ''
     
     //rerendering the HTML page after each render call
     renderHeader()
@@ -945,6 +1029,9 @@ function render() {
     renderFooter()
     renderUserModal()
     renderBagModal()
+    renderPopUpModal()
+    renderSignUpModal()
+    renderPayModal()
 
 }
 
