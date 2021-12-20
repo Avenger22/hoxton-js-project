@@ -2,6 +2,14 @@
 
 // #region 'GLOBAL VARIABLES AND DOM ELEMENTS CATCHER'
 const sectionContainerMenusEl = document.querySelector('section.container-menus')
+
+//these three divs are MODALS, so i use them here as global to acces them everywhere in the app
+const userModalEl = document.createElement('div')
+userModalEl.setAttribute('class', 'modal-user_container')
+
+const bagModalEl = document.createElement('div')
+bagModalEl.setAttribute('class', 'modal-bag_container')
+
 let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
@@ -14,7 +22,22 @@ const state = {
 
     //two important arrays for fetching and udapting the state
     items: [],
-    users: []
+    users: [],
+
+    //additional array for items in the bag
+    bagItems: [],
+    bagItemQuantity: [],
+
+    //super crucial for catching each name and passing it in render in else if, problem is because the filter function had param and passing was hard so this solved
+    searchCatcher: [],
+    userCatcher: [],
+
+    //checking to show the username after login
+    userName: null,
+    userShowClass: null,
+
+    userModalClicked: false,
+    bagModalClicked: false
 
 }
 
@@ -72,6 +95,146 @@ window.onscroll = function() {
     }
 
 }
+
+function listenToUserEvent(userElParam) {
+    
+    userElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        state.userModalClicked = true
+        userModalEl.classList.add('show')
+        // render()
+    })
+
+}
+
+function listenToSubmitUser(formUserElParam) {
+
+    formUserElParam.addEventListener('submit', function(event) {
+        event.preventDefault()
+        console.log("Submit user is Clicked or sumbit")
+
+        state.userCatcher.pop()
+        state.userCatcher.push(getUserCredentialsFromStateFilter(formUserElParam.email.value, formUserElParam.password.value))
+
+        if(state.userCatcher.length === 0) {
+            alert('No email or user found with these credentials')
+        }
+
+        else {
+            alert(`The email is : ${state.userCatcher[0][0].id} and also the password is : ${state.userCatcher[0][0].password}`)
+        }
+
+        spanHolderEl.classList.add('show')
+        state.userShowClass = 'show'
+        state.userName = state.userCatcher[0][0].firstName
+        spanHolderEl.textContent = state.userName //fixed this BUG LINKING STATE AND DOM THEN RERENDER
+
+        render()
+    })
+
+}
+
+function listenToRemoveUser(btnRemoveElParam) {
+
+    btnRemoveElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        state.userModalClicked = false
+        userModalEl.classList.remove('show')
+        // render()
+    })
+
+}
+
+
+function listenToBagEvent(bagElParam) {
+    
+    bagElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        state.bagModalClicked = true
+        bagModalEl.classList.add('show')
+        // render()
+    })
+
+}
+
+function listenToRemoveBag(buttonElParam) {
+
+    buttonElParam.addEventListener('click', function(event) {
+        event.preventDefault()
+        state.bagModalClicked = false
+        bagModalEl.classList.remove('show')
+        // render()
+    })
+
+}
+
+function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
+
+    buttonItemParam.addEventListener('click', function(event) {
+
+        event.preventDefault()
+        console.log("item button is Clicked, so now its ready to go to bag from page")
+
+        state.stockShowClass = 'show'
+        stockHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
+
+        itemObjectParam.stock -= 1
+        stockHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
+
+        if (itemObjectParam.stock < 0) {
+            itemObjectParam.stock = 0 //removing negative values from span and stock ruining the state object
+        }
+
+        else {
+            state.stockSpanValue += 1
+        }
+
+        let quantityBag = 0
+        quantityBag++
+
+        const itemNameValue = itemObjectParam.name
+        const objectBag = {
+            itemName: itemNameValue,
+            quantity: quantityBag
+        } 
+
+        //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
+        state.bagItemQuantity.push(objectBag)
+        state.bagItems.push(itemObjectParam)
+        state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
+
+        render()
+
+    })
+    
+}
+
+function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemParam) {
+
+    btnRemoveItemElParam.addEventListener('click', function(event) {
+
+        event.preventDefault()
+        divItemParam.remove() //remove from html the dom item
+
+        //update the state another array, here we change state bag array from FILTER
+        state.bagItems = getDeletedUsersFromBag(itemObjectParam.name)
+
+        const quantity = getQuantityValue(itemObjectParam.name)
+        itemObjectParam.stock += quantity
+        state.stockSpanValue -= quantity
+        stockHolderEl.textContent = state.stockSpanValue
+
+        state.bagItemQuantity = getDeletedUsersFromBagQuantity(itemObjectParam.name)
+        render() //rerender the app
+
+    })
+
+
+}
+
+function getStockSpanEl(stockElParam) {
+    return stockElParam
+}
 // #endregion
 
 // #region 'FILTER FUNCTIONS'
@@ -85,6 +248,146 @@ window.onscroll = function() {
 // #region 'RENDER FUNCTIONS'
 
 // #region 'RENDER MODALS'
+function renderUserModal() {
+
+    const divUserModalEl = document.createElement('div')
+    divUserModalEl.setAttribute('class', 'modal-user')
+
+    const headerUserModalEl = document.createElement('div')
+    headerUserModalEl.setAttribute('class', 'header-user-modal')
+
+    const divInputUser = document.createElement('div')
+    divInputUser.setAttribute('class', 'input-user-modal')
+
+    const divBtnUser = document.createElement('div')
+    divBtnUser.setAttribute('class', 'button-user-modal')
+
+    const h3El = document.createElement('h3')
+    h3El.textContent = 'Sign In'
+
+    const spanEl1 = document.createElement('span')
+    spanEl1.setAttribute('class', 'span-user-1')
+    spanEl1.textContent = 'Email:'
+
+    const inputEl1 = document.createElement('input')
+    inputEl1.setAttribute('class', 'email-input-user')
+    inputEl1.setAttribute('name', 'email')
+    inputEl1.setAttribute('required', 'true')
+    inputEl1.setAttribute('type', 'email')
+    inputEl1.placeholder = 'Enter Email'
+
+    const spanEl2 = document.createElement('span')
+    spanEl1.setAttribute('class', 'span-user-2')
+    spanEl2.textContent = 'Password:'
+
+    const inputEl2 = document.createElement('input')
+    inputEl2.setAttribute('class', 'password-input-user')
+    inputEl2.setAttribute('name', 'password')
+    inputEl2.setAttribute('required', 'true')
+    inputEl2.setAttribute('type', 'password')
+    inputEl2.placeholder = 'Enter Password'
+
+    const btnSignInEl = document.createElement('button')
+    btnSignInEl.textContent = 'Sign In'
+
+    const btnRemoveEl = document.createElement('button')
+    btnRemoveEl.textContent = 'X'
+
+    const formUser = document.createElement('form')
+    formUser.setAttribute('class', 'form-user')
+
+    headerUserModalEl.append(h3El)
+    divInputUser.append(spanEl1, inputEl1, spanEl2, inputEl2)
+    divBtnUser.append(btnSignInEl, btnRemoveEl)
+    formUser.append(divInputUser, divBtnUser)
+    divUserModalEl.append(headerUserModalEl, formUser)
+    userModalEl.append(divUserModalEl)
+    sectionContainerMenusEl.append(userModalEl)
+
+    //event listener function call for clicking the modal to show up or adding something there from form to render etc
+    listenToRemoveUser(btnRemoveEl)
+    listenToSubmitUser(formUser)
+
+}
+
+function renderBagModal() {
+
+    const divBagModalEl = document.createElement('div')
+    divBagModalEl.setAttribute('class', 'modal-bag')
+
+    const divBagHeaderEl = document.createElement('div')
+    divBagHeaderEl.setAttribute('class', 'header-bag')
+
+    const divBagModalWrapper = document.createElement('div')
+    divBagModalWrapper.setAttribute('class', 'modal-bag_wrapper')
+
+    const h3El = document.createElement('h3')
+    h3El.textContent = 'Bag'
+    divBagHeaderEl.append(h3El)
+
+
+    const divBagItemWrapperEl = document.createElement('div')
+    divBagItemWrapperEl.setAttribute('class', 'wrapper-items-bag')
+    divBagItemWrapperEl.innerHTML = '' 
+    //destroy after each rerender then recreate
+
+    for (const item of state.bagItems) {
+
+        const divBagItemEl = document.createElement('div')
+        divItemEl.setAttribute('class', 'item-bag') 
+
+        const imgEl = document.createElement('img')
+        imgEl.setAttribute('src', item.image)
+        imgEl.setAttribute('alt', '')
+
+        const h4El = document.createElement('h4')
+        h4El.textContent = item.name
+
+        const spanEl1 = document.createElement('span')
+        spanEl1.setAttribute('class', 'span-1-bag')
+        spanEl1.textContent = `Price: ${item.price}`
+
+        const spanEl2 = document.createElement('span')
+        spanEl2.setAttribute('class', 'span-2-bag')
+        spanEl2.textContent = `Discounted Price: ${item.discountedPrice}` 
+
+        //important to get the quantity of x item with that name passed as argument
+        const quantityValue = getQuantityValue(item.name)
+
+        const spanEl3 = document.createElement('span')
+        spanEl3.setAttribute('class', 'span-3-bag')
+        spanEl3.textContent = `Quantity: ${quantityValue}`
+
+        const btnRemoveItem = document.createElement('button')
+        btnRemoveItem.textContent = 'Remove'
+
+        divBagItemEl.append(imgEl, h4El, spanEl1, spanEl2, spanEl3, btnRemoveItem)
+        divBagItemWrapperEl.append(divBagItemEl)
+
+        //function event listner for better code structure this calls it and uses the arguments to do tasks
+        listenToRemoveBagItem(btnRemoveItem, item, divBagItemEl)
+
+    }
+
+    const divRemovingEl = document.createElement('div')
+    divRemovingEl.setAttribute('class', 'removing-bag')
+
+    const btnRemoveModal = document.createElement('button')
+    btnRemoveModal.textContent = 'X'
+
+    const btnPay = document.createElement('button')
+    btnPay.textContent = 'Pay now ....'
+
+    divRemovingEl.append(btnPay, btnRemoveModal)
+    divBagModalWrapper.append(divBagHeaderEl, divBagItemWrapperEl, divRemovingEl)
+    divBagModalEl.append(divBagModalWrapper)
+    bagModalEl.append(divBagModalEl)
+    sectionContainerMenusEl.append(bagModalEl)
+
+    //Function call with arguments for event listener
+    listenToRemoveBag(btnRemoveModal)
+
+}
 
 // #endregion
 
@@ -96,6 +399,7 @@ function renderHeader() {
 
     headerCatcherEl = headerMenuEl //this makes sure when rendered i catch this DOM el and save it in global variables
 
+    //creating header-sub-1
     const subHeaderDiv = document.createElement('div')
     subHeaderDiv.setAttribute('class', 'header-sub-1')
 
@@ -110,18 +414,6 @@ function renderHeader() {
     logoLinkEl.textContent = 'AlbVitaFitness'
 
     liLogoEl.append(logoLinkEl)
-
-    // const buttonImageEl = document.createElement('button')
-    // buttonImageEl.setAttribute('class', 'button-image')
-
-    // const iconLiEl = document.createElement('li')
-
-    // const hamburgerIconEl = document.createElement('img')
-    // hamburgerIconEl.setAttribute('src', './assets/icons/hamburger.png')
-    // hamburgerIconEl.setAttribute('alt', '')
-
-    // iconLiEl.append(hamburgerIconEl)
-    // buttonImageEl.append(iconLiEl)
 
     const formWrapperEl = document.createElement('form')
     formWrapperEl.setAttribute('class', 'form-wrapper')
@@ -202,10 +494,18 @@ function renderHeader() {
 
     shoppingBagButton.append(shoppingBagIconEl)
 
-    ulHeader1El.append(liLogoEl, formWrapperEl, userButton, shoppingBagButton)
+    //event listener for modals
+    listenToUserEvent(userButton)
+    listenToBagEvent(shoppingBagButton)
 
+    //catching some elements wich i want to use to other functions for stock and bag calculations
+    // spanHolderEl = getSpanEl(spanUl2_2)
+    // stockHolderEl = getStockSpanEl(spanUl2_3)
+
+    ulHeader1El.append(liLogoEl, formWrapperEl, userButton, shoppingBagButton)
     subHeaderDiv.append(ulHeader1El)
 
+    //creating header-sub-2
     const subHeaderDiv2 = document.createElement('div')
     subHeaderDiv2.setAttribute('class', 'header-sub-2')
 
@@ -263,13 +563,9 @@ function renderHeader() {
     contactLinkEl.textContent = 'Contact'
 
     liContactEl.append(contactLinkEl)
-
     ulHeader2El.append(liHomeEl, liProductsEl, liOffersEl, liAboutEl, liBlogEl, liContactEl)
-
     subHeaderDiv2.append(ulHeader2El)
-
     headerMenuEl.append(subHeaderDiv, subHeaderDiv2)
-
     sectionContainerMenusEl.append(headerMenuEl)
 
 }
@@ -563,15 +859,21 @@ function render() {
 
     //destroy everything then recreate each time you render
     sectionContainerMenusEl.innerHTML = ''
+    userModalEl.innerHTML = ''
+    bagModalEl.innerHTML = ''
     
     //rerendering the HTML page after each render call
     renderHeader()
     renderMain(state.items) //here we pass the state.items from server wich we saved here to loop and render
     renderFooter()
+    renderUserModal()
+    renderBagModal()
 
 }
 
 function init() {
+
+    render()
 
      //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
     getItemsArrayFromServer().then(function (itemsArrayFromServer) {
@@ -584,7 +886,7 @@ function init() {
         render()
     })
 
-    render()
+    // render()
 
 }
 
