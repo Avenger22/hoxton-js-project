@@ -103,6 +103,7 @@ window.onscroll = function() {
 
 }
 
+
 function listenToUserEvent(userElParam) {
     
     userElParam.addEventListener('click', function(event) {
@@ -117,27 +118,29 @@ function listenToUserEvent(userElParam) {
 function listenToSubmitUser(formUserElParam) {
 
     formUserElParam.addEventListener('submit', function(event) {
+
         event.preventDefault()
         console.log("Submit user is Clicked or sumbit")
 
         state.userCatcher.pop()
-        state.userCatcher.push(getUserCredentialsFromStateFilter(formUserElParam.email.value, formUserElParam.password.value))
+        state.userCatcher.push(getUserCredentialsFromStateFilter(formUserElParam['email'].value, formUserElParam['password'].value))
 
         if(state.userCatcher.length === 0) {
             alert('No email or user found with these credentials')
         }
 
         else {
-            alert(`The email is : ${state.userCatcher[0][0].id} and also the password is : ${state.userCatcher[0][0].password}`)
+            alert(`The email is : ${state.userCatcher['0'][0].id} and also the password is : ${state.userCatcher['0'][0].password}`)
         }
 
         spanUserHolderEl.classList.add('show')
         state.userShowClass = 'show'
 
-        state.userName = state.userCatcher[0][0].firstName
-        spanUserHolderEl.textContent = state.userName //fixed this BUG LINKING STATE AND DOM THEN RERENDER
+        state.userName = state.userCatcher['0'][0].firstName
+        spanUserHolderEl.textContent = state.userName //LINKING STATE AND DOM THEN RERENDER
 
-        render()
+        render() //rerender after state update
+
     })
 
 }
@@ -146,6 +149,7 @@ function listenToRemoveUser(btnRemoveElParam) {
 
     btnRemoveElParam.addEventListener('click', function(event) {
         event.preventDefault()
+
         state.userModalClicked = false
         userModalEl.classList.remove('show')
         // render()
@@ -225,14 +229,14 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         divItemParam.remove() //remove from html the dom item
 
         //update the state another array, here we change state bag array from FILTER
-        state.bagItems = getDeletedUsersFromBag(itemObjectParam.name)
+        state.bagItems = getDeletedItemsFromBag(itemObjectParam.name)
 
         const quantity = getQuantityValue(itemObjectParam.name)
         itemObjectParam.stock += quantity //BUG
         state.stockSpanValue -= quantity
         spanBagHolderEl.textContent = state.stockSpanValue
 
-        state.bagItemQuantity = getDeletedUsersFromBagQuantity(itemObjectParam.name) //change the state
+        state.bagItemQuantity = getDeletedItemsFromBagQuantity(itemObjectParam.name) //change the state
         render() //rerender the app
 
     })
@@ -249,14 +253,14 @@ function getBagArrayByNameFromState(objectNameParam) {
     
 }
 
-function getDeletedUsersFromBagQuantity(itemObjectNameParam) {
+function getDeletedItemsFromBagQuantity(itemObjectNameParam) {
 
     let bagQuantityArrayFiltered = []
     return bagQuantityArrayFiltered = state.bagItemQuantity.filter((item) => item.itemName !== itemObjectNameParam)
 
 }
 
-function getDeletedUsersFromBag(itemObjectNameParam) {
+function getDeletedItemsFromBag(itemObjectNameParam) {
 
     let bagArrayFiltered = []
     //my mistake BUG was here so the argument was object.name i mistaken as object.name.name and filter didnt show anythig wront
@@ -271,6 +275,14 @@ function getQuantityValue(objectNameParam) {
     const arrayLength = getBagArrayByNameFromState(objectNameParam) 
     const quantityValueFinal = arrayLength.length
     return quantityValueFinal
+
+}
+
+
+function getUserCredentialsFromStateFilter(emailParam, passwordParam) {
+
+    let userCredentialsArray = []
+    return userCredentialsArray = state.users.filter((item) => item.id === emailParam && item.password === passwordParam)
 
 }
 
@@ -319,7 +331,7 @@ function renderUserModal() {
     inputEl1.placeholder = 'Enter Email'
 
     const spanEl2 = document.createElement('span')
-    spanEl1.setAttribute('class', 'span-user-2')
+    spanEl2.setAttribute('class', 'span-user-2')
     spanEl2.textContent = 'Password:'
 
     const inputEl2 = document.createElement('input')
@@ -340,10 +352,13 @@ function renderUserModal() {
 
     headerUserModalEl.append(h3El)
     divInputUser.append(spanEl1, inputEl1, spanEl2, inputEl2)
+
     divBtnUser.append(btnSignInEl, btnRemoveEl)
     formUser.append(divInputUser, divBtnUser)
+
     divUserModalEl.append(headerUserModalEl, formUser)
     userModalEl.append(divUserModalEl)
+
     sectionContainerMenusEl.append(userModalEl)
 
     //event listener function call for clicking the modal to show up or adding something there from form to render etc

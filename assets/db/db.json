@@ -142,13 +142,37 @@
           "firstName": "Jurgen",
           "lastName": "Hasmeta",
           "id": "jurgenhasmeta@email.com",
-          "password": "jurgen"
+          "password": "jurgen",
+          "bag": [
+            {
+              "id": 1,
+              "quantity": 3
+            },
+            {
+              "id": 3,
+              "quantity": 1
+            }
+          ]
         },
         {
           "firstName": "Desintila",
           "lastName": "Luzi",
           "id": "desintila@email.com",
-          "password": "desintila"
+          "password": "desintila",
+          "bag": [
+            {
+              "id": 2,
+              "quantity": 2
+            },
+            {
+              "id": 3,
+              "quantity": 2
+            },
+            {
+              "id": 12,
+              "quantity": 1
+            }
+          ]
         }
     ]
 }
