@@ -1,3 +1,6 @@
+/*------------------------------------------------------------------------------------------------------------*/
+
+/* #region 'DEFFAULT VALUES' */
 * {
     margin: 0px 0px;
     padding: 0px 0px;
@@ -11,22 +14,26 @@ li {
 
 button {
     transition: 1s;
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    -ms-transition: 1s;
-    -o-transition: 1s;
+    -webkit-transition:;
+    -moz-transition:;
+    -ms-transition:;
+    -o-transition:;
 }
 
 a {
     text-decoration: none;
     color: #fff;
     transition: 1s;
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    -ms-transition: 1s;
-    -o-transition: 1s;
+    -webkit-transition:;
+    -moz-transition:;
+    -ms-transition:;
+    -o-transition:;
 }
+/* #endregion */
 
+/*------------------------------------------------------------------------------------------------------------*/
+
+/* #region 'HEADER-MENU AND CONTAINER MENUS' */
 section.container-menus {
     height: auto;
     width: 100%;
@@ -153,7 +160,11 @@ button.button-image {
     -ms-transition: 1s;
     -o-transition: 1s;
 }
+/* #endregion */
 
+/*------------------------------------------------------------------------------------------------------------*/
+
+/* #region 'MAIN-MENU' */
 main.main-menu {
     display:grid;
     grid-template: 
@@ -320,10 +331,10 @@ footer.footer-menu {
 .ul-aside li a:hover {
     color: #d40a0a;
     transition: 1s;
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    -ms-transition: 1s;
-    -o-transition: 1s;
+    -webkit-transition:;
+    -moz-transition:;
+    -ms-transition:;
+    -o-transition:;
 }
 
 #special-aside {
@@ -368,27 +379,14 @@ footer.footer-menu {
     color: #fff;
     background-color: #d40a0a;
     transition: 1s;
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    -ms-transition: 1s;
-    -o-transition: 1s;
+    -webkit-transition:;
+    -moz-transition:;
+    -ms-transition:;
+    -o-transition:;
 }
 
 .pagination-wrapper button:hover span {
     color: #fff;
-}
-
-footer.footer-menu {
-    display: grid;
-    grid-template-rows: 1fr;
-    place-items: center;
-}
-
-.footer-menu span {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: #f1f1f1;
 }
 
 .items-container {
@@ -493,7 +491,30 @@ option {
     padding-left: 10px;
     color: #022335;
 }
+/* #endregion*/
 
+/*------------------------------------------------------------------------------------------------------------*/
+
+/* #region 'FOOTER-MENU' */
+footer.footer-menu {
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+}
+
+.footer-menu span {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #f1f1f1;
+}
+/* #endregion */
+
+/*------------------------------------------------------------------------------------------------------------*/
+
+/* #region 'MODALS' */
+
+/* #region 'USER-MODAL' */
 .modal-user_container {
     height: 100vh;
     width: 100%;
@@ -579,7 +600,9 @@ option {
     grid-template-columns: 0.5fr 0.5fr;
     place-items: center;
 }
+/* #endregion */
 
+/* #region 'BAG-MODAL' */
 .modal-bag_container {
     height: 100vh;
     width: 100%;
@@ -629,7 +652,6 @@ option {
     "img-item-bag span-1-item-bag span-2-item-bag span-3-item-bag" 80px
     "img-item-bag button-item-bag button-item-bag button-item-bag" 40px /
     150px 100px 100px 100px ;
-    /* align-items: center; */
 }
 
 .wrapper-items-bag {
@@ -670,13 +692,13 @@ option {
     cursor: pointer;
 }
 
-.modal-3 .removing-bag {
+.modal-bag .removing-bag {
     display: grid;
     grid-template-columns: 200px 35px;
     place-items: center;
 }
 
-.modal-3 .removing-bag button {
+.modal-bag .removing-bag button {
     border: none;
     outline: none;
     background-color: #c22048;
@@ -712,7 +734,13 @@ span.new-item-date {
     font-style: italic;
     font-weight: 900;
 }
+/* #endregion */
 
+/* #endregion */
+
+/*------------------------------------------------------------------------------------------------------------*/
+
+/* #region 'MEDIA QUERIES' */
 @media screen and (max-width: 1200px) {
 
     main.main-menu {
@@ -853,3 +881,6 @@ span.new-item-date {
     }
 
 }
+/* #endregion */
+
+/*------------------------------------------------------------------------------------------------------------*/
