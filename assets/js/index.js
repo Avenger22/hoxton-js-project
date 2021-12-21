@@ -56,7 +56,9 @@ const state = {
     bagModalClicked: false,
     signUpModalClicked: false,
     payModalClicked: false,
-
+  
+    specificItemClicked: false,
+  
     //selected category
     category: ''
 
@@ -323,6 +325,33 @@ function listenToRemovePayModal(btnRemovePayElParam) {
 // #endregion
 
 // #region 'event listener for categories'
+function listenToClickItem(storeItemParam, itemsWrapperParam, cartButtonParam, itemParam) {
+
+    storeItemParam.addEventListener('click', function(event) {
+
+        event.preventDefault()
+        console.log('Listen to click item function activated')
+
+        renderMainItemClicked(storeItemParam, itemsWrapperParam, cartButtonParam, itemParam)
+
+        state.specificItemClicked = true //change state
+
+        // render() 
+
+    })
+
+}
+
+function listenToGoBackBtn(goBackBtnElParam) {
+
+    goBackBtnElParam.addEventListener('click', function(event) {
+
+        event.preventDefault()
+        state.specificItemClicked = false
+        render()
+
+    })
+  
 function listenToProteinsCategory(proteinsLink) {
     proteinsLink.addEventListener('click', function () {
         state.category = 'Proteins'
@@ -385,10 +414,6 @@ function listenToWeightGainersCategory(weightLink) {
         render()
     })
 }
-
-
-
-
 // #endregion
 
 // #endregion
@@ -1198,6 +1223,7 @@ function renderMain(itemsArray) {
             itemsWrapper.append(storeItem)
 
             listenToSubmitItemToBag(cartButton, item)
+            listenToClickItem(storeItem, itemsWrapper, cartButton, item) //this renders specific click on item 
 
         }
 
@@ -1212,6 +1238,7 @@ function renderMain(itemsArray) {
             itemsWrapper.append(storeItem)
 
             listenToSubmitItemToBag(cartButton, item)
+            listenToClickItem(storeItem, itemsWrapper, cartButton, item) //this renders specific click on item 
 
         }
 
@@ -1385,6 +1412,29 @@ function renderFooter() {
     footerEl.append(spanEl)
 
     sectionContainerMenusEl.append(footerEl)
+
+}
+
+function renderMainItemClicked(storeItemParam, itemWrapperParam, cartButtonParam, itemParam) {
+
+    itemWrapperParam.innerHTML = ''
+
+    const goBackBtnEl = document.createElement('button')
+    goBackBtnEl.textContent = 'Go Back'
+
+    const descriptionEl = document.createElement('span')
+    descriptionEl.textContent = itemParam.description
+    descriptionEl.setAttribute('class', 'span-description')
+
+    storeItemParam.append(goBackBtnEl, descriptionEl)
+    itemWrapperParam.append(storeItemParam)
+
+    storeItemParam.style.width = '600px'
+    cartButtonParam.style.width = '300px'
+    goBackBtnEl.style.width = '300px'
+
+    listenToSubmitItemToBag(cartButtonParam, itemParam)
+    listenToGoBackBtn(goBackBtnEl)
 
 }
 // #endregion
