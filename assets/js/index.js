@@ -60,13 +60,14 @@ const state = {
     bagModalClicked: false,
     signUpModalClicked: false,
     payModalClicked: false,
-  
+
     specificItemClicked: false,
     selectType: '',
 
     //selected category
-    category: ''
-
+    category: '',
+    //searched item
+    search: ''
     //experimental for pagination from js not server
     // page: 1,
     // perPage: 10
@@ -280,7 +281,7 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
 
         // if (state.specificItemClicked === false) {
-            render()
+        render()
         // }
 
     })
@@ -334,7 +335,7 @@ function listenToRemovePayModal(btnRemovePayElParam) {
 // #region 'event listener for categories'
 function listenToClickItem(storeItemParam, itemsWrapperParam, cartButtonParam, itemParam) {
 
-    storeItemParam.addEventListener('click', function(event) {
+    storeItemParam.addEventListener('click', function (event) {
 
         event.preventDefault()
         console.log('Listen to click item function activated')
@@ -351,7 +352,7 @@ function listenToClickItem(storeItemParam, itemsWrapperParam, cartButtonParam, i
 
 function listenToGoBackBtn(goBackBtnElParam) {
 
-    goBackBtnElParam.addEventListener('click', function(event) {
+    goBackBtnElParam.addEventListener('click', function (event) {
 
         event.preventDefault()
         state.specificItemClicked = false
@@ -433,6 +434,16 @@ function listenToSelectChanges(selectElParam) {
         render()
     })
 
+}
+// #endregion
+
+// #region 'event listener for search'
+function listenToSearch(formWrapperEl) {
+    formWrapperEl.addEventListener('submit', function (event) {
+        event.preventDefault()
+        state.search = formWrapperEl['search-product'].value
+        render()
+    })
 }
 // #endregion
 
@@ -544,91 +555,91 @@ function showItems() {
     let itemsToDisplay = state.items
     let itemToDisplaySorted = []
 
-// #region 'CONDITIONALS FOR DEFFAULT VALUES AND CASES IF VOID SOMETHING ETC
-if (state.category === '' && state.selectType === '') {
-    itemToDisplaySorted = state.items
-}
+    // #region 'CONDITIONALS FOR DEFFAULT VALUES AND CASES IF VOID SOMETHING ETC
+    if (state.category === '' && state.selectType === '') {
+        itemToDisplaySorted = state.items
+    }
 
-else if (state.category === '' && state.selectType === 'price-asc') {
-    globalItemsToDisplay = state.items
-    itemToDisplaySorted = getSortedByPriceAsc()
-}
+    else if (state.category === '' && state.selectType === 'price-asc') {
+        globalItemsToDisplay = state.items
+        itemToDisplaySorted = getSortedByPriceAsc()
+    }
 
-else if (state.category === '' && state.selectType === 'price-desc') {
-    globalItemsToDisplay = state.items
-    itemToDisplaySorted = getSortedByPriceDesc()
-}
+    else if (state.category === '' && state.selectType === 'price-desc') {
+        globalItemsToDisplay = state.items
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
 
-else if (state.category === '' && state.selectType === 'name-asc') {
-    globalItemsToDisplay = state.items
-    itemToDisplaySorted = getSortedByNameAsc()
-}
+    else if (state.category === '' && state.selectType === 'name-asc') {
+        globalItemsToDisplay = state.items
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
 
-else if (state.category === '' && state.selectType === 'name-desc') {
-    globalItemsToDisplay = state.items
-    itemToDisplaySorted = getSortedByNameDesc()
-}
+    else if (state.category === '' && state.selectType === 'name-desc') {
+        globalItemsToDisplay = state.items
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
 
-else if (state.category === '' && state.selectType === 'date-asc') {
-    globalItemsToDisplay = state.items
-    itemToDisplaySorted = getSortedByDateAsc()
-}
+    else if (state.category === '' && state.selectType === 'date-asc') {
+        globalItemsToDisplay = state.items
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
 
-else if (state.category === '' && state.selectType === 'date-desc') {
-    globalItemsToDisplay = state.items
-    itemToDisplaySorted = getSortedByDateDesc()
-}
-// #endregion
+    else if (state.category === '' && state.selectType === 'date-desc') {
+        globalItemsToDisplay = state.items
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
 
-// #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
-else if (state.category === 'Default' && state.selectType === '') {
-    itemToDisplaySorted = state.items
-}
+    // #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
+    else if (state.category === 'Default' && state.selectType === '') {
+        itemToDisplaySorted = state.items
+    }
 
-else if (state.category === 'Default' && state.selectType === 'price-asc') {
-    itemsToDisplay = state.items
-    globalItemsToDisplay = itemsToDisplay
+    else if (state.category === 'Default' && state.selectType === 'price-asc') {
+        itemsToDisplay = state.items
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByPriceAsc()
-}
+        itemToDisplaySorted = getSortedByPriceAsc()
+    }
 
-else if (state.category === 'Default' && state.selectType === 'price-desc') {
-    itemsToDisplay = state.items
-    globalItemsToDisplay = itemsToDisplay
+    else if (state.category === 'Default' && state.selectType === 'price-desc') {
+        itemsToDisplay = state.items
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByPriceDesc()
-}
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
 
-else if (state.category === 'Default' && state.selectType === 'name-asc') {
-    itemsToDisplay = state.items
-    globalItemsToDisplay = itemsToDisplay
+    else if (state.category === 'Default' && state.selectType === 'name-asc') {
+        itemsToDisplay = state.items
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByNameAsc()
-}
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
 
-else if (state.category === 'Default' && state.selectType === 'name-desc') {
-    itemsToDisplay = state.items
-    globalItemsToDisplay = itemsToDisplay
+    else if (state.category === 'Default' && state.selectType === 'name-desc') {
+        itemsToDisplay = state.items
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByNameDesc()
-}
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
 
-else if (state.category === 'Default' && state.selectType === 'date-asc') {
-    itemsToDisplay = state.items
-    globalItemsToDisplay = itemsToDisplay
+    else if (state.category === 'Default' && state.selectType === 'date-asc') {
+        itemsToDisplay = state.items
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByDateAsc()
-}
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
 
-else if (state.category === 'Default' && state.selectType === 'date-desc') {
-    itemsToDisplay = state.items
-    globalItemsToDisplay = itemsToDisplay
+    else if (state.category === 'Default' && state.selectType === 'date-desc') {
+        itemsToDisplay = state.items
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByDateDesc()
-}
-// #endregion
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
 
-// #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
     else if (state.category === 'Proteins' && state.selectType === '') {
         itemToDisplaySorted = getProteinProducts()
     }
@@ -676,7 +687,7 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
     }
     // #endregion
 
-// #region 'CONDITIONALS FOR MULTIVITAMINS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR MULTIVITAMINS AND THEIR SORTING OPTIONS
     else if (state.category === 'Multivitamins' && state.selectType === '') {
         itemToDisplaySorted = getMultivitaminsProducts()
     }
@@ -718,7 +729,7 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
     }
     // #endregion
 
-// #region 'CONDITIONALS FOR PRE-WORKOUT AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR PRE-WORKOUT AND THEIR SORTING OPTIONS
     else if (state.category === 'Pre-Workouts' && state.selectType === '') {
         itemToDisplaySorted = getPreWorkoutProducts()
     }
@@ -760,7 +771,7 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
     }
     // #endregion
 
-// #region 'CONDITIONALS FOR WEIGHT-GAINERS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR WEIGHT-GAINERS AND THEIR SORTING OPTIONS
     else if (state.category === 'Weight-Gainers' && state.selectType === '') {
         itemToDisplaySorted = getWeightGainersProducts()
     }
@@ -802,7 +813,7 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
     }
     // #endregion
 
-// #region 'CONDITIONALS FOR CREATINE AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR CREATINE AND THEIR SORTING OPTIONS
     else if (state.category === 'Creatine' && state.selectType === '') {
         itemToDisplaySorted = getCreatineProducts()
     }
@@ -844,7 +855,7 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
     }
     // #endregion
 
-// #region 'CONDITIONALS FOR AMINOACIDS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR AMINOACIDS AND THEIR SORTING OPTIONS
     else if (state.category === 'Aminoacids' && state.selectType === '') {
         itemToDisplaySorted = getAminoacidsProducts()
     }
@@ -886,16 +897,16 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
     }
     // #endregion
 
-// #region 'CONDITIONALS FOR WEIGHT-BURNERS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR WEIGHT-BURNERS AND THEIR SORTING OPTIONS
     else if (state.category === 'Weight-Burner' && state.selectType === '') {
         itemToDisplaySorted = getWeightBurnerProducts()
     }
 
     else if (state.category === 'Weight-Burner' && state.selectType === 'price-asc') {
-    itemsToDisplay = getWeightBurnerProducts()
-    globalItemsToDisplay = itemsToDisplay
+        itemsToDisplay = getWeightBurnerProducts()
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByPriceAsc()
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.category === 'Weight-Burner' && state.selectType === 'price-desc') {
@@ -926,18 +937,18 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
         itemsToDisplay = getWeightBurnerProducts()
         itemToDisplaySorted = getSortedByDateDesc()
     }
-// #endregion
+    // #endregion
 
-// #region 'CONDITIONALS FOR TESTOSTERONE-BOOSTERS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR TESTOSTERONE-BOOSTERS AND THEIR SORTING OPTIONS
     else if (state.category === 'Testosterone-Boosters' && state.selectType === '') {
         itemToDisplaySorted = getTestosteroneBoostersProducts()
     }
 
     else if (state.category === 'Testosterone-Boosters' && state.selectType === 'price-asc') {
-    itemsToDisplay = getTestosteroneBoostersProducts()
-    globalItemsToDisplay = itemsToDisplay
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        globalItemsToDisplay = itemsToDisplay
 
-    itemToDisplaySorted = getSortedByPriceAsc()
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.category === 'Testosterone-Boosters' && state.selectType === 'price-desc') {
@@ -968,10 +979,21 @@ else if (state.category === 'Default' && state.selectType === 'date-desc') {
         itemsToDisplay = getTestosteroneBoostersProducts()
         itemToDisplaySorted = getSortedByDateDesc()
     }
-// #endregion
+    // #endregion
+    itemToDisplaySorted = searchByName(itemToDisplaySorted)
 
     return itemToDisplaySorted
 
+}
+
+
+// #endregion
+
+// #region 'filter search'
+function searchByName(itemToDisplaySorted) {
+    return itemToDisplaySorted.filter(function (item) {
+        return item.name.toLowerCase().includes(state.search.toLowerCase())
+    })
 }
 // #endregion
 
@@ -1002,31 +1024,31 @@ function checkDateEnteredNew(itemDateParam, newSpanElParam, storeItemDivParam) {
 // #region 'filter sorting'
 function getSortedByPriceAsc() {
 
-    return globalItemsToDisplay.sort((a, b) => (a.price > b.price) ? 1 : (a.price === b.price) ? ((a.name > b.name) ? 1 : -1) : -1 )
-    
+    return globalItemsToDisplay.sort((a, b) => (a.price > b.price) ? 1 : (a.price === b.price) ? ((a.name > b.name) ? 1 : -1) : -1)
+
 }
 
 function getSortedByPriceDesc() {
-        
+
     return getSortedByPriceAsc().reverse()
 
 }
 
 function getSortedByNameAsc() {
 
-    return globalItemsToDisplay.sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.price > b.price) ? 1 : -1) : -1 )
-    
+    return globalItemsToDisplay.sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.price > b.price) ? 1 : -1) : -1)
+
 }
 
 function getSortedByNameDesc() {
 
     return getSortedByNameAsc().reverse()
-    
+
 }
 
 function getSortedByDateAsc() {
 
-    return globalItemsToDisplay.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : (Date.parse(a.date) === Date.parse(b.date)) ? ((a.name > b.name) ? 1 : -1) : -1 )
+    return globalItemsToDisplay.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : (Date.parse(a.date) === Date.parse(b.date)) ? ((a.name > b.name) ? 1 : -1) : -1)
 
 }
 
@@ -1236,7 +1258,7 @@ function renderPopUpModal() {
     popUpModalEl.append(divPopUpModalEl)
     sectionContainerMenusEl.append(popUpModalEl)
 
-    btnPopEl.addEventListener('click', function(event) {
+    btnPopEl.addEventListener('click', function (event) {
         event.preventDefault()
         alert('The newsletter is sended to your email')
     })
@@ -1294,7 +1316,7 @@ function renderSignUpModal() {
     signUpModalEl.append(divSignUpModalEl)
     sectionContainerMenusEl.append(signUpModalEl)
 
-    btnSignUp.addEventListener('click', function(event) {
+    btnSignUp.addEventListener('click', function (event) {
         event.preventDefault()
         alert('We are sending the verification code to the email')
     })
@@ -1365,7 +1387,7 @@ function renderPayModal() {
     payModalEl.append(divPayModalEl)
     sectionContainerMenusEl.append(payModalEl)
 
-    payBtnEl.addEventListener('click', function(event) {
+    payBtnEl.addEventListener('click', function (event) {
         event.preventDefault()
         alert('Now the payment details will be sended to email')
     })
@@ -1459,6 +1481,8 @@ function renderHeader() {
     searchButtonEl.textContent = 'Search'
 
     formWrapperEl.append(categoriesSelectEl, searchInputEl, searchButtonEl)
+
+    listenToSearch(formWrapperEl)
 
     const userButton = document.createElement('button')
     userButton.setAttribute('class', 'button-image')
@@ -1597,7 +1621,7 @@ function renderMain() {
 
     const numberSpanEl = document.createElement('span')
     numberSpanEl.setAttribute('class', 'number-span')
-    numberSpanEl.textContent = '150'
+    numberSpanEl.textContent = showItems().length
 
     const foundSpanEl = document.createElement('span')
     foundSpanEl.textContent = 'Products found'
@@ -1976,7 +2000,7 @@ function render() {
 
     //rerendering the HTML page after each render call
     renderHeader()
-    renderMain() 
+    renderMain()
     renderFooter()
     renderUserModal()
     renderBagModal()
