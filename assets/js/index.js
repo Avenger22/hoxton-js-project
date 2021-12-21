@@ -57,6 +57,9 @@ const state = {
     signUpModalClicked: false,
     payModalClicked: false,
 
+    //selected category
+    category: ''
+
     //experimental for pagination from js not server
     // page: 1,
     // perPage: 10
@@ -70,9 +73,8 @@ const state = {
 // #region 'SERVER FUNCTIONS'
 function getItemsArrayFromServer() {
 
-    return fetch('http://localhost:3000/items')        
-        .then(function (response) 
-        {
+    return fetch('http://localhost:3000/items')
+        .then(function (response) {
             return response.json()
         })
 
@@ -80,9 +82,8 @@ function getItemsArrayFromServer() {
 
 function getUsersArrayFromServer() {
 
-    return fetch('http://localhost:3000/users')        
-        .then(function (response) 
-        {
+    return fetch('http://localhost:3000/users')
+        .then(function (response) {
             return response.json()
         })
 
@@ -96,15 +97,15 @@ function getUsersArrayFromServer() {
 // #region 'EVENT LISTENER FUNCTIONS
 
 // #region 'event listener for page navbar or modal auto pop'
-window.onscroll = function() {
+window.onscroll = function () {
 
     if (document.body.scrollTop >= 280 || document.documentElement.scrollTop >= 280) {
         headerCatcherEl.style.display = 'grid'
         headerCatcherEl.style.gridTemplateRows = '1fr'
         headerSub2CatcherEl.style.display = 'none'
         headerCatcherEl.style.height = '100px'
-    } 
-    
+    }
+
     else {
         headerCatcherEl.style.display = 'grid'
         headerCatcherEl.style.gridTemplateRows = '0.5fr 0.5fr'
@@ -120,9 +121,9 @@ window.onscroll = function() {
 
 }
 
-window.onload = function() {
+window.onload = function () {
 
-    setTimeout(function() {
+    setTimeout(function () {
         popUpModalEl.classList.add('show');
     }, 5000);
 
@@ -131,8 +132,8 @@ window.onload = function() {
 
 // #region 'event listener for modals'
 function listenToUserEvent(userElParam) {
-    
-    userElParam.addEventListener('click', function(event) {
+
+    userElParam.addEventListener('click', function (event) {
         event.preventDefault()
         state.userModalClicked = true
         userModalEl.classList.add('show')
@@ -143,7 +144,7 @@ function listenToUserEvent(userElParam) {
 
 function listenToSubmitUser(formUserElParam) {
 
-    formUserElParam.addEventListener('submit', function(event) {
+    formUserElParam.addEventListener('submit', function (event) {
 
         event.preventDefault()
         console.log("Submit user is Clicked or sumbit")
@@ -151,7 +152,7 @@ function listenToSubmitUser(formUserElParam) {
         state.userCatcher.pop()
         state.userCatcher.push(getUserCredentialsFromStateFilter(formUserElParam['email'].value, formUserElParam['password'].value))
 
-        if(state.userCatcher.length === 0) {
+        if (state.userCatcher.length === 0) {
             alert('No email or user found with these credentials')
         }
 
@@ -173,7 +174,7 @@ function listenToSubmitUser(formUserElParam) {
 
 function listenToRemoveUser(btnRemoveElParam) {
 
-    btnRemoveElParam.addEventListener('click', function(event) {
+    btnRemoveElParam.addEventListener('click', function (event) {
         event.preventDefault()
 
         state.userModalClicked = false
@@ -186,7 +187,7 @@ function listenToRemoveUser(btnRemoveElParam) {
 
 function listenToRemovePopUp(btnRemovePopElParam) {
 
-    btnRemovePopElParam.addEventListener('click', function(event) {
+    btnRemovePopElParam.addEventListener('click', function (event) {
         event.preventDefault()
         popUpModalEl.classList.remove('show')
     })
@@ -195,7 +196,7 @@ function listenToRemovePopUp(btnRemovePopElParam) {
 
 function listenToGoToSignUp(btnSignUpElParam) {
 
-    btnSignUpElParam.addEventListener('click', function(event) {
+    btnSignUpElParam.addEventListener('click', function (event) {
         event.preventDefault()
 
         userModalEl.classList.remove('show')
@@ -206,7 +207,7 @@ function listenToGoToSignUp(btnSignUpElParam) {
 
 function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
 
-    btnRemoveSignUpElParam.addEventListener('click', function(event) {
+    btnRemoveSignUpElParam.addEventListener('click', function (event) {
         event.preventDefault()
         signUpModalEl.classList.remove('show')
     })
@@ -215,8 +216,8 @@ function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
 
 
 function listenToBagEvent(bagElParam) {
-    
-    bagElParam.addEventListener('click', function(event) {
+
+    bagElParam.addEventListener('click', function (event) {
         event.preventDefault()
         state.bagModalClicked = true
         bagModalEl.classList.add('show')
@@ -227,7 +228,7 @@ function listenToBagEvent(bagElParam) {
 
 function listenToRemoveBag(buttonElParam) {
 
-    buttonElParam.addEventListener('click', function(event) {
+    buttonElParam.addEventListener('click', function (event) {
         event.preventDefault()
         state.bagModalClicked = false
         bagModalEl.classList.remove('show')
@@ -238,7 +239,7 @@ function listenToRemoveBag(buttonElParam) {
 
 function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 
-    buttonItemParam.addEventListener('click', function(event) {
+    buttonItemParam.addEventListener('click', function (event) {
 
         event.preventDefault()
         console.log("item button is Clicked, so now its ready to go to bag from page")
@@ -264,7 +265,7 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         const objectBag = {
             itemName: itemNameValue,
             quantity: quantityBag
-        } 
+        }
 
         //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
         state.bagItemQuantity.push(objectBag)
@@ -274,12 +275,12 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         render()
 
     })
-    
+
 }
 
 function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemParam) {
 
-    btnRemoveItemElParam.addEventListener('click', function(event) {
+    btnRemoveItemElParam.addEventListener('click', function (event) {
 
         event.preventDefault()
         divItemParam.remove() //remove from html the dom item
@@ -303,17 +304,17 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
 
 function listenToGoToPay(btnPayParam) {
 
-    btnPayParam.addEventListener('click', function(event) {
+    btnPayParam.addEventListener('click', function (event) {
         event.preventDefault()
         bagModalEl.classList.remove('show')
-    payModalEl.classList.add('show')
+        payModalEl.classList.add('show')
     })
 
 }
 
 function listenToRemovePayModal(btnRemovePayElParam) {
 
-    btnRemovePayElParam.addEventListener('click', function(event) {
+    btnRemovePayElParam.addEventListener('click', function (event) {
         event.preventDefault()
         payModalEl.classList.remove('show')
     })
@@ -322,6 +323,71 @@ function listenToRemovePayModal(btnRemovePayElParam) {
 // #endregion
 
 // #region 'event listener for categories'
+function listenToProteinsCategory(proteinsLink) {
+    proteinsLink.addEventListener('click', function () {
+        state.category = 'Proteins'
+        render()
+    })
+}
+
+
+function listenToMultivitaminsCategory(multivitaminsLink) {
+    multivitaminsLink.addEventListener('click', function () {
+        state.category = 'Multivitamins'
+        render()
+    })
+}
+
+
+function listenToPreWorkoutsCategory(workoutsLink) {
+    workoutsLink.addEventListener('click', function () {
+        state.category = 'Pre-Workouts'
+        render()
+    })
+}
+
+
+function listenToAminoacidsCategory(aminoacidsLink) {
+    aminoacidsLink.addEventListener('click', function () {
+        state.category = 'Aminoacids'
+        render()
+    })
+}
+
+
+function listenToWeightBurnerCategory(weightBurnerLink) {
+    weightBurnerLink.addEventListener('click', function () {
+        state.category = 'Weight-Burner'
+        render()
+    })
+}
+
+
+function listenToCreatineCategory(creatinesLink) {
+    creatinesLink.addEventListener('click', function () {
+        state.category = 'Creatine'
+        render()
+    })
+}
+
+
+function listenToTestosteroneBoostersCategory(boostersLink) {
+    boostersLink.addEventListener('click', function () {
+        state.category = 'Testosterone-Boosters'
+        render()
+    })
+}
+
+
+function listenToWeightGainersCategory(weightLink) {
+    weightLink.addEventListener('click', function () {
+        state.category = 'Weight-Gainers'
+        render()
+    })
+}
+
+
+
 
 // #endregion
 
@@ -334,7 +400,7 @@ function getBagArrayByNameFromState(objectNameParam) {
 
     let quantityBasedOnName = []
     return quantityBasedOnName = state.bagItemQuantity.filter((object) => object.itemName === objectNameParam)
-    
+
 }
 
 function getDeletedItemsFromBagQuantity(itemObjectNameParam) {
@@ -356,7 +422,7 @@ function getQuantityValue(objectNameParam) {
 
     //this passes the name of the object in the filter to give me array of object filtered
     //by its name, now i just save that array of objects and then i just .length and i have the quantity based on that item
-    const arrayLength = getBagArrayByNameFromState(objectNameParam) 
+    const arrayLength = getBagArrayByNameFromState(objectNameParam)
     const quantityValueFinal = arrayLength.length
     return quantityValueFinal
 
@@ -379,7 +445,87 @@ function getUserSpanEl(userSpanElParam) {
 // #endregion
 
 // #region 'filter categories'
+function getProteinProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'proteins'
+    })
+}
 
+
+function getPreWorkoutProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'pre-workouts'
+    })
+}
+
+
+function getWeightBurnerProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'weight-burner'
+    })
+}
+
+
+function getAminoacidsProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'aminoacids'
+    })
+}
+
+
+function getMultivitaminsProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'multivitamins'
+    })
+}
+function getWeightGainersProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'weight-gainers'
+    })
+}
+
+
+function getCreatineProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'creatine'
+    })
+}
+
+
+function getTestosteroneBoostersProducts() {
+    return state.items.filter(function (item) {
+        return item.type === 'testosterone-boosters'
+    })
+}
+
+function showItems() {
+    let itemsToDisplay = state.items
+    if (state.category === 'Proteins') {
+        itemsToDisplay = getProteinProducts()
+    }
+    if (state.category === 'Multivitamins') {
+        itemsToDisplay = getMultivitaminsProducts()
+    }
+    if (state.category === 'Pre-Workouts') {
+        itemsToDisplay = getPreWorkoutProducts()
+    }
+    if (state.category === 'Weight-Gainers') {
+        itemsToDisplay = getWeightGainersProducts()
+    }
+    if (state.category === 'Creatine') {
+        itemsToDisplay = getCreatineProducts()
+    }
+    if (state.category === 'Aminoacids') {
+        itemsToDisplay = getAminoacidsProducts()
+    }
+    if (state.category === 'Weight-Burner') {
+        itemsToDisplay = getWeightBurnerProducts()
+    }
+    if (state.category === 'Testosterone-Boosters') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+    }
+    return itemsToDisplay
+}
 // #endregion
 
 // #region 'filter other'
@@ -389,8 +535,8 @@ function sliceArrayFromStateToDisplay(stateArrayParam) {
     return stateArrayParam.slice(
         (state.page - 1) * state.perPage,
         state.page * state.perPage
-      )
-    
+    )
+
 }
 
 function checkDateEnteredNew(itemDateParam, newSpanElParam, storeItemDivParam) {
@@ -489,7 +635,7 @@ function renderUserModal() {
     //event listener function call for clicking the modal to show up or adding something there from form to render etc
     listenToRemoveUser(btnRemoveEl)
     listenToSubmitUser(formUser)
-    
+
     listenToGoToSignUp(btnSignUpEl)
 
 }
@@ -512,13 +658,13 @@ function renderBagModal() {
 
     const divBagItemWrapperEl = document.createElement('div')
     divBagItemWrapperEl.setAttribute('class', 'wrapper-items-bag')
-    divBagItemWrapperEl.innerHTML = '' 
+    divBagItemWrapperEl.innerHTML = ''
     //destroy after each rerender then recreate
 
     for (const item of state.bagItems) {
 
         const divBagItemEl = document.createElement('div')
-        divBagItemEl.setAttribute('class', 'item-bag') 
+        divBagItemEl.setAttribute('class', 'item-bag')
 
         const imgEl = document.createElement('img')
         imgEl.setAttribute('src', item.image)
@@ -533,7 +679,7 @@ function renderBagModal() {
 
         const spanEl2 = document.createElement('span')
         spanEl2.setAttribute('class', 'span-2-bag')
-        spanEl2.textContent = `Discounted Price: ${item.discountedPrice}` 
+        spanEl2.textContent = `Discounted Price: ${item.discountedPrice}`
 
         //important to get the quantity of x item with that name passed as argument
         const quantityValue = getQuantityValue(item.name)
@@ -645,7 +791,7 @@ function renderSignUpModal() {
     const btnRemoveSignUp = document.createElement('button')
     btnRemoveSignUp.textContent = 'X'
 
-    formSignUpEl.append(labelNameSignUpEl, nameSignUpEl, labelEmailSignUpEl, emailSignUpEl, 
+    formSignUpEl.append(labelNameSignUpEl, nameSignUpEl, labelEmailSignUpEl, emailSignUpEl,
         labelPasswordSignUpEl, passwordSignUpEl, btnSignUp, btnRemoveSignUp)
 
     divSignUpModalEl.append(formSignUpEl)
@@ -707,8 +853,8 @@ function renderPayModal() {
     removePayBtnEl.textContent = 'X'
 
     btnPaywrapper.append(payBtnEl, removePayBtnEl)
-    formPayEl.append(h4PayEl, spanPayEl, inputPayEl1, 
-    inputPayEl2, inputPayEl3, inputPayEl4, btnPaywrapper)
+    formPayEl.append(h4PayEl, spanPayEl, inputPayEl1,
+        inputPayEl2, inputPayEl3, inputPayEl4, btnPaywrapper)
 
     divPayModalEl.append(formPayEl)
 
@@ -1001,7 +1147,7 @@ function renderMain(itemsArray) {
     itemsWrapper.setAttribute('class', 'store-items-wrapper')
 
     // #region 'RENDERING MAIN ITEM IN A FOR LOOP'
-    for (const item of itemsArray) {
+    for (const item of showItems()) {
 
         const storeItem = document.createElement('div')
         storeItem.setAttribute('class', 'store-item')
@@ -1068,7 +1214,7 @@ function renderMain(itemsArray) {
             listenToSubmitItemToBag(cartButton, item)
 
         }
-        
+
     }
 
     itemsDivEl.append(itemsWrapper) //this append all the items in this big container box inside box
@@ -1146,7 +1292,7 @@ function renderMain(itemsArray) {
     const multivitaminsLi = document.createElement('li')
 
     const multivitaminsLink = document.createElement('a')
-    multivitaminsLink.setAttribute('href', '')
+    multivitaminsLink.setAttribute('href', '#')
     multivitaminsLink.textContent = 'Multivitamins & essentials minerals'
 
     multivitaminsLi.append(multivitaminsLink)
@@ -1154,7 +1300,7 @@ function renderMain(itemsArray) {
     const workoutsLi = document.createElement('li')
 
     const workoutsLink = document.createElement('a')
-    workoutsLink.setAttribute('href', '')
+    workoutsLink.setAttribute('href', '#')
     workoutsLink.textContent = 'Pre-Workouts'
 
     workoutsLi.append(workoutsLink)
@@ -1162,7 +1308,7 @@ function renderMain(itemsArray) {
     const proteinsLi = document.createElement('li')
 
     const proteinsLink = document.createElement('a')
-    proteinsLink.setAttribute('href', '')
+    proteinsLink.setAttribute('href', '#')
     proteinsLink.textContent = 'Proteins'
 
     proteinsLi.append(proteinsLink)
@@ -1170,7 +1316,7 @@ function renderMain(itemsArray) {
     const boostersLi = document.createElement('li')
 
     const boostersLink = document.createElement('a')
-    boostersLink.setAttribute('href', '')
+    boostersLink.setAttribute('href', '#')
     boostersLink.textContent = 'Testosterone Boosters'
 
     boostersLi.append(boostersLink)
@@ -1178,7 +1324,7 @@ function renderMain(itemsArray) {
     const weightLi = document.createElement('li')
 
     const weightLink = document.createElement('a')
-    weightLink.setAttribute('href', '')
+    weightLink.setAttribute('href', '#')
     weightLink.textContent = 'Weight gainers'
 
     weightLi.append(weightLink)
@@ -1186,7 +1332,7 @@ function renderMain(itemsArray) {
     const aminoacidsLi = document.createElement('li')
 
     const aminoacidsLink = document.createElement('a')
-    aminoacidsLink.setAttribute('href', '')
+    aminoacidsLink.setAttribute('href', '#')
     aminoacidsLink.textContent = 'Aminoacids'
 
     aminoacidsLi.append(aminoacidsLink)
@@ -1194,7 +1340,7 @@ function renderMain(itemsArray) {
     const creatinesLi = document.createElement('li')
 
     const creatinesLink = document.createElement('a')
-    creatinesLink.setAttribute('href', '')
+    creatinesLink.setAttribute('href', '#')
     creatinesLink.textContent = 'Creatines'
 
     creatinesLi.append(creatinesLink)
@@ -1202,16 +1348,26 @@ function renderMain(itemsArray) {
     const weightBurnerLi = document.createElement('li')
 
     const weightBurnerLink = document.createElement('a')
-    weightBurnerLink.setAttribute('href', '')
+    weightBurnerLink.setAttribute('href', '#')
     weightBurnerLink.textContent = 'Weight Burner'
 
     weightBurnerLi.append(weightBurnerLink)
+    //event listeners for categories
+    listenToProteinsCategory(proteinsLink)
+    listenToMultivitaminsCategory(multivitaminsLink)
+    listenToPreWorkoutsCategory(workoutsLink)
+    listenToAminoacidsCategory(aminoacidsLink)
+    listenToWeightBurnerCategory(weightBurnerLink)
+    listenToCreatineCategory(creatinesLink)
+    listenToTestosteroneBoostersCategory(boostersLink)
+    listenToWeightGainersCategory(weightLink)
 
     asideUl.append(categoriesLi, multivitaminsLi, workoutsLi, proteinsLi, boostersLi, weightLi, aminoacidsLi, creatinesLi, weightBurnerLi)
 
     asideContainerEl.append(asideUl)
 
     asideWrapperEl.append(asideContainerEl, asideContainerEl2)
+
 
     mainEl.append(ribbon1El, ribbon2El, itemsDivEl, paginationContainerEl, asideWrapperEl)
 
@@ -1243,7 +1399,7 @@ function render() {
     payModalEl.innerHTML = ''
     popUpModalEl.innerHTML = ''
     signUpModalEl.innerHTML = ''
-    
+
     //rerendering the HTML page after each render call
     renderHeader()
     renderMain(state.items) //here we pass the state.items from server wich we saved here to loop and render
@@ -1260,7 +1416,7 @@ function init() {
 
     render()
 
-     //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
+    //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
     getItemsArrayFromServer().then(function (itemsArrayFromServer) {
         state.items = itemsArrayFromServer
         render()
