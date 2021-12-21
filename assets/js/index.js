@@ -351,7 +351,9 @@ function listenToGoBackBtn(goBackBtnElParam) {
         render()
 
     })
-  
+
+}
+
 function listenToProteinsCategory(proteinsLink) {
     proteinsLink.addEventListener('click', function () {
         state.category = 'Proteins'
