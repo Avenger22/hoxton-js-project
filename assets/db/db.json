@@ -3,7 +3,7 @@
         {
             "id": 1,
             "name": "Animal Pak Powder",
-            "price": "55$",
+            "price": "55",
             "image": "./assets/images/animal-pak-powder.png",
             "stock": 7,
             "type": "multivitamins",
@@ -13,7 +13,7 @@
         {
             "id": 2,
             "name": "Artichoke Premium",
-            "price": "10$",
+            "price": "10",
             "image": "./assets/images/artichoke-premium.jpg",
             "stock": 5,
             "type": "multivitamins",
@@ -23,18 +23,18 @@
         {
             "id": 3,
             "name": "Argi Power 1500 Mega Caps",
-            "price": "30$",
+            "price": "30",
             "image": "./assets/images/argi-power.jpg",
             "stock": 12,
             "type": "aminoacids",
             "date": "2021/11/20",
             "description": "Argi Power 1500 Mega Caps, mega capsules contain 1500 mg L-Arginine with the highest pharmaceutical quality in one capsule. How does L-Arginine HCl work and what is it used for? L-arginine is a dietary supplement that participates in many processes of formation of substances in the body: eg nitric oxide. Furthermore it provides the formamide group that serves in creatine biosynthesis.",
-            "discountPrice": "24$"
+            "discountPrice": "24"
         },
         {
             "id": 4,
             "name": "Beta-Alanine Xplode Powder",
-            "price": "28$",
+            "price": "28",
             "image": "./assets/images/beta-alanine.jpg",
             "stock": 6,
             "type": "aminoacids",
@@ -44,7 +44,7 @@
         {
             "id": 5,
             "name": "Dymatize Elite 100 % Whey",
-            "price": "65$",
+            "price": "65",
             "image": "./assets/images/Chocolate-Fudge.jpg",
             "stock": 3,
             "type": "proteins",
@@ -54,7 +54,7 @@
         {
             "id": 6,
             "name": "ON Gold Standard 100% Whey",
-            "price": "85$",
+            "price": "85",
             "image": "./assets/images/gold-standard.jpg",
             "stock": 6,
             "type": "proteins",
@@ -64,18 +64,18 @@
         {
             "id": 7,
             "name": "BSN True Mass 1200",
-            "price": "75$",
+            "price": "75",
             "image": "./assets/images/bsn-true-mass.png",
             "stock": 4,
             "type": "weight-gainers",
             "date": "2021/12/16",
             "description": "TRUE-MASS® 1200 contains the unique ultra premium protein formula to nourish an athlete's muscles with the essential building blocks of protein. The unique mix of carbohydrates provides the caloric support needed to support extreme physical activity, helping the body prepare as well as supporting regeneration from intense exercise. Carbohydrates and fats provide energy that burns quickly during strenuous physical activity",
-            "discountPrice": "64$"
+            "discountPrice": "64"
         },
         {
             "id": 8,
             "name": "Gain Bolic 6000G",
-            "price": "19$",
+            "price": "19",
             "image": "./assets/images/gain-bolic.jpg",
             "stock": 10,
             "type": "weight-gainers",
@@ -85,7 +85,7 @@
         {
             "id": 9,
             "name": "Animal M-Stak",
-            "price": "64$",
+            "price": "64",
             "image": "./assets/images/animal-m-stak.png",
             "stock": 6,
             "type": "testosterone-boosters",
@@ -95,18 +95,18 @@
         {
             "id": 10,
             "name": "BCAA-X",
-            "price": "17$",
+            "price": "17",
             "image": "./assets/images/bcaa-x.jpg",
             "stock": 8,
             "type": "aminoacids",
             "date": "2021/12/12",
             "description": "Branched chain amino acids (BCAAs) are an important group of essential amino acids consisting of Leucine, Isoleucine and Valine. BCAAs are among the nine essential amino acids for humans because our bodies cannot produce them.",
-            "discountPrice": "12$"
+            "discountPrice": "12"
         },
         {
             "id": 11,
             "name": "Beta- Carotene",
-            "price": "12$",
+            "price": "12",
             "image": "./assets/images/beta-carotene.jpg",
             "stock": 10,
             "type": "multivitamins",
@@ -116,7 +116,7 @@
         {
             "id": 12,
             "name": "Daily Vita-min",
-            "price": "20$",
+            "price": "20",
             "image": "./assets/images/daily-vitamin.jpg",
             "stock": 0,
             "type": "multivitamins",
@@ -126,7 +126,7 @@
         {
             "id": 13,
             "name": "MuscleTech Nitro-Tech",
-            "price": "86$",
+            "price": "86",
             "image": "./assets/images/muscle-tech.jpg",
             "stock": 2,
             "type": "proteins",
@@ -136,18 +136,18 @@
         {
             "id": 14,
             "name": "Scitec 100 % Kompleks Casein",
-            "price": "32$",
+            "price": "32",
             "image": "./assets/images/scitec.jpg",
             "stock": 1,
             "type": "proteins",
             "date": "2021/06/10",
             "description": "100% Casein Complex is a blend of milk proteins with predominant micellar casein, exclusively from caseit milk proteins. Casein is rich in branched-chain essential amino acids (BCAAs) and has a very high content (more than serum) of L-glutamine, the most abundant free-form amino acid in human blood.",
-            "discountPrice": "21$"
+            "discountPrice": "21"
         },
         {
             "id": 15,
             "name": "Blackweiler Shred",
-            "price": "40$",
+            "price": "40",
             "image": "./assets/images/blackweiler-shred.jpg",
             "stock": 0,
             "type": "pre-workouts",
@@ -157,7 +157,7 @@
         {
             "id": 16,
             "name": "L-carnitine 1500 extreme mega caps",
-            "price": "45$",
+            "price": "45",
             "image": "./assets/images/carnitine.jpg",
             "stock": 3,
             "type": "weight-burner",
@@ -167,7 +167,7 @@
         {
             "id": 17,
             "name": "Scitec Shredex",
-            "price": "35$",
+            "price": "35",
             "image": "./assets/images/shredex.jpg",
             "stock": 5,
             "type": "weight-burner",
@@ -177,18 +177,18 @@
         {
             "id": 18,
             "name": "Scitec Restyle",
-            "price": "30$",
+            "price": "30",
             "image": "./assets/images/restyle.jpg",
             "stock": 4,
             "type": "weight-burner",
             "date": "2021/09/17",
             "description": "When you want to get in better shape, you need to reform your life: your eating habits and your level of physical activity. When you do, we suggest you get our ReStyle formula too! It is a complex of 12 ingredients, stimulus of body weight and body management.",
-            "discountPrice": "16$"
+            "discountPrice": "16"
         },
         {
             "id": 19,
             "name": "Caffeine 100 Caps",
-            "price": "10$",
+            "price": "10",
             "image": "./assets/images/cafeine.jpg",
             "stock": 6,
             "type": "weight-burner",
@@ -198,7 +198,7 @@
         {
             "id": 20,
             "name": "Creatine monohydrate powder",
-            "price": "25$",
+            "price": "25",
             "image": "./assets/images/creatine-powder.jpg",
             "stock": 1,
             "type": "creatine",
@@ -208,7 +208,7 @@
         {
             "id": 21,
             "name": "MuscleTech Platinum 100% Creatine",
-            "price": "30$",
+            "price": "30",
             "image": "./assets/images/muscletech-platinum.jpg",
             "stock": 2,
             "type": "creatine",
@@ -218,18 +218,18 @@
         {
             "id": 22,
             "name": "Scitec 100% Creatine Monohydrate",
-            "price": "15$",
+            "price": "15",
             "image": "./assets/images/scitec-creatine.jpg",
             "stock": 7,
             "type": "creatine",
             "date": "2021/06/05",
             "description": "Creatine is an organic nitric acid that occurs in vertebrates. Approximately 95% of creatine in the body is found in skeletal muscle. It helps supply energy to all cells, mainly muscles, by increasing the formation of Adenosine TriPhosphate (ATP) which acts as a cellular energy reserve, for muscle contractions.",
-            "discountPrice": "7$"
+            "discountPrice": "7"
         },
         {
             "id": 23,
             "name": "Scitec Jumbo",
-            "price": "90$",
+            "price": "90",
             "image": "./assets/images/jumbo.jpg",
             "stock": 1,
             "type": "weight-gainers",
@@ -239,18 +239,18 @@
         {
             "id": 24,
             "name": "ON Serious Mass",
-            "price": "90$",
+            "price": "90",
             "image": "./assets/images/seriousmass.jpg",
             "stock": 3,
             "type": "weight-gainers",
             "date": "2021/03/10",
             "description": "A serious weight gain requires serious calories. However, those who need extra calories often find it difficult to consume those calories. For those who aspire to be bigger but who have a very active metabolism or have little appetite make consuming enough calories just through whole foods a real challenge. With SERIUOS MAS, you will have nothing to lose and much to gain.",
-            "discountPrice": "60$"
+            "discountPrice": "60"
         },
         {
             "id": 25,
             "name": "MuscleTech Mass-Tech Extreme 2000",
-            "price": "70$",
+            "price": "70",
             "image": "./assets/images/extreme.jpg",
             "stock": 4,
             "type": "weight-gainers",
@@ -260,7 +260,7 @@
         {
             "id": 26,
             "name": "Tribusterone 90",
-            "price": "30$",
+            "price": "30",
             "image": "./assets/images/tribusteron.jpg",
             "stock": 2,
             "type": "testosterone-boosters",
@@ -270,18 +270,18 @@
         {
             "id": 27,
             "name": "Stanabol-X",
-            "price": "45$",
+            "price": "45",
             "image": "./assets/images/stanabol-X.jpg",
             "stock": 8,
             "type": "testosterone-boosters",
             "date": "2021/07/20",
             "description": "Stanabol - X is a synergistic complex of 25 known anabolic substrates, Anabolic Stack modulates testosterone and other anabolic hormones such as insulin, growth hormone HGH and IGF-1 and thyroid hormones T3 and T4.",
-            "discountPrice": "33$"
+            "discountPrice": "33"
         },
         {
             "id": 28,
             "name": "Testo Punch",
-            "price": "35$",
+            "price": "35",
             "image": "./assets/images/testo-punch.jpg",
             "stock": 6,
             "type": "testosterone-boosters",
@@ -291,7 +291,7 @@
         {
             "id": 29,
             "name": "Scitec 100% Plant Protein",
-            "price": "22$",
+            "price": "22",
             "image": "./assets/images/plant-protein.jpg",
             "stock": 5,
             "type": "proteins",
@@ -301,7 +301,7 @@
         {
             "id": 30,
             "name": "Scitec 100% Whey Isolate",
-            "price": "65$",
+            "price": "65",
             "image": "./assets/images/whey-isolate.jpg",
             "stock": 5,
             "type": "proteins",
