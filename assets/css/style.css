@@ -44,6 +44,7 @@ header.header-menu {
 
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 
 .header-sub-1 {
@@ -566,6 +567,7 @@ footer.footer-menu {
     pointer-events: none;
     position: fixed;
     display: none;
+    z-index: 1;
 }
 
 .modal-user_container.show {
@@ -656,6 +658,7 @@ footer.footer-menu {
     pointer-events: none;
     position: fixed;
     display: none;
+    z-index: 1;
 }
 
 .modal-bag_container.show {
@@ -790,6 +793,7 @@ span.new-item-date {
     pointer-events: none;
     position: fixed;
     display: none;
+    z-index: 1;
 }
 
 .modal-pop_up-container.show {
@@ -857,6 +861,7 @@ span.new-item-date {
     pointer-events: none;
     position: fixed;
     display: none;
+    z-index: 1;
 }
 
 .modal-pay-container.show {
@@ -961,6 +966,7 @@ span.new-item-date {
     pointer-events: none;
     position: fixed;
     display: none;
+    z-index: 1;
 }
 
 .modal-sign_up-container.show {
