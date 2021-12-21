@@ -24,6 +24,8 @@ let headerCatcherEl = null
 let ulSub2CatcherEl = null
 let paginationHolderEl = null
 
+let globalItemsToDisplay = []
+
 let spanUserHolderEl = null //this is important to hold the stock span EL when its rendered so i can acces it and use it in other parts of app
 let spanBagHolderEl = null //same as above
 // #endregion
@@ -59,7 +61,8 @@ const state = {
     payModalClicked: false,
   
     specificItemClicked: false,
-  
+    selectType: '',
+
     //selected category
     category: ''
 
@@ -413,6 +416,17 @@ function listenToWeightGainersCategory(weightLink) {
         render()
     })
 }
+
+
+function listenToSelectChanges(selectElParam) {
+
+    selectElParam.addEventListener('change', function () {
+        state.selectType = selectElParam.value
+        state.selectedItem = ''
+        render()
+    })
+
+}
 // #endregion
 
 // #endregion
@@ -517,33 +531,392 @@ function getTestosteroneBoostersProducts() {
     })
 }
 
+
 function showItems() {
+
     let itemsToDisplay = state.items
-    if (state.category === 'Proteins') {
+    let itemToDisplaySorted = []
+
+// #region 'CONDITIONALS FOR DEFFAULT VALUES AND CASES IF VOID SOMETHING ETC
+if (state.category === '' && state.selectType === '') {
+    itemToDisplaySorted = state.items
+}
+
+else if (state.category === '' && state.selectType === 'price-asc') {
+    globalItemsToDisplay = state.items
+    itemToDisplaySorted = getSortedByPriceAsc()
+}
+
+else if (state.category === '' && state.selectType === 'price-desc') {
+    globalItemsToDisplay = state.items
+    itemToDisplaySorted = getSortedByPriceDesc()
+}
+
+else if (state.category === '' && state.selectType === 'name-asc') {
+    globalItemsToDisplay = state.items
+    itemToDisplaySorted = getSortedByNameAsc()
+}
+
+else if (state.category === '' && state.selectType === 'name-desc') {
+    globalItemsToDisplay = state.items
+    itemToDisplaySorted = getSortedByNameDesc()
+}
+
+else if (state.category === '' && state.selectType === 'date-asc') {
+    globalItemsToDisplay = state.items
+    itemToDisplaySorted = getSortedByDateAsc()
+}
+
+else if (state.category === '' && state.selectType === 'date-desc') {
+    globalItemsToDisplay = state.items
+    itemToDisplaySorted = getSortedByDateDesc()
+}
+// #endregion
+
+// #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
+    else if (state.category === 'Proteins' && state.selectType === '') {
+        itemToDisplaySorted = getProteinProducts()
+    }
+
+    else if (state.category === 'Proteins' && state.selectType === 'price-asc') {
         itemsToDisplay = getProteinProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
-    if (state.category === 'Multivitamins') {
+
+    else if (state.category === 'Proteins' && state.selectType === 'price-desc') {
+        itemsToDisplay = getProteinProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
+
+    else if (state.category === 'Proteins' && state.selectType === 'name-asc') {
+        itemsToDisplay = getProteinProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Proteins' && state.selectType === 'name-desc') {
+        itemsToDisplay = getProteinProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Proteins' && state.selectType === 'date-asc') {
+        itemsToDisplay = getProteinProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Proteins' && state.selectType === 'date-desc') {
+        itemsToDisplay = getProteinProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
+
+// #region 'CONDITIONALS FOR MULTIVITAMINS AND THEIR SORTING OPTIONS
+    else if (state.category === 'Multivitamins' && state.selectType === '') {
+        itemToDisplaySorted = getMultivitaminsProducts()
+    }
+
+    else if (state.category === 'Multivitamins' && state.selectType === 'price-asc') {
         itemsToDisplay = getMultivitaminsProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
-    if (state.category === 'Pre-Workouts') {
+
+    else if (state.category === 'Multivitamins' && state.selectType === 'price-desc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
+
+    else if (state.category === 'Multivitamins' && state.selectType === 'name-asc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Multivitamins' && state.selectType === 'name-desc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Multivitamins' && state.selectType === 'date-asc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Multivitamins' && state.selectType === 'date-desc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
+
+// #region 'CONDITIONALS FOR PRE-WORKOUT AND THEIR SORTING OPTIONS
+    else if (state.category === 'Pre-Workouts' && state.selectType === '') {
+        itemToDisplaySorted = getPreWorkoutProducts()
+    }
+
+    else if (state.category === 'Pre-Workouts' && state.selectType === 'price-asc') {
         itemsToDisplay = getPreWorkoutProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
-    if (state.category === 'Weight-Gainers') {
+
+    else if (state.category === 'Pre-Workouts' && state.selectType === 'price-desc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
+
+    else if (state.category === 'Pre-Workouts' && state.selectType === 'name-asc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Pre-Workouts' && state.selectType === 'name-desc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Pre-Workouts' && state.selectType === 'date-asc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Pre-Workouts' && state.selectType === 'date-desc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
+
+// #region 'CONDITIONALS FOR WEIGHT-GAINERS AND THEIR SORTING OPTIONS
+    else if (state.category === 'Weight-Gainers' && state.selectType === '') {
+        itemToDisplaySorted = getWeightGainersProducts()
+    }
+
+    else if (state.category === 'Weight-Gainers' && state.selectType === 'price-asc') {
         itemsToDisplay = getWeightGainersProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
-    if (state.category === 'Creatine') {
+
+    else if (state.category === 'Weight-Gainers' && state.selectType === 'price-desc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
+
+    else if (state.category === 'Weight-Gainers' && state.selectType === 'name-asc') {
+        itemsToDisplay = getWeightGainersProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Weight-Gainers' && state.selectType === 'name-desc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Weight-Gainers' && state.selectType === 'date-asc') {
+        itemsToDisplay = getWeightGainersProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Weight-Gainers' && state.selectType === 'date-desc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
+
+// #region 'CONDITIONALS FOR CREATINE AND THEIR SORTING OPTIONS
+    else if (state.category === 'Creatine' && state.selectType === '') {
+        itemToDisplaySorted = getCreatineProducts()
+    }
+
+    else if (state.category === 'Creatine' && state.selectType === 'price-asc') {
         itemsToDisplay = getCreatineProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
-    if (state.category === 'Aminoacids') {
+
+    else if (state.category === 'Creatine' && state.selectType === 'price-desc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
+
+    else if (state.category === 'Creatine' && state.selectType === 'name-asc') {
+        itemsToDisplay = getCreatineProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Creatine' && state.selectType === 'name-desc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Creatine' && state.selectType === 'date-asc') {
+        itemsToDisplay = getCreatineProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Creatine' && state.selectType === 'date-desc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
+
+// #region 'CONDITIONALS FOR AMINOACIDS AND THEIR SORTING OPTIONS
+    else if (state.category === 'Aminoacids' && state.selectType === '') {
+        itemToDisplaySorted = getAminoacidsProducts()
+    }
+
+    else if (state.category === 'Aminoacids' && state.selectType === 'price-asc') {
         itemsToDisplay = getAminoacidsProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
-    if (state.category === 'Weight-Burner') {
+
+    else if (state.category === 'Aminoacids' && state.selectType === 'price-desc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
+
+    else if (state.category === 'Aminoacids' && state.selectType === 'name-asc') {
+        itemsToDisplay = getAminoacidsProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Aminoacids' && state.selectType === 'name-desc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Aminoacids' && state.selectType === 'date-asc') {
+        itemsToDisplay = getAminoacidsProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Aminoacids' && state.selectType === 'date-desc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
+
+// #region 'CONDITIONALS FOR WEIGHT-BURNERS AND THEIR SORTING OPTIONS
+    else if (state.category === 'Weight-Burner' && state.selectType === '') {
+        itemToDisplaySorted = getWeightBurnerProducts()
+    }
+
+    else if (state.category === 'Weight-Burner' && state.selectType === 'price-asc') {
+    itemsToDisplay = getWeightBurnerProducts()
+    globalItemsToDisplay = itemsToDisplay
+
+    itemToDisplaySorted = getSortedByPriceAsc()
+    }
+
+    else if (state.category === 'Weight-Burner' && state.selectType === 'price-desc') {
         itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
-    if (state.category === 'Testosterone-Boosters') {
+
+    else if (state.category === 'Weight-Burner' && state.selectType === 'name-asc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Weight-Burner' && state.selectType === 'name-desc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Weight-Burner' && state.selectType === 'date-asc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Weight-Burner' && state.selectType === 'date-desc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+// #endregion
+
+// #region 'CONDITIONALS FOR TESTOSTERONE-BOOSTERS AND THEIR SORTING OPTIONS
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === '') {
+        itemToDisplaySorted = getTestosteroneBoostersProducts()
+    }
+
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === 'price-asc') {
+    itemsToDisplay = getTestosteroneBoostersProducts()
+    globalItemsToDisplay = itemsToDisplay
+
+    itemToDisplaySorted = getSortedByPriceAsc()
+    }
+
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === 'price-desc') {
         itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
-    return itemsToDisplay
+
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === 'name-asc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === 'name-desc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === 'date-asc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === 'date-desc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+// #endregion
+
+    return itemToDisplaySorted
+
 }
 // #endregion
 
@@ -567,6 +940,44 @@ function checkDateEnteredNew(itemDateParam, newSpanElParam, storeItemDivParam) {
         storeItemDivParam.append(newSpanElParam)
         storeItemDivParam.style.gridTemplateRows = '0.1fr 0.5fr 0.1fr 0.2fr 40px'
     }
+
+}
+// #endregion
+
+// #region 'filter sorting'
+function getSortedByPriceAsc() {
+
+    return globalItemsToDisplay.sort((a, b) => (a.price > b.price) ? 1 : (a.price === b.price) ? ((a.name > b.name) ? 1 : -1) : -1 )
+    
+}
+
+function getSortedByPriceDesc() {
+        
+    return getSortedByPriceAsc().reverse()
+
+}
+
+function getSortedByNameAsc() {
+
+    return globalItemsToDisplay.sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.price > b.price) ? 1 : -1) : -1 )
+    
+}
+
+function getSortedByNameDesc() {
+
+    return getSortedByNameAsc().reverse()
+    
+}
+
+function getSortedByDateAsc() {
+
+    return globalItemsToDisplay.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : (Date.parse(a.date) === Date.parse(b.date)) ? ((a.name > b.name) ? 1 : -1) : -1 )
+
+}
+
+function getSortedByDateDesc() {
+
+    return getSortedByDateAsc().reverse()
 
 }
 // #endregion
@@ -1131,8 +1542,8 @@ function renderMain() {
     selectEl.setAttribute('id', 'filter-by-sort')
 
     const option1El = document.createElement('option')
-    option1El.setAttribute('value', 'deffault')
-    option1El.textContent = 'Sorting Deffault'
+    option1El.setAttribute('value', '')
+    option1El.textContent = 'No Sorting (Deffault)'
 
     const option2El = document.createElement('option')
     option2El.setAttribute('value', 'price-asc')
@@ -1147,16 +1558,24 @@ function renderMain() {
     option4El.textContent = 'Sort by oldest'
 
     const option5El = document.createElement('option')
-    option5El.setAttribute('value', 'name-asc')
-    option5El.textContent = 'Sort by name ascending'
+    option5El.setAttribute('value', 'date-desc')
+    option5El.textContent = 'Sort by newest'
 
     const option6El = document.createElement('option')
-    option6El.setAttribute('value', 'name-desc')
-    option6El.textContent = 'Sort by name descending'
+    option6El.setAttribute('value', 'name-asc')
+    option6El.textContent = 'Sort by name ascending'
 
-    selectEl.append(option1El, option2El, option3El, option4El, option5El, option6El)
+    const option7El = document.createElement('option')
+    option7El.setAttribute('value', 'name-desc')
+    option7El.textContent = 'Sort by name descending'
+
+    selectEl.append(option1El, option2El, option3El, option4El, option5El, option6El, option7El)
     filterFormEl.append(filterLabel, selectEl)
     ribbon2El.append(boxWrapperEl, filterFormEl)
+
+    selectEl.value = state.selectType
+
+    listenToSelectChanges(selectEl)
 
 
     const itemsDivEl = document.createElement('div')
