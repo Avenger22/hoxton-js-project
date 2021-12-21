@@ -23,6 +23,7 @@ let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
 let paginationHolderEl = null
+let productImgElHolder = null
 
 let globalItemsToDisplay = []
 
@@ -367,6 +368,12 @@ function listenToProteinsCategory(proteinsLink) {
     })
 }
 
+function listenToDefaultCategory(showAllLink) {
+    showAllLink.addEventListener('click', function () {
+        state.category = 'Default'
+        render()
+    })
+}
 
 function listenToMultivitaminsCategory(multivitaminsLink) {
     multivitaminsLink.addEventListener('click', function () {
@@ -569,6 +576,54 @@ else if (state.category === '' && state.selectType === 'date-asc') {
 
 else if (state.category === '' && state.selectType === 'date-desc') {
     globalItemsToDisplay = state.items
+    itemToDisplaySorted = getSortedByDateDesc()
+}
+// #endregion
+
+// #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
+else if (state.category === 'Default' && state.selectType === '') {
+    itemToDisplaySorted = state.items
+}
+
+else if (state.category === 'Default' && state.selectType === 'price-asc') {
+    itemsToDisplay = state.items
+    globalItemsToDisplay = itemsToDisplay
+
+    itemToDisplaySorted = getSortedByPriceAsc()
+}
+
+else if (state.category === 'Default' && state.selectType === 'price-desc') {
+    itemsToDisplay = state.items
+    globalItemsToDisplay = itemsToDisplay
+
+    itemToDisplaySorted = getSortedByPriceDesc()
+}
+
+else if (state.category === 'Default' && state.selectType === 'name-asc') {
+    itemsToDisplay = state.items
+    globalItemsToDisplay = itemsToDisplay
+
+    itemToDisplaySorted = getSortedByNameAsc()
+}
+
+else if (state.category === 'Default' && state.selectType === 'name-desc') {
+    itemsToDisplay = state.items
+    globalItemsToDisplay = itemsToDisplay
+
+    itemToDisplaySorted = getSortedByNameDesc()
+}
+
+else if (state.category === 'Default' && state.selectType === 'date-asc') {
+    itemsToDisplay = state.items
+    globalItemsToDisplay = itemsToDisplay
+
+    itemToDisplaySorted = getSortedByDateAsc()
+}
+
+else if (state.category === 'Default' && state.selectType === 'date-desc') {
+    itemsToDisplay = state.items
+    globalItemsToDisplay = itemsToDisplay
+
     itemToDisplaySorted = getSortedByDateDesc()
 }
 // #endregion
@@ -1169,6 +1224,7 @@ function renderPopUpModal() {
 
     const inputPopEl = document.createElement('input')
     inputPopEl.setAttribute('name', 'pop-input')
+    inputPopEl.setAttribute('required', '')
     inputPopEl.setAttribute('type', 'email')
 
     const removePopBtnEl = document.createElement('button')
@@ -1179,6 +1235,11 @@ function renderPopUpModal() {
 
     popUpModalEl.append(divPopUpModalEl)
     sectionContainerMenusEl.append(popUpModalEl)
+
+    btnPopEl.addEventListener('click', function(event) {
+        event.preventDefault()
+        alert('The newsletter is sended to your email')
+    })
 
     listenToRemovePopUp(removePopBtnEl)
 
@@ -1197,7 +1258,9 @@ function renderSignUpModal() {
 
     const nameSignUpEl = document.createElement('input')
     nameSignUpEl.setAttribute('name', 'name-signUp')
+    nameSignUpEl.setAttribute('type', 'text')
     nameSignUpEl.setAttribute('placeholder', 'Enter name:')
+    nameSignUpEl.setAttribute('required', '')
 
     const labelEmailSignUpEl = document.createElement('label')
     labelEmailSignUpEl.textContent = 'Email: '
@@ -1205,6 +1268,7 @@ function renderSignUpModal() {
     const emailSignUpEl = document.createElement('input')
     emailSignUpEl.setAttribute('type', 'email')
     emailSignUpEl.setAttribute('name', 'email-signUp')
+    emailSignUpEl.setAttribute('required', '')
     emailSignUpEl.setAttribute('placeholder', 'Enter Email:')
 
     const labelPasswordSignUpEl = document.createElement('label')
@@ -1213,6 +1277,7 @@ function renderSignUpModal() {
     const passwordSignUpEl = document.createElement('input')
     passwordSignUpEl.setAttribute('type', 'password')
     passwordSignUpEl.setAttribute('name', 'password-signUp')
+    passwordSignUpEl.setAttribute('required', '')
     passwordSignUpEl.setAttribute('placeholder', 'Enter password:')
 
     const btnSignUp = document.createElement('button')
@@ -1228,6 +1293,11 @@ function renderSignUpModal() {
 
     signUpModalEl.append(divSignUpModalEl)
     sectionContainerMenusEl.append(signUpModalEl)
+
+    btnSignUp.addEventListener('click', function(event) {
+        event.preventDefault()
+        alert('We are sending the verification code to the email')
+    })
 
     listenToRemoveSignUpModal(btnRemoveSignUp)
 
@@ -1251,24 +1321,28 @@ function renderPayModal() {
     inputPayEl1.setAttribute('type', 'text')
     inputPayEl1.setAttribute('id', 'input-pay-1')
     inputPayEl1.setAttribute('name', 'name-pay')
+    inputPayEl1.setAttribute('required', '')
     inputPayEl1.placeholder = 'Name on card:'
 
     const inputPayEl2 = document.createElement('input')
     inputPayEl2.setAttribute('type', 'text')
     inputPayEl2.setAttribute('id', 'input-pay-2')
     inputPayEl2.setAttribute('name', 'number-pay')
+    inputPayEl2.setAttribute('required', '')
     inputPayEl2.placeholder = 'Card number:'
 
     const inputPayEl3 = document.createElement('input')
     inputPayEl3.setAttribute('type', 'date')
     inputPayEl3.setAttribute('id', 'input-pay-3')
     inputPayEl3.setAttribute('name', 'date-pay')
+    inputPayEl3.setAttribute('required', '')
     inputPayEl3.placeholder = 'Date:'
 
     const inputPayEl4 = document.createElement('input')
     inputPayEl4.setAttribute('type', 'text')
     inputPayEl4.setAttribute('id', 'input-pay-4')
     inputPayEl4.setAttribute('name', 'cvv-pay')
+    inputPayEl4.setAttribute('required', '')
     inputPayEl4.placeholder = 'CVV NUMBER:'
 
     const payBtnEl = document.createElement('button')
@@ -1290,6 +1364,11 @@ function renderPayModal() {
 
     payModalEl.append(divPayModalEl)
     sectionContainerMenusEl.append(payModalEl)
+
+    payBtnEl.addEventListener('click', function(event) {
+        event.preventDefault()
+        alert('Now the payment details will be sended to email')
+    })
 
     listenToRemovePayModal(removePayBtnEl)
 
@@ -1571,11 +1650,14 @@ function renderMain() {
 
     selectEl.append(option1El, option2El, option3El, option4El, option5El, option6El, option7El)
     filterFormEl.append(filterLabel, selectEl)
+
     ribbon2El.append(boxWrapperEl, filterFormEl)
 
     selectEl.value = state.selectType
 
     listenToSelectChanges(selectEl)
+
+    // selectEl.value = state.selectType
 
 
     const itemsDivEl = document.createElement('div')
@@ -1593,6 +1675,8 @@ function renderMain() {
         const productImgEl = document.createElement('img')
         productImgEl.setAttribute('src', item.image)
         productImgEl.setAttribute('alt', '')
+
+        productImgElHolder = productImgEl
 
         const productNameEl = document.createElement('h2')
         productNameEl.textContent = item.name
@@ -1800,7 +1884,17 @@ function renderMain() {
     weightBurnerLink.textContent = 'Weight Burner'
 
     weightBurnerLi.append(weightBurnerLink)
+
+    const showAllLi = document.createElement('li')
+
+    const showAllLink = document.createElement('a')
+    showAllLink.setAttribute('href', '#')
+    showAllLink.textContent = 'Deffault no categories'
+
+    showAllLi.append(showAllLink)
+
     //event listeners for categories
+    listenToDefaultCategory(showAllLink)
     listenToProteinsCategory(proteinsLink)
     listenToMultivitaminsCategory(multivitaminsLink)
     listenToPreWorkoutsCategory(workoutsLink)
@@ -1810,7 +1904,7 @@ function renderMain() {
     listenToTestosteroneBoostersCategory(boostersLink)
     listenToWeightGainersCategory(weightLink)
 
-    asideUl.append(categoriesLi, multivitaminsLi, workoutsLi, proteinsLi, boostersLi, weightLi, aminoacidsLi, creatinesLi, weightBurnerLi)
+    asideUl.append(categoriesLi, showAllLi, multivitaminsLi, workoutsLi, proteinsLi, boostersLi, weightLi, aminoacidsLi, creatinesLi, weightBurnerLi)
 
     asideContainerEl.append(asideUl)
 
@@ -1852,9 +1946,14 @@ function renderMainItemClicked(storeItemParam, itemWrapperParam, cartButtonParam
 
     itemWrapperParam.style.gridTemplateColumns = '1fr'
     itemWrapperParam.style.placeItems = 'center'
-    storeItemParam.style.width = '650px'
-    cartButtonParam.style.width = '350px'
-    goBackBtnEl.style.width = '350px'
+
+    storeItemParam.style.width = '350px'
+
+    // cartButtonParam.style.width = '250px'
+    // goBackBtnEl.style.width = '250px'
+
+    // productImgElHolder.style.height = '350px'
+    // productImgElHolder.style.width = '350px'
 
     paginationHolderEl.style.display = 'none' //this removes pagination when an individual item is rendered
 
