@@ -22,6 +22,7 @@ popUpModalEl.setAttribute('class', 'modal-pop_up-container')
 let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
+let paginationHolderEl = null
 
 let spanUserHolderEl = null //this is important to hold the stock span EL when its rendered so i can acces it and use it in other parts of app
 let spanBagHolderEl = null //same as above
@@ -274,7 +275,9 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         state.bagItems.push(itemObjectParam)
         state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
 
-        render()
+        // if (state.specificItemClicked === false) {
+            render()
+        // }
 
     })
 
@@ -369,14 +372,12 @@ function listenToMultivitaminsCategory(multivitaminsLink) {
     })
 }
 
-
 function listenToPreWorkoutsCategory(workoutsLink) {
     workoutsLink.addEventListener('click', function () {
         state.category = 'Pre-Workouts'
         render()
     })
 }
-
 
 function listenToAminoacidsCategory(aminoacidsLink) {
     aminoacidsLink.addEventListener('click', function () {
@@ -385,14 +386,12 @@ function listenToAminoacidsCategory(aminoacidsLink) {
     })
 }
 
-
 function listenToWeightBurnerCategory(weightBurnerLink) {
     weightBurnerLink.addEventListener('click', function () {
         state.category = 'Weight-Burner'
         render()
     })
 }
-
 
 function listenToCreatineCategory(creatinesLink) {
     creatinesLink.addEventListener('click', function () {
@@ -401,14 +400,12 @@ function listenToCreatineCategory(creatinesLink) {
     })
 }
 
-
 function listenToTestosteroneBoostersCategory(boostersLink) {
     boostersLink.addEventListener('click', function () {
         state.category = 'Testosterone-Boosters'
         render()
     })
 }
-
 
 function listenToWeightGainersCategory(weightLink) {
     weightLink.addEventListener('click', function () {
@@ -478,13 +475,11 @@ function getProteinProducts() {
     })
 }
 
-
 function getPreWorkoutProducts() {
     return state.items.filter(function (item) {
         return item.type === 'pre-workouts'
     })
 }
-
 
 function getWeightBurnerProducts() {
     return state.items.filter(function (item) {
@@ -492,32 +487,29 @@ function getWeightBurnerProducts() {
     })
 }
 
-
 function getAminoacidsProducts() {
     return state.items.filter(function (item) {
         return item.type === 'aminoacids'
     })
 }
 
-
 function getMultivitaminsProducts() {
     return state.items.filter(function (item) {
         return item.type === 'multivitamins'
     })
 }
+
 function getWeightGainersProducts() {
     return state.items.filter(function (item) {
         return item.type === 'weight-gainers'
     })
 }
 
-
 function getCreatineProducts() {
     return state.items.filter(function (item) {
         return item.type === 'creatine'
     })
 }
-
 
 function getTestosteroneBoostersProducts() {
     return state.items.filter(function (item) {
@@ -706,7 +698,7 @@ function renderBagModal() {
 
         const spanEl2 = document.createElement('span')
         spanEl2.setAttribute('class', 'span-2-bag')
-        spanEl2.textContent = `Discounted Price: ${item.discountedPrice}`
+        spanEl2.textContent = `Discounted Price: ${item.discountPrice}`
 
         //important to get the quantity of x item with that name passed as argument
         const quantityValue = getQuantityValue(item.name)
@@ -1082,7 +1074,7 @@ function renderHeader() {
 
 }
 
-function renderMain(itemsArray) {
+function renderMain() {
 
     const mainEl = document.createElement('main')
     mainEl.setAttribute('class', 'main-menu')
@@ -1252,52 +1244,60 @@ function renderMain(itemsArray) {
     const paginationContainerEl = document.createElement('div')
     paginationContainerEl.setAttribute('class', 'pagination-container')
 
+    paginationHolderEl = paginationContainerEl //catching this el in global scope cauuse i need it when rendering click item
+
     const paginationWrapperEl = document.createElement('div')
     paginationWrapperEl.setAttribute('class', 'pagination-wrapper')
 
-    const button1El = document.createElement('button')
+    const prevBtnEl = document.createElement('button')
+    prevBtnEl.setAttribute('class', 'special-button-pagination')
 
-    const span_1 = document.createElement('span')
-    span_1.textContent = '1'
+    const prevSpanEl = document.createElement('span')
+    prevSpanEl.textContent = 'Previous Page'
 
-    button1El.append(span_1)
+    prevBtnEl.append(prevSpanEl)
 
-    const button2El = document.createElement('button')
+    // #region 'DELETED BUTTONS FOR THE MOMENT'
 
-    const span_2 = document.createElement('span')
-    span_2.textContent = '2'
+    // const button2El = document.createElement('button')
 
-    button2El.append(span_2)
+    // const span_2 = document.createElement('span')
+    // span_2.textContent = '2'
 
-    const button3El = document.createElement('button')
+    // button2El.append(span_2)
 
-    const span_3 = document.createElement('span')
-    span_3.textContent = '3'
+    // const button3El = document.createElement('button')
 
-    button3El.append(span_3)
+    // const span_3 = document.createElement('span')
+    // span_3.textContent = '3'
 
-    const button4El = document.createElement('button')
+    // button3El.append(span_3)
 
-    const span_4 = document.createElement('span')
-    span_4.textContent = '....'
+    // const button4El = document.createElement('button')
 
-    button4El.append(span_4)
+    // const span_4 = document.createElement('span')
+    // span_4.textContent = '....'
 
-    const button6El = document.createElement('button')
+    // button4El.append(span_4)
 
-    const span_6 = document.createElement('span')
-    span_6.textContent = '6'
+    // const button6El = document.createElement('button')
 
-    button6El.append(span_6)
+    // const span_6 = document.createElement('span')
+    // span_6.textContent = '6'
 
-    const paginationButton = document.createElement('button')
-    paginationButton.setAttribute('id', 'special-button-pagination')
+    // button6El.append(span_6)
+
+    // #endregion
+
+    const nextBtnEl = document.createElement('button')
+    nextBtnEl.setAttribute('class', 'special-button-pagination')
 
     const nextPageSpan = document.createElement('span')
     nextPageSpan.textContent = 'Next Page'
 
-    paginationButton.append(nextPageSpan)
-    paginationWrapperEl.append(button1El, button2El, button3El, button4El, button6El, paginationButton)
+    nextBtnEl.append(nextPageSpan)
+
+    paginationWrapperEl.append(prevBtnEl, nextBtnEl)
 
     paginationContainerEl.append(paginationWrapperEl)
 
@@ -1431,9 +1431,13 @@ function renderMainItemClicked(storeItemParam, itemWrapperParam, cartButtonParam
     storeItemParam.append(goBackBtnEl, descriptionEl)
     itemWrapperParam.append(storeItemParam)
 
-    storeItemParam.style.width = '600px'
-    cartButtonParam.style.width = '300px'
-    goBackBtnEl.style.width = '300px'
+    itemWrapperParam.style.gridTemplateColumns = '1fr'
+    itemWrapperParam.style.placeItems = 'center'
+    storeItemParam.style.width = '650px'
+    cartButtonParam.style.width = '350px'
+    goBackBtnEl.style.width = '350px'
+
+    paginationHolderEl.style.display = 'none' //this removes pagination when an individual item is rendered
 
     listenToSubmitItemToBag(cartButtonParam, itemParam)
     listenToGoBackBtn(goBackBtnEl)
@@ -1454,7 +1458,7 @@ function render() {
 
     //rerendering the HTML page after each render call
     renderHeader()
-    renderMain(state.items) //here we pass the state.items from server wich we saved here to loop and render
+    renderMain() 
     renderFooter()
     renderUserModal()
     renderBagModal()
@@ -1478,8 +1482,6 @@ function init() {
         state.users = usersArrayFromServer
         render()
     })
-
-    // render()
 
 }
 

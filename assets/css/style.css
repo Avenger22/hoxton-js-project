@@ -180,7 +180,7 @@ main.main-menu {
     'main-ribbon-2 aside-wrapper' 60px
     'items-container aside-wrapper' 0.80fr
     'pagination-container aside-wrapper' 150px /
-    0.80fr 300px;
+    0.80fr 0.2fr;
     grid-gap: 30px;
 }
 
@@ -257,6 +257,8 @@ main.main-menu {
     1fr;
     place-items: center;
     align-content: start;
+    padding-right: 20px;
+    padding-top: 30px;
 }
 
 .aside-container-1 {
@@ -353,7 +355,7 @@ footer.footer-menu {
 
 .pagination-wrapper {
     display: grid;
-    grid-template-columns: repeat(6, 0.1fr);
+    grid-template-columns: repeat(2, 100px);
     grid-gap: 20px;
     place-items: center;
     padding-bottom: 30px;
@@ -364,23 +366,16 @@ footer.footer-menu {
     grid-template-rows: 1fr;
     align-items: center;
     
-    background-color: #f1f1f1;
+    background-color: #9c8888;
     border: none;
     outline: none;
-    height: 30px;
-    width: 30px;
+    padding: 10px 10px;
     cursor: pointer;
 }
 
 .pagination-wrapper button span {
-    font-size: 18px;
+    font-size: 12px;
     color: #000;
-}
-
-#special-button-pagination {
-    height: 30px;
-    width: 100px;
-    border: none;
 }
 
 .pagination-wrapper button:hover {
