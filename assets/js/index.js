@@ -47,7 +47,6 @@ const state = {
     bagItemQuantity: [],
 
     //super crucial for catching each name and passing it in render in else if, problem is because the filter function had param and passing was hard so this solved
-    searchCatcher: [],
     userCatcher: [],
 
     //checking to show the username after login USER SPAN
@@ -66,12 +65,14 @@ const state = {
     specificItemClicked: false,
     selectType: '',
 
-    // totalAmount: 0,
+    totalAmount: null,
 
     //selected category
     category: '',
+
     //searched item
     search: ''
+
     //experimental for pagination from js not server
     // page: 1,
     // perPage: 10
@@ -142,7 +143,9 @@ window.onload = function () {
 }
 // #endregion
 
-// #region 'event listener for modals'
+// #region 'event listener for MODALS'
+
+// #region 'event listener for user
 function listenToUserEvent(userElParam) {
 
     userElParam.addEventListener('click', function (event) {
@@ -195,8 +198,9 @@ function listenToRemoveUser(btnRemoveElParam) {
     })
 
 }
+// #endregion
 
-
+// #region 'event listener for popup
 function listenToRemovePopUp(btnRemovePopElParam) {
 
     btnRemovePopElParam.addEventListener('click', function (event) {
@@ -204,8 +208,9 @@ function listenToRemovePopUp(btnRemovePopElParam) {
         popUpModalEl.classList.remove('show')
     })
 }
+// #endregion
 
-
+// #region 'event listener for signup'
 function listenToGoToSignUp(btnSignUpElParam) {
 
     btnSignUpElParam.addEventListener('click', function (event) {
@@ -225,8 +230,9 @@ function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
     })
 
 }
+// #endregion
 
-
+// #region 'event listener for bag'
 function listenToBagEvent(bagElParam) {
 
     bagElParam.addEventListener('click', function (event) {
@@ -325,8 +331,9 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
 
 
 }
+// #endregion
 
-
+// #region 'event listener for pay'
 function listenToGoToPay(btnPayParam) {
 
     btnPayParam.addEventListener('click', function (event) {
@@ -345,6 +352,8 @@ function listenToRemovePayModal(btnRemovePayElParam) {
     })
 
 }
+// #endregion
+
 // #endregion
 
 // #region 'event listener for categories'
@@ -377,11 +386,14 @@ function listenToGoBackBtn(goBackBtnElParam) {
 
 }
 
+
 function listenToProteinsCategory(proteinsLink) {
+
     proteinsLink.addEventListener('click', function () {
         state.category = 'Proteins'
         render()
     })
+
 }
 
 function listenToDefaultCategory(showAllLink) {
@@ -392,52 +404,66 @@ function listenToDefaultCategory(showAllLink) {
 }
 
 function listenToMultivitaminsCategory(multivitaminsLink) {
+
     multivitaminsLink.addEventListener('click', function () {
         state.category = 'Multivitamins'
         render()
     })
+
 }
 
 function listenToPreWorkoutsCategory(workoutsLink) {
+
     workoutsLink.addEventListener('click', function () {
         state.category = 'Pre-Workouts'
         render()
     })
+
 }
 
 function listenToAminoacidsCategory(aminoacidsLink) {
+
     aminoacidsLink.addEventListener('click', function () {
         state.category = 'Aminoacids'
         render()
     })
+
 }
 
 function listenToWeightBurnerCategory(weightBurnerLink) {
+
     weightBurnerLink.addEventListener('click', function () {
         state.category = 'Weight-Burner'
         render()
     })
+
 }
 
 function listenToCreatineCategory(creatinesLink) {
+
     creatinesLink.addEventListener('click', function () {
         state.category = 'Creatine'
         render()
     })
+
 }
 
 function listenToTestosteroneBoostersCategory(boostersLink) {
+
     boostersLink.addEventListener('click', function () {
         state.category = 'Testosterone-Boosters'
         render()
     })
+
 }
 
 function listenToWeightGainersCategory(weightLink) {
+
     weightLink.addEventListener('click', function () {
         state.category = 'Weight-Gainers'
         render()
     })
+
 }
 
 
@@ -454,11 +480,13 @@ function listenToSelectChanges(selectElParam) {
 
 // #region 'event listener for search'
 function listenToSearch(formWrapperEl) {
+
     formWrapperEl.addEventListener('submit', function (event) {
         event.preventDefault()
         state.search = formWrapperEl['search-product'].value
         render()
     })
+
 }
 // #endregion
 
@@ -474,6 +502,7 @@ function getBagArrayByNameFromState(objectNameParam) {
 
 }
 
+
 function getDeletedItemsFromBagQuantity(itemObjectNameParam) {
 
     let bagQuantityArrayFiltered = []
@@ -488,6 +517,7 @@ function getDeletedItemsFromBag(itemObjectNameParam) {
     return bagArrayFiltered = state.bagItems.filter((item) => item.name !== itemObjectNameParam)
 
 }
+
 
 function getQuantityValue(objectNameParam) {
 
@@ -505,6 +535,7 @@ function getUserCredentialsFromStateFilter(emailParam, passwordParam) {
     return userCredentialsArray = state.users.filter((item) => item.id === emailParam && item.password === passwordParam)
 
 }
+
 
 function getBagSpanEl(bagSpanElParam) {
     return bagSpanElParam
@@ -570,7 +601,7 @@ function showItems() {
     let itemsToDisplay = state.items
     let itemToDisplaySorted = []
 
-    // #region 'CONDITIONALS FOR DEFFAULT VALUES AND CASES IF VOID SOMETHING ETC
+    // #region 'CONDITIONALS FOR INITIAL VALUES AND CASES IF VOID SOMETHING ETC
     if (state.category === '' && state.selectType === '') {
         itemToDisplaySorted = state.items
     }
@@ -606,7 +637,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR DEFAULT SORTING OPTION AND THEIR SORTING OPTIONS
     else if (state.category === 'Default' && state.selectType === '') {
         itemToDisplaySorted = state.items
     }
@@ -995,20 +1026,21 @@ function showItems() {
         itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
+    
     itemToDisplaySorted = searchByName(itemToDisplaySorted)
 
     return itemToDisplaySorted
 
 }
-
-
 // #endregion
 
 // #region 'filter search'
 function searchByName(itemToDisplaySorted) {
+
     return itemToDisplaySorted.filter(function (item) {
         return item.name.toLowerCase().includes(state.search.toLowerCase())
     })
+
 }
 // #endregion
 
