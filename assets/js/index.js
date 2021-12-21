@@ -25,6 +25,8 @@ let ulSub2CatcherEl = null
 let paginationHolderEl = null
 let productImgElHolder = null
 
+let totalAmount = 0
+
 let globalItemsToDisplay = []
 
 let spanUserHolderEl = null //this is important to hold the stock span EL when its rendered so i can acces it and use it in other parts of app
@@ -63,6 +65,8 @@ const state = {
 
     specificItemClicked: false,
     selectType: '',
+
+    // totalAmount: 0,
 
     //selected category
     category: '',
@@ -270,15 +274,24 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         quantityBag++
 
         const itemNameValue = itemObjectParam.name
+        const itemPrice = itemObjectParam.price
+        const itemDiscountPrice = itemObjectParam.discountPrice
+
         const objectBag = {
             itemName: itemNameValue,
-            quantity: quantityBag
+            quantity: quantityBag,
+            price: itemPrice,
+            discountPrice: itemDiscountPrice
         }
 
         //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
         state.bagItemQuantity.push(objectBag)
         state.bagItems.push(itemObjectParam)
         state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
+        
+        calculateTotalAddingAmount() //experimental
+        
+        render()
 
         // if (state.specificItemClicked === false) {
         render()
@@ -291,7 +304,6 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemParam) {
 
     btnRemoveItemElParam.addEventListener('click', function (event) {
-
         event.preventDefault()
         divItemParam.remove() //remove from html the dom item
 
@@ -304,6 +316,9 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         spanBagHolderEl.textContent = state.stockSpanValue
 
         state.bagItemQuantity = getDeletedItemsFromBagQuantity(itemObjectParam.name) //change the state
+        
+        calculateTotalRemovingAmount() //experimental
+        
         render() //rerender the app
 
     })
@@ -1019,6 +1034,48 @@ function checkDateEnteredNew(itemDateParam, newSpanElParam, storeItemDivParam) {
     }
 
 }
+
+function calculateTotalAddingAmount() {
+
+    for (const item of state.bagItemQuantity) {
+
+        let numberValueDiscount = Number(item.discountPrice)
+        let numberValue = Number(item.price)
+
+        if (item.discountPrice === undefined) {
+            totalAmount = totalAmount +  numberValueDiscount
+        }
+
+        else {
+            totalAmount = totalAmount + numberValue
+        }
+
+    }
+
+    console.log(totalAmount)
+
+}
+
+function calculateTotalRemovingAmount() {
+
+    for (const item of state.bagItemQuantity) {
+
+        let numberValueDiscount = Number(item.discountPrice)
+        let numberValue = Number(item.price)
+
+        if (item.discountPrice === undefined) {
+            totalAmount = totalAmount -  numberValueDiscount
+        }
+
+        else {
+            totalAmount = totalAmount - numberValue
+        }
+
+    }
+
+    console.log(totalAmount)
+
+}
 // #endregion
 
 // #region 'filter sorting'
@@ -1198,8 +1255,19 @@ function renderBagModal() {
         const btnRemoveItem = document.createElement('button')
         btnRemoveItem.textContent = 'Remove bag item'
 
-        divBagItemEl.append(imgEl, h4El, spanEl1, spanEl2, spanEl3, btnRemoveItem)
-        divBagItemWrapperEl.append(divBagItemEl)
+        if (item.hasOwnProperty('discountPrice')) {
+
+            divBagItemEl.append(imgEl, h4El, spanEl1, spanEl2, spanEl3, btnRemoveItem)
+            divBagItemWrapperEl.append(divBagItemEl)
+
+        }
+
+        else {
+
+            divBagItemEl.append(imgEl, h4El, spanEl1, spanEl3, btnRemoveItem)
+            divBagItemWrapperEl.append(divBagItemEl)
+
+        }
 
         //function event listner for better code structure this calls it and uses the arguments to do tasks
         listenToRemoveBagItem(btnRemoveItem, item, divBagItemEl)
@@ -1212,8 +1280,10 @@ function renderBagModal() {
     const btnRemoveModal = document.createElement('button')
     btnRemoveModal.textContent = 'X'
 
+    // calculateTotalAmount() //experimental
+
     const btnPay = document.createElement('button')
-    btnPay.textContent = 'Pay now ....'
+    btnPay.textContent = `Pay now .... ${totalAmount}`
 
     divRemovingEl.append(btnPay, btnRemoveModal)
     divBagModalWrapper.append(divBagHeaderEl, divBagItemWrapperEl, divRemovingEl)

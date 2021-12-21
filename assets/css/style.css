@@ -31,7 +31,7 @@ section.container-menus {
     width: 100%;
 
     display: grid;
-    grid-template-rows: 160px 0.95fr 80px;
+    grid-template-rows: 160px 0.95fr 120px;
     grid-gap: 20px;
 }
 
@@ -259,7 +259,7 @@ main.main-menu {
     place-items: center;
     align-content: start;
     padding-right: 20px;
-    padding-top: 30px;
+    padding-top: 60px;
 }
 
 .aside-container-1 {
@@ -879,8 +879,8 @@ span.new-item-date {
     place-items: center;
 
     background-color: #f1f1f6;
-    height: 450px;
-    width: 650px;
+    height: 550px;
+    width: 750px;
     place-content: center;
 }
 
@@ -974,6 +974,7 @@ span.new-item-date {
     display: grid;
     grid-template-rows: 1fr;
     place-items: center;
+    place-content: center;
     opacity: 1;
     background-color: rgba(230, 90, 50, 0.3);
 }
@@ -983,9 +984,11 @@ span.new-item-date {
     grid-template-rows: 0.1fr 0.5fr 30px;
     grid-gap: 10px;
     background-color: #f1f1f6;
-    height: 250px;
+    height: 450px;
     width: 500px;
     place-content: center;
+    place-items: center;
+    padding-top: 100px;
 }
 
 .modal-sign_up form {
@@ -993,6 +996,7 @@ span.new-item-date {
     grid-template-columns: 0.5fr 0.5fr;
     grid-gap: 20px;
     place-items: center;
+    place-content: center;
 }
 
 .modal-sign_up form input {
