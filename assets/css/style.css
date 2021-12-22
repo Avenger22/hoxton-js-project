@@ -538,6 +538,17 @@ span.new-item-date {
     font-style: italic;
     font-weight: 900;
 }
+
+.special-button-pagination:disabled {
+    background-color: transparent;
+    cursor: none;
+    color: #022335;
+}
+
+.special-button-pagination:disabled:hover {
+    /* background-color: transparent; */
+    color: #022335;
+}
 /* #endregion*/
 
 /*------------------------------------------------------------------------------------------------------------*/
@@ -853,6 +864,8 @@ span.new-item-date {
 
 /* #endregion
 /* #region 'POP-UP-MODAL' */
+
+/* #region 'ABOUT-US-MODAL' */
 .modal-about_us-container {
     height: 100vh;
     width: 100%;
@@ -902,8 +915,9 @@ span.new-item-date {
     font-family: sans-serif;
     line-height: 22px;
 }
+/* #endregion /*
 
-/* #endregion
+/* #endregion */
 
 /* #endregion */
 

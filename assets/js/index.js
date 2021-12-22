@@ -77,14 +77,12 @@ const state = {
     //searched item
     search: '',
 
-    // offersClicked: false,
-
     // searched item based on category
-    searchOnCategory: 'Default'
+    searchOnCategory: 'Default',
 
     //experimental for pagination from js not server
-    // page: 1,
-    // perPage: 10
+    page: 1,
+    perPage: 10
 
 }
 
@@ -158,6 +156,28 @@ window.onload = function () {
     setTimeout(function () {
         popUpModalEl.classList.add('show');
     }, 5000);
+
+}
+
+function listenToPreviousBtn(prevBtnEl) {
+
+    prevBtnEl.addEventListener('click', function () {
+        if (state.page > 1) {
+          state.page--
+          render()
+        }
+      })
+
+}
+
+function listenToNextBtn(nextBtnEl) {
+
+    nextBtnEl.addEventListener('click', function () {
+        if (state.page * state.perPage < state.items.length) {
+          state.page++
+          render()
+        }
+      })
 
 }
 // #endregion
@@ -659,8 +679,6 @@ function showItems() {
 
     let itemsToDisplay = []
     let itemToDisplaySorted = []
-
-
 
     // #region 'Conditionals for ---search select--- based on cagetories with searched item'
     if (state.search === '' && state.category === 'Default' && state.selectType === 'Default') {
@@ -1305,7 +1323,6 @@ function showItems() {
     // #endregion
 
 
-
     // #region 'CONDITIONALS FOR ---DEFAULT--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Default' && state.selectType === 'Default') {
         itemsToDisplay = state.items
@@ -1750,7 +1767,10 @@ function showItems() {
     }
     // #endregion
 
-    return itemToDisplaySorted
+    return itemToDisplaySorted.slice(
+        (state.page - 1) * state.perPage,
+        state.page * state.perPage
+      )
 
 }
 // #endregion
@@ -2677,6 +2697,13 @@ function renderMain() {
 
     prevBtnEl.append(prevSpanEl)
 
+    if (state.page === 1) {
+        prevBtnEl.disabled = true
+    }
+
+    listenToPreviousBtn(prevBtnEl)
+
+
     const nextBtnEl = document.createElement('button')
     nextBtnEl.setAttribute('class', 'special-button-pagination')
 
@@ -2684,6 +2711,12 @@ function renderMain() {
     nextPageSpan.textContent = 'Next Page'
 
     nextBtnEl.append(nextPageSpan)
+
+    if (state.page * state.perPage > state.items.length) {
+        nextBtnEl.disabled = true
+    }
+
+    listenToNextBtn(nextBtnEl)
 
     paginationWrapperEl.append(prevBtnEl, nextBtnEl)
 
