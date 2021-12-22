@@ -332,8 +332,8 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
             state.bagItems.push(itemObjectParam)
             state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
 
-            calculateTotalAddingAmount() //experimental
-
+            //experimental
+            calculateTotalAddingAmount()
             render()
 
         }
@@ -358,8 +358,8 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         spanBagHolderEl.textContent = state.stockSpanValue
 
         state.bagItemQuantity = getDeletedItemsFromBagQuantity(itemObjectParam.name) //change the state
-
         calculateTotalRemovingAmount()
+        calculateTotalAddingAmount()
 
         render() //rerender the app
 
