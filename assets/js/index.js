@@ -637,6 +637,8 @@ function showItems() {
     let itemsToDisplay = state.items
     let itemToDisplaySorted = []
 
+    
+
     // #region 'Conditionals for ---search select--- based on cagetories with searched item'
     if (state.search === '' && state.category === 'Default' && state.selectType === 'Default') {
         itemsToDisplay = initialStateItems
@@ -652,16 +654,547 @@ function showItems() {
         itemToDisplaySorted = getOffersFromState()
     }
 
-    else if (state.search !== '' && state.searchOnCategory === 'Default') {
+    else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'Default') {
         itemToDisplaySorted = state.items
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
+ 
     
-
-    else if (state.search !== '' && state.searchOnCategory === 'Proteins') {
+    // #region 'search ---proteins--- with sorting'
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'Default') {
         itemToDisplaySorted = getProteinProducts()
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'price-asc') {
+        itemsToDisplay = getProteinProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'price-desc') {
+        itemsToDisplay = getProteinProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'name-asc') {
+        itemsToDisplay = getProteinProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'name-desc') {
+        itemsToDisplay = getProteinProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'date-asc') {
+        itemsToDisplay = getProteinProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'date-desc') {
+        itemsToDisplay = getProteinProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    // #endregion
+
+    // #region 'search ---creatines--- with sorting'
+     else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'Default') {
+        itemToDisplaySorted = getCreatineProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'price-asc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'price-desc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'name-asc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'name-desc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'date-asc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'date-desc') {
+        itemsToDisplay = getCreatineProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    // #endregion
+
+    // #region 'search ---multivitamins--- with sorting'
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'Default') {
+        itemToDisplaySorted = getMultivitaminsProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'price-asc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'price-desc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'name-asc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'name-desc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'date-asc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'date-desc') {
+        itemsToDisplay = getMultivitaminsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    //  #endregion
+
+    // #region 'search ---Weight-Gainers--- with sorting'
+     else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'Default') {
+        itemToDisplaySorted = getWeightGainersProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'price-asc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'price-desc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'name-asc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'name-desc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'date-asc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'date-desc') {
+        itemsToDisplay = getWeightGainersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    // #endregion
+
+    // #region 'search ---Pre-Workouts--- with sorting'
+     else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'Default') {
+        itemToDisplaySorted = getPreWorkoutProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'price-asc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'price-desc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'name-asc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'name-desc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'date-asc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'date-desc') {
+        itemsToDisplay = getPreWorkoutProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    // #endregion
+
+    // #region 'search ---Testosterone-Boosters--- with sorting'
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'Default') {
+        itemToDisplaySorted = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'price-asc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'price-desc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'name-asc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'name-desc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'date-asc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'date-desc') {
+        itemsToDisplay = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    // #endregion
+
+    // #region 'search ---Aminoacids--- with sorting'
+     else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'Default') {
+        itemToDisplaySorted = getAminoacidsProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'price-asc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'price-desc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'name-asc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'name-desc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'date-asc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'date-desc') {
+        itemsToDisplay = getAminoacidsProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    //  #endregion
+
+    // #region 'search ---WeightBurners--- with sorting'
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'Default') {
+        itemToDisplaySorted = getWeightBurnerProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'price-asc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+
+        itemToDisplaySorted = getSortedByPriceAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'price-desc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'name-asc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'name-desc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'date-asc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'date-desc') {
+        itemsToDisplay = getWeightBurnerProducts()
+        itemToDisplaySorted = itemsToDisplay
+
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    //  #endregion
 
     else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins') {
         itemToDisplaySorted = getMultivitaminsProducts()
@@ -698,6 +1231,8 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
     // #endregion
+
+
 
     // #region 'CONDITIONALS FOR ---DEFAULT--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Default' && state.selectType === 'Default') {
