@@ -1314,7 +1314,7 @@ function showItems() {
         itemToDisplaySorted = getUnSortedArrayState()
     }
 
-    else if (state.category === 'Default' && state.selectType === 'price-asc') {
+    else if (state.category === 'Default' && state.selectType === 'price-asc' || state.selectType === 'price-asc' && state.category === 'Default') {
         itemsToDisplay = state.items
         globalItemsToDisplay = itemsToDisplay
 
@@ -1409,46 +1409,46 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR ---PROTEINS--- AND THEIR SORTING OPTIONS
-    else if (state.category === 'Proteins' && state.selectType === 'Default') {
+    else if (state.category === 'Proteins' && state.selectType === 'Default' || state.selectType === 'Default' && state.category === 'Default') {
         itemToDisplaySorted = getProteinProducts()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'price-asc') {
+    else if (state.category === 'Proteins' && state.selectType === 'price-asc' || state.selectType === 'price-asc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByPriceAsc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'price-desc') {
+    else if (state.category === 'Proteins' && state.selectType === 'price-desc' || state.selectType === 'price-desc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByPriceDesc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'name-asc') {
+    else if (state.category === 'Proteins' && state.selectType === 'name-asc' || state.selectType === 'name-asc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByNameAsc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'name-desc') {
+    else if (state.category === 'Proteins' && state.selectType === 'name-desc' || state.selectType === 'name-desc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByNameDesc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'date-asc') {
+    else if (state.category === 'Proteins' && state.selectType === 'date-asc' || state.selectType === 'date-asc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByDateAsc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'date-desc') {
+    else if (state.category === 'Proteins' && state.selectType === 'date-desc' || state.selectType === 'date-desc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
@@ -1457,42 +1457,42 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR ---MULTIVITAMINS--- AND THEIR SORTING OPTIONS
-    else if (state.category === 'Multivitamins' && state.selectType === 'Default') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'Default' || state.selectType === 'Default' && state.category === 'Multivitamins') {
         itemToDisplaySorted = getMultivitaminsProducts()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'price-asc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'price-asc' || state.selectType === 'price-asc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByPriceAsc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'price-desc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'price-desc' || state.selectType === 'price-desc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         itemToDisplaySorted = getSortedByPriceDesc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'name-asc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'name-asc' || state.selectType === 'name-asc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByNameAsc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'name-desc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'name-desc' || state.selectType === 'name-desc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         itemToDisplaySorted = getSortedByNameDesc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'date-asc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'date-asc' || state.selectType === 'date-asc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByDateAsc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'date-desc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'date-desc' || state.selectType === 'date-desc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         itemToDisplaySorted = getSortedByDateDesc()
     }
@@ -2436,7 +2436,7 @@ function renderHeader() {
     const liAboutEl = document.createElement('li')
 
     const aboutLinkEl = document.createElement('a')
-    aboutLinkEl.setAttribute('href', '')
+    aboutLinkEl.setAttribute('href', '#')
     aboutLinkEl.textContent = 'About Us'
 
     liAboutEl.append(aboutLinkEl)
