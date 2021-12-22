@@ -38,7 +38,7 @@ let spanBagHolderEl = null //same as above
 // #region 'STATE OBJECT, STATE MANAGEMENT'
 const state = {
 
-    //two important arrays for fetching and udapting the state
+    //two important arrays for fetching and updating the state
     items: [],
     users: [],
 
