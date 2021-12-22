@@ -19,6 +19,9 @@ signUpModalEl.setAttribute('class', 'modal-sign_up-container')
 const popUpModalEl = document.createElement('div')
 popUpModalEl.setAttribute('class', 'modal-pop_up-container')
 
+const aboutUsModalEl = document.createElement('div')
+aboutUsModalEl.setAttribute('class', 'modal-about_us-container')
+
 let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
@@ -61,6 +64,7 @@ const state = {
     bagModalClicked: false,
     signUpModalClicked: false,
     payModalClicked: false,
+    aboutUsModalClicked: false,
 
     specificItemClicked: false,
     selectType: 'Default',
@@ -248,7 +252,16 @@ function listenToBagEvent(bagElParam) {
     })
 
 }
+function listenToAboutUsEvent(aboutLinkEl) {
 
+    aboutLinkEl.addEventListener('click', function () {
+
+        state.aboutUsModalClicked = true
+        aboutUsModalEl.classList.add('show')
+        // render()
+    })
+
+}
 function listenToRemoveBag(buttonElParam) {
 
     buttonElParam.addEventListener('click', function (event) {
@@ -306,9 +319,9 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
             state.bagItemQuantity.push(objectBag)
             state.bagItems.push(itemObjectParam)
             state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
-            
+
             calculateTotalAddingAmount() //experimental
-            
+
             render()
 
         }
@@ -333,9 +346,9 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         spanBagHolderEl.textContent = state.stockSpanValue
 
         state.bagItemQuantity = getDeletedItemsFromBagQuantity(itemObjectParam.name) //change the state
-        
+
         calculateTotalRemovingAmount()
-        
+
         render() //rerender the app
 
     })
@@ -501,7 +514,7 @@ function listenToSearch(formWrapperEl) {
 
 function listenToSelectChangesSearch(categoriesSelectEl) {
 
-    categoriesSelectEl.addEventListener('change', function(event) {
+    categoriesSelectEl.addEventListener('change', function (event) {
         event.preventDefault()
         state.searchOnCategory = categoriesSelectEl.value
         render()
@@ -1067,7 +1080,7 @@ function showItems() {
         itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
-    
+
     // itemToDisplaySorted = searchByName(itemToDisplaySorted)
 
     return itemToDisplaySorted
@@ -1117,7 +1130,7 @@ function calculateTotalAddingAmount() {
         let numberValue = Number(item.price)
 
         if (item.discountPrice !== undefined) {
-            state.totalAmount = state.totalAmount +  numberValueDiscount
+            state.totalAmount = state.totalAmount + numberValueDiscount
             render()
         }
 
@@ -1151,7 +1164,7 @@ function calculateTotalRemovingAmount() {
             }
 
             else if (item.discountPrice !== undefined) {
-                state.totalAmount = state.totalAmount -  numberValueDiscount
+                state.totalAmount = state.totalAmount - numberValueDiscount
                 render()
             }
 
@@ -1556,6 +1569,36 @@ function renderPayModal() {
     listenToRemovePayModal(removePayBtnEl)
 
 }
+
+function renderAboutUsModal() {
+
+    const divAboutUsModalEl = document.createElement('div')
+    divAboutUsModalEl.setAttribute('class', 'modal-about-us')
+
+    const spanAboutEl = document.createElement('span')
+    spanAboutEl.setAttribute('class', 'span-about')
+    spanAboutEl.textContent = 'About Us'
+
+    const divWrapperSubs = document.createElement('div')
+    divWrapperSubs.setAttribute('class', 'wrapper-subs')
+    const pEl = document.createElement('p')
+    pEl.setAttribute('class', 'about-us')
+    pEl.textContent = 'We offer only the best American & British products for all Fintess and Bodybuilding enthusiasts! Our products are of the highest quality and guarantee Effect and Safety for anyone who consumes them Regardless of whether you are a passionate Athlete, or just looking to keep your body in shape.Exclusive distributor in Albania of Nutrex Research, Animal, Universal Nutrion, Evogen Nutrition, Servivita Usa, Applied Nutrition & Bpi Sports We grow with your passion for Sport!'
+
+    const removeAboutUsEl = document.createElement('button')
+    removeAboutUsEl.textContent = 'X'
+    removeAboutUsEl.setAttribute('class', 'remove-about')
+    removeAboutUsEl.addEventListener('click', function () {
+        aboutUsModalEl.classList.remove('show')
+    })
+
+    divWrapperSubs.append(spanAboutEl, pEl)
+    divAboutUsModalEl.append(divWrapperSubs, removeAboutUsEl)
+
+    aboutUsModalEl.append(divAboutUsModalEl)
+    sectionContainerMenusEl.append(aboutUsModalEl)
+
+}
 // #endregion
 
 // #region 'RENDER PAGE HTML'
@@ -1627,7 +1670,7 @@ function renderHeader() {
     optionCategories9El.textContent = 'Weigh Burners'
 
     categoriesSelectEl.append(optionCategories1El, optionCategories2El, optionCategories3El, optionCategories4El,
-    optionCategories5El, optionCategories6El, optionCategories7El, optionCategories8El, optionCategories9El)
+        optionCategories5El, optionCategories6El, optionCategories7El, optionCategories8El, optionCategories9El)
 
     // #endregion
 
@@ -1730,6 +1773,8 @@ function renderHeader() {
     aboutLinkEl.textContent = 'About Us'
 
     liAboutEl.append(aboutLinkEl)
+
+    listenToAboutUsEvent(aboutLinkEl)
 
     const liBlogEl = document.createElement('li')
 
@@ -2153,6 +2198,7 @@ function render() {
     payModalEl.innerHTML = ''
     popUpModalEl.innerHTML = ''
     signUpModalEl.innerHTML = ''
+    aboutUsModalEl.innerHTML = ''
 
     //rerendering the HTML page after each render call
     renderHeader()
@@ -2163,6 +2209,7 @@ function render() {
     renderPopUpModal()
     renderSignUpModal()
     renderPayModal()
+    renderAboutUsModal()
 
 }
 
