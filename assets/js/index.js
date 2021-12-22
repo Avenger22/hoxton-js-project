@@ -73,6 +73,8 @@ const state = {
     //searched item
     search: '',
 
+    // offersClicked: false,
+
     // searched item based on category
     searchOnCategory: 'Default'
 
@@ -477,6 +479,16 @@ function listenToWeightGainersCategory(weightLink) {
 
 }
 
+function listenToOffersNav(liOffersEl) {
+
+    liOffersEl.addEventListener('click', function(event) {
+        event.preventDefault()
+        state.category = 'Offers'
+        render()
+    })
+
+}
+
 
 function listenToSelectChanges(selectElParam) {
 
@@ -615,13 +627,17 @@ function getTestosteroneBoostersProducts() {
     })
 }
 
+function getOffersFromState() {
+    return state.items.filter((item) => item.hasOwnProperty('discountPrice'))
+}
 
+//THIS DOES EVERYTHING CONDITIONALS THE MOST IMPORTaNT FUNCTION
 function showItems() {
 
     let itemsToDisplay = state.items
     let itemToDisplaySorted = []
 
-    // #region 'Conditionals for search select based on cagetories with searched item'
+    // #region 'Conditionals for ---search select--- based on cagetories with searched item'
     if (state.search === '' && state.category === 'Default' && state.selectType === 'Default') {
         itemsToDisplay = initialStateItems
         globalItemsToDisplay = itemsToDisplay
@@ -629,10 +645,18 @@ function showItems() {
         itemToDisplaySorted = getUnSortedArrayState()
     }
 
+    else if (state.search === '' && state.category === 'Offers' && state.selectType === 'Default') {
+        itemsToDisplay = initialStateItems
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getOffersFromState()
+    }
+
     else if (state.search !== '' && state.searchOnCategory === 'Default') {
         itemToDisplaySorted = state.items
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
+    
 
     else if (state.search !== '' && state.searchOnCategory === 'Proteins') {
         itemToDisplaySorted = getProteinProducts()
@@ -675,7 +699,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR DEFAULT SORTING OPTION AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---DEFAULT--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Default' && state.selectType === 'Default') {
         itemsToDisplay = initialStateItems
         globalItemsToDisplay = itemsToDisplay
@@ -726,7 +750,58 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
+     // #region 'CONDITIONALS FOR ---OFFERS---  AND THEIR SORTING OPTIONS
+     else if (state.category === 'Offers' && state.selectType === 'Default') {
+        itemsToDisplay = initialStateItems
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getOffersFromState()
+    }
+
+    else if (state.category === 'Offers' && state.selectType === 'price-asc') {
+        itemsToDisplay = getOffersFromState()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceAsc()
+    }
+
+    else if (state.category === 'Offers' && state.selectType === 'price-desc') {
+        itemsToDisplay = getOffersFromState()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByPriceDesc()
+    }
+
+    else if (state.category === 'Offers' && state.selectType === 'name-asc') {
+        itemsToDisplay = getOffersFromState()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameAsc()
+    }
+
+    else if (state.category === 'Offers' && state.selectType === 'name-desc') {
+        itemsToDisplay = getOffersFromState()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByNameDesc()
+    }
+
+    else if (state.category === 'Offers' && state.selectType === 'date-asc') {
+        itemsToDisplay = getOffersFromState()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateAsc()
+    }
+
+    else if (state.category === 'Offers' && state.selectType === 'date-desc') {
+        itemsToDisplay = getOffersFromState()
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getSortedByDateDesc()
+    }
+    // #endregion
+
+    // #region 'CONDITIONALS FOR ---PROTEINS--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Proteins' && state.selectType === 'Default') {
         itemToDisplaySorted = getProteinProducts()
     }
@@ -774,7 +849,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR MULTIVITAMINS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---MULTIVITAMINS--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Multivitamins' && state.selectType === 'Default') {
         itemToDisplaySorted = getMultivitaminsProducts()
     }
@@ -816,7 +891,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR PRE-WORKOUT AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---PRE-WORKOUT--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Pre-Workouts' && state.selectType === 'Default') {
         itemToDisplaySorted = getPreWorkoutProducts()
     }
@@ -858,7 +933,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR WEIGHT-GAINERS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---WEIGHT-GAINERS--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Weight-Gainers' && state.selectType === 'Default') {
         itemToDisplaySorted = getWeightGainersProducts()
     }
@@ -900,7 +975,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR CREATINE AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---CREATINE--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Creatine' && state.selectType === 'Default') {
         itemToDisplaySorted = getCreatineProducts()
     }
@@ -942,7 +1017,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR AMINOACIDS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---AMINOACIDS--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Aminoacids' && state.selectType === 'Default') {
         itemToDisplaySorted = getAminoacidsProducts()
     }
@@ -984,7 +1059,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR WEIGHT-BURNERS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---WEIGHT-BURNERS--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Weight-Burner' && state.selectType === 'Default') {
         itemToDisplaySorted = getWeightBurnerProducts()
     }
@@ -1026,7 +1101,7 @@ function showItems() {
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR TESTOSTERONE-BOOSTERS AND THEIR SORTING OPTIONS
+    // #region 'CONDITIONALS FOR ---TESTOSTERONE-BOOSTERS--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Testosterone-Boosters' && state.selectType === 'Default') {
         itemToDisplaySorted = getTestosteroneBoostersProducts()
     }
@@ -1068,8 +1143,6 @@ function showItems() {
     }
     // #endregion
     
-    // itemToDisplaySorted = searchByName(itemToDisplaySorted)
-
     return itemToDisplaySorted
 
 }
@@ -1749,6 +1822,9 @@ function renderHeader() {
     ulHeader2El.append(liHomeEl, liProductsEl, liOffersEl, liAboutEl, liBlogEl, liContactEl)
     subHeaderDiv2.append(ulHeader2El)
     headerMenuEl.append(subHeaderDiv, subHeaderDiv2)
+
+    listenToOffersNav(liOffersEl)
+
     sectionContainerMenusEl.append(headerMenuEl)
 
 }
@@ -1946,38 +2022,6 @@ function renderMain() {
     prevSpanEl.textContent = 'Previous Page'
 
     prevBtnEl.append(prevSpanEl)
-
-    // #region 'DELETED BUTTONS FOR THE MOMENT'
-
-    // const button2El = document.createElement('button')
-
-    // const span_2 = document.createElement('span')
-    // span_2.textContent = '2'
-
-    // button2El.append(span_2)
-
-    // const button3El = document.createElement('button')
-
-    // const span_3 = document.createElement('span')
-    // span_3.textContent = '3'
-
-    // button3El.append(span_3)
-
-    // const button4El = document.createElement('button')
-
-    // const span_4 = document.createElement('span')
-    // span_4.textContent = '....'
-
-    // button4El.append(span_4)
-
-    // const button6El = document.createElement('button')
-
-    // const span_6 = document.createElement('span')
-    // span_6.textContent = '6'
-
-    // button6El.append(span_6)
-
-    // #endregion
 
     const nextBtnEl = document.createElement('button')
     nextBtnEl.setAttribute('class', 'special-button-pagination')
