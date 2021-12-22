@@ -65,7 +65,7 @@ const state = {
     specificItemClicked: false,
     selectType: 'Default',
 
-    totalAmount: null,
+    totalAmount: 0,
 
     //selected category
     category: 'Default',
@@ -267,46 +267,51 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         event.preventDefault()
         console.log("item button is Clicked, so now its ready to go to bag from page")
 
-        state.stockShowClass = 'show'
-        spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
-
-        itemObjectParam.stock -= 1
-        spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
-
-        if (itemObjectParam.stock < 0) {
-            itemObjectParam.stock = 0 //removing negative values from span and stock ruining the state object
+        if (itemObjectParam.stock === 0) {
+            console.log('We dont add items to bag cause no stock')
+            alert('We dont add items to bag cause no stock')
         }
 
         else {
-            state.stockSpanValue += 1
+
+            state.stockShowClass = 'show'
+            spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
+
+            itemObjectParam.stock -= 1
+            spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
+
+            if (itemObjectParam.stock < 0) {
+                itemObjectParam.stock = 0 //removing negative values from span and stock ruining the state object
+            }
+
+            else {
+                state.stockSpanValue += 1
+            }
+
+            let quantityBag = 0
+            quantityBag++
+
+            const itemNameValue = itemObjectParam.name
+            const itemPrice = itemObjectParam.price
+            const itemDiscountPrice = itemObjectParam.discountPrice
+
+            const objectBag = {
+                itemName: itemNameValue,
+                quantity: quantityBag,
+                price: itemPrice,
+                discountPrice: itemDiscountPrice
+            }
+
+            //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
+            state.bagItemQuantity.push(objectBag)
+            state.bagItems.push(itemObjectParam)
+            state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
+            
+            calculateTotalAddingAmount() //experimental
+            
+            render()
+
         }
-
-        let quantityBag = 0
-        quantityBag++
-
-        const itemNameValue = itemObjectParam.name
-        const itemPrice = itemObjectParam.price
-        const itemDiscountPrice = itemObjectParam.discountPrice
-
-        const objectBag = {
-            itemName: itemNameValue,
-            quantity: quantityBag,
-            price: itemPrice,
-            discountPrice: itemDiscountPrice
-        }
-
-        //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
-        state.bagItemQuantity.push(objectBag)
-        state.bagItems.push(itemObjectParam)
-        state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
-        
-        calculateTotalAddingAmount() //experimental
-        
-        render()
-
-        // if (state.specificItemClicked === false) {
-        render()
-        // }
 
     })
 
@@ -315,6 +320,7 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemParam) {
 
     btnRemoveItemElParam.addEventListener('click', function (event) {
+
         event.preventDefault()
         divItemParam.remove() //remove from html the dom item
 
@@ -322,13 +328,13 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         state.bagItems = getDeletedItemsFromBag(itemObjectParam.name)
 
         const quantity = getQuantityValue(itemObjectParam.name)
-        itemObjectParam.stock += quantity //BUG
+        itemObjectParam.stock += quantity
         state.stockSpanValue -= quantity
         spanBagHolderEl.textContent = state.stockSpanValue
 
         state.bagItemQuantity = getDeletedItemsFromBagQuantity(itemObjectParam.name) //change the state
         
-        calculateTotalRemovingAmount() //experimental
+        calculateTotalRemovingAmount()
         
         render() //rerender the app
 
@@ -658,7 +664,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
 
-    else if (state.search !== '' && state.searchOnCategory === 'TestosteroneBoosters') {
+    else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters') {
         itemToDisplaySorted = getTestosteroneBoostersProducts()
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
@@ -1104,22 +1110,23 @@ function checkDateEnteredNew(itemDateParam, newSpanElParam, storeItemDivParam) {
 
 function calculateTotalAddingAmount() {
 
+    state.totalAmount = 0
     for (const item of state.bagItemQuantity) {
 
         let numberValueDiscount = Number(item.discountPrice)
         let numberValue = Number(item.price)
 
-        if (item.discountPrice === undefined) {
+        if (item.discountPrice !== undefined) {
             state.totalAmount = state.totalAmount +  numberValueDiscount
+            render()
         }
 
-        else {
+        else if (item.discountPrice === undefined) {
             state.totalAmount = state.totalAmount + numberValue
+            render()
         }
 
     }
-
-    console.log(state.totalAmount)
 
 }
 
@@ -1131,11 +1138,14 @@ function calculateTotalRemovingAmount() {
         let numberValue = Number(item.price)
 
         if (item.discountPrice === undefined) {
-            state.totalAmount = state.totalAmount -  numberValueDiscount
+            state.totalAmount = state.totalAmount - numberValue
+            console.log(state.totalAmount)
+            render()
         }
 
-        else {
-            state.totalAmount = state.totalAmount - numberValue
+        else if (item.discountPrice !== undefined) {
+            state.totalAmount = state.totalAmount -  numberValueDiscount
+            render()
         }
 
     }
@@ -1313,11 +1323,11 @@ function renderBagModal() {
 
         const spanEl1 = document.createElement('span')
         spanEl1.setAttribute('class', 'span-1-bag')
-        spanEl1.textContent = `Price: ${item.price}`
+        spanEl1.textContent = `Price: $${item.price}`
 
         const spanEl2 = document.createElement('span')
         spanEl2.setAttribute('class', 'span-2-bag')
-        spanEl2.textContent = `Discounted Price: ${item.discountPrice}`
+        spanEl2.textContent = `Discounted Price: $${item.discountPrice}`
 
         //important to get the quantity of x item with that name passed as argument
         const quantityValue = getQuantityValue(item.name)
@@ -1357,7 +1367,7 @@ function renderBagModal() {
     // calculateTotalAmount() //experimental
 
     const btnPay = document.createElement('button')
-    btnPay.textContent = `Pay now .... ${state.totalAmount}`
+    btnPay.textContent = `Pay now .... $${state.totalAmount}`
 
     divRemovingEl.append(btnPay, btnRemoveModal)
     divBagModalWrapper.append(divBagHeaderEl, divBagItemWrapperEl, divRemovingEl)
@@ -1495,7 +1505,7 @@ function renderPayModal() {
     inputPayEl2.setAttribute('id', 'input-pay-2')
     inputPayEl2.setAttribute('name', 'number-pay')
     inputPayEl2.setAttribute('required', '')
-    inputPayEl2.placeholder = 'Card number:'
+    inputPayEl2.placeholder = 'Number:'
 
     const inputPayEl3 = document.createElement('input')
     inputPayEl3.setAttribute('type', 'date')
@@ -1509,7 +1519,7 @@ function renderPayModal() {
     inputPayEl4.setAttribute('id', 'input-pay-4')
     inputPayEl4.setAttribute('name', 'cvv-pay')
     inputPayEl4.setAttribute('required', '')
-    inputPayEl4.placeholder = 'CVV NUMBER:'
+    inputPayEl4.placeholder = 'CVV:'
 
     const payBtnEl = document.createElement('button')
     payBtnEl.setAttribute('id', 'button-pay-1')
@@ -1856,11 +1866,11 @@ function renderMain() {
 
         const span1El = document.createElement('span')
         span1El.setAttribute('class', 'span-1')
-        span1El.textContent = `price: ${item.price}`
+        span1El.textContent = `price: $${item.price}`
 
         const span2El = document.createElement('span')
         span2El.setAttribute('class', 'span-2')
-        span2El.textContent = `Discounted Price: ${item.discountPrice}`
+        span2El.textContent = `Discounted Price: $${item.discountPrice}`
 
         const span3El = document.createElement('span')
         span3El.setAttribute('class', 'span-3-item')
@@ -2118,16 +2128,9 @@ function renderMainItemClicked(storeItemParam, itemWrapperParam, cartButtonParam
     itemWrapperParam.style.placeItems = 'center'
 
     storeItemParam.style.width = '350px'
-
-    // cartButtonParam.style.width = '250px'
-    // goBackBtnEl.style.width = '250px'
-
-    // productImgElHolder.style.height = '350px'
-    // productImgElHolder.style.width = '350px'
-
     paginationHolderEl.style.display = 'none' //this removes pagination when an individual item is rendered
 
-    listenToSubmitItemToBag(cartButtonParam, itemParam)
+    // listenToSubmitItemToBag(cartButtonParam, itemParam) fixed a bug when adding to cart from here added 2 not 1
     listenToGoBackBtn(goBackBtnEl)
 
 }
