@@ -353,7 +353,7 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         state.bagItems = getDeletedItemsFromBag(itemObjectParam.name)
 
         const quantity = getQuantityValue(itemObjectParam.name)
-        itemObjectParam.stock += quantity
+
         state.stockSpanValue -= quantity
         spanBagHolderEl.textContent = state.stockSpanValue
 
@@ -504,7 +504,7 @@ function listenToWeightGainersCategory(weightLink) {
 
 function listenToOffersNav(liOffersEl) {
 
-    liOffersEl.addEventListener('click', function(event) {
+    liOffersEl.addEventListener('click', function (event) {
         event.preventDefault()
         state.category = 'Offers'
         render()
@@ -660,7 +660,7 @@ function showItems() {
     let itemsToDisplay = state.items
     let itemToDisplaySorted = []
 
-    
+
 
     // #region 'Conditionals for ---search select--- based on cagetories with searched item'
     if (state.search === '' && state.category === 'Default' && state.selectType === 'Default') {
@@ -681,54 +681,54 @@ function showItems() {
         itemToDisplaySorted = initialStateItems
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
- 
+
     // #region 'search ---default category on search--- with sorting'
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'price-asc') {
         itemsToDisplay = initialStateItems
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceAsc()  
+
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'price-desc') {
         itemsToDisplay = initialStateItems
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc()  
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'name-asc') {
         itemsToDisplay = initialStateItems
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc()  
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'name-desc') {
         itemsToDisplay = initialStateItems
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameDesc()  
+
+        itemToDisplaySorted = getSortedByNameDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'date-asc') {
         itemsToDisplay = state.items
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'date-desc') {
         itemsToDisplay = state.items
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
 
@@ -745,7 +745,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'price-desc') {
@@ -754,8 +754,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'name-asc') {
@@ -764,8 +764,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'name-desc') {
@@ -774,8 +774,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'date-asc') {
@@ -784,8 +784,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'date-desc') {
@@ -794,13 +794,13 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
 
     // #region 'search ---creatines--- with sorting'
-     else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'Default') {
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'Default') {
         itemToDisplaySorted = getCreatineProducts()
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
@@ -812,7 +812,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'price-desc') {
@@ -821,8 +821,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'name-asc') {
@@ -831,8 +831,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'name-desc') {
@@ -841,8 +841,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'date-asc') {
@@ -851,8 +851,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Creatines' && state.selectType === 'date-desc') {
@@ -861,8 +861,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
 
@@ -879,7 +879,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'price-desc') {
@@ -888,8 +888,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'name-asc') {
@@ -898,8 +898,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'name-desc') {
@@ -908,8 +908,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'date-asc') {
@@ -918,8 +918,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins' && state.selectType === 'date-desc') {
@@ -928,13 +928,13 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     //  #endregion
 
     // #region 'search ---Weight-Gainers--- with sorting'
-     else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'Default') {
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'Default') {
         itemToDisplaySorted = getWeightGainersProducts()
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
@@ -946,7 +946,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'price-desc') {
@@ -955,8 +955,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'name-asc') {
@@ -965,8 +965,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'name-desc') {
@@ -975,8 +975,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'date-asc') {
@@ -985,8 +985,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightGainers' && state.selectType === 'date-desc') {
@@ -995,13 +995,13 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
 
     // #region 'search ---Pre-Workouts--- with sorting'
-     else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'Default') {
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'Default') {
         itemToDisplaySorted = getPreWorkoutProducts()
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
@@ -1013,7 +1013,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'price-desc') {
@@ -1022,8 +1022,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'name-asc') {
@@ -1032,8 +1032,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'name-desc') {
@@ -1042,8 +1042,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'date-asc') {
@@ -1052,8 +1052,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts' && state.selectType === 'date-desc') {
@@ -1062,8 +1062,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
 
@@ -1080,7 +1080,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'price-desc') {
@@ -1089,8 +1089,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'name-asc') {
@@ -1099,8 +1099,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'name-desc') {
@@ -1109,8 +1109,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'date-asc') {
@@ -1119,8 +1119,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'testosteroneBoosters' && state.selectType === 'date-desc') {
@@ -1129,13 +1129,13 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
 
     // #region 'search ---Aminoacids--- with sorting'
-     else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'Default') {
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'Default') {
         itemToDisplaySorted = getAminoacidsProducts()
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
@@ -1147,7 +1147,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'price-desc') {
@@ -1156,8 +1156,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'name-asc') {
@@ -1166,8 +1166,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'name-desc') {
@@ -1176,8 +1176,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'date-asc') {
@@ -1186,8 +1186,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Aminoacids' && state.selectType === 'date-desc') {
@@ -1196,8 +1196,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     //  #endregion
 
@@ -1214,7 +1214,7 @@ function showItems() {
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
 
-        itemToDisplaySorted = getSortedByPriceAsc() 
+        itemToDisplaySorted = getSortedByPriceAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'price-desc') {
@@ -1223,8 +1223,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByPriceDesc() 
+
+        itemToDisplaySorted = getSortedByPriceDesc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'name-asc') {
@@ -1233,8 +1233,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'name-desc') {
@@ -1243,8 +1243,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByNameAsc() 
+
+        itemToDisplaySorted = getSortedByNameAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'date-asc') {
@@ -1253,8 +1253,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateAsc() 
+
+        itemToDisplaySorted = getSortedByDateAsc()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'WeightBurners' && state.selectType === 'date-desc') {
@@ -1263,8 +1263,8 @@ function showItems() {
 
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
         globalItemsToDisplay = itemToDisplaySorted
-        
-        itemToDisplaySorted = getSortedByDateDesc() 
+
+        itemToDisplaySorted = getSortedByDateDesc()
     }
     //  #endregion
 
@@ -1357,8 +1357,8 @@ function showItems() {
     }
     // #endregion
 
-     // #region 'CONDITIONALS FOR ---OFFERS---  AND THEIR SORTING OPTIONS
-     else if (state.category === 'Offers' && state.selectType === 'Default') {
+    // #region 'CONDITIONALS FOR ---OFFERS---  AND THEIR SORTING OPTIONS
+    else if (state.category === 'Offers' && state.selectType === 'Default') {
         itemsToDisplay = initialStateItems
         globalItemsToDisplay = itemsToDisplay
 
@@ -2025,6 +2025,11 @@ function renderBagModal() {
 
         const btnRemoveItem = document.createElement('button')
         btnRemoveItem.textContent = 'Remove bag item'
+        btnRemoveItem.addEventListener('click', function () {
+            item.stock += quantityValue
+            updateStock({ id: item.id, stock: item.stock })
+            render()
+        })
 
         if (item.hasOwnProperty('discountPrice')) {
 
