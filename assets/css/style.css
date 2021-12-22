@@ -419,7 +419,7 @@ footer.footer-menu {
 }
 
 .store-item:hover {
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
     transform: scale(1.1);
     margin-right: 3%;
     margin-left: 3%;

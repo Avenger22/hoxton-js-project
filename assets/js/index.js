@@ -1577,7 +1577,7 @@ function renderHeader() {
     liLogoEl.setAttribute('id', 'logo')
 
     const logoLinkEl = document.createElement('a')
-    logoLinkEl.setAttribute('href', '#')
+    logoLinkEl.setAttribute('href', './index.html')
     logoLinkEl.textContent = 'AlbVitaFitness'
 
     liLogoEl.append(logoLinkEl)
@@ -1702,7 +1702,7 @@ function renderHeader() {
     const liHomeEl = document.createElement('li')
 
     const homeLinkEl = document.createElement('a')
-    homeLinkEl.setAttribute('href', '#')
+    homeLinkEl.setAttribute('href', './index.html')
     homeLinkEl.textContent = 'Home'
 
     liHomeEl.append(homeLinkEl)
@@ -1710,7 +1710,7 @@ function renderHeader() {
     const liProductsEl = document.createElement('li')
 
     const productsLinkEl = document.createElement('a')
-    productsLinkEl.setAttribute('href', '#')
+    productsLinkEl.setAttribute('href', './index.html')
     productsLinkEl.textContent = 'Products'
 
     liProductsEl.append(productsLinkEl)
@@ -1734,7 +1734,7 @@ function renderHeader() {
     const liBlogEl = document.createElement('li')
 
     const blogLinkEl = document.createElement('a')
-    blogLinkEl.setAttribute('href', '#')
+    blogLinkEl.setAttribute('href', './assets/pages/blog.html')
     blogLinkEl.textContent = 'Blog'
 
     liBlogEl.append(blogLinkEl)
@@ -1742,7 +1742,7 @@ function renderHeader() {
     const liContactEl = document.createElement('li')
 
     const contactLinkEl = document.createElement('a')
-    contactLinkEl.setAttribute('href', '#')
+    contactLinkEl.setAttribute('href', './assets/pages/contact.html')
     contactLinkEl.textContent = 'Contact'
 
     liContactEl.append(contactLinkEl)
