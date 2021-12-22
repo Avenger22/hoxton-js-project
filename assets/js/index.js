@@ -104,6 +104,16 @@ function getUsersArrayFromServer() {
         })
 
 }
+
+function updateStock(item) {
+    return fetch(`http://localhost:3000/items/${item.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+    })
+}
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -277,7 +287,7 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
             state.stockShowClass = 'show'
             spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
 
-            itemObjectParam.stock -= 1
+
             spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
 
             if (itemObjectParam.stock < 0) {
@@ -306,9 +316,9 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
             state.bagItemQuantity.push(objectBag)
             state.bagItems.push(itemObjectParam)
             state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
-            
+
             calculateTotalAddingAmount() //experimental
-            
+
             render()
 
         }
@@ -333,9 +343,9 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
         spanBagHolderEl.textContent = state.stockSpanValue
 
         state.bagItemQuantity = getDeletedItemsFromBagQuantity(itemObjectParam.name) //change the state
-        
+
         calculateTotalRemovingAmount()
-        
+
         render() //rerender the app
 
     })
@@ -500,8 +510,7 @@ function listenToSearch(formWrapperEl) {
 }
 
 function listenToSelectChangesSearch(categoriesSelectEl) {
-
-    categoriesSelectEl.addEventListener('change', function(event) {
+    categoriesSelectEl.addEventListener('change', function (event) {
         event.preventDefault()
         state.searchOnCategory = categoriesSelectEl.value
         render()
@@ -1067,7 +1076,7 @@ function showItems() {
         itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
-    
+
     // itemToDisplaySorted = searchByName(itemToDisplaySorted)
 
     return itemToDisplaySorted
@@ -1117,7 +1126,7 @@ function calculateTotalAddingAmount() {
         let numberValue = Number(item.price)
 
         if (item.discountPrice !== undefined) {
-            state.totalAmount = state.totalAmount +  numberValueDiscount
+            state.totalAmount = state.totalAmount + numberValueDiscount
             render()
         }
 
@@ -1151,7 +1160,7 @@ function calculateTotalRemovingAmount() {
             }
 
             else if (item.discountPrice !== undefined) {
-                state.totalAmount = state.totalAmount -  numberValueDiscount
+                state.totalAmount = state.totalAmount - numberValueDiscount
                 render()
             }
 
@@ -1627,7 +1636,7 @@ function renderHeader() {
     optionCategories9El.textContent = 'Weigh Burners'
 
     categoriesSelectEl.append(optionCategories1El, optionCategories2El, optionCategories3El, optionCategories4El,
-    optionCategories5El, optionCategories6El, optionCategories7El, optionCategories8El, optionCategories9El)
+        optionCategories5El, optionCategories6El, optionCategories7El, optionCategories8El, optionCategories9El)
 
     // #endregion
 
@@ -1889,6 +1898,16 @@ function renderMain() {
 
         const cartButton = document.createElement('button')
         cartButton.textContent = 'Add to cart'
+        cartButton.addEventListener('click', function () {
+
+            item.stock--
+
+            updateStock(item)
+
+            render()
+        })
+
+
 
         //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
         const newSpanEl = document.createElement('span')
