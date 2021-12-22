@@ -1132,25 +1132,32 @@ function calculateTotalAddingAmount() {
 
 function calculateTotalRemovingAmount() {
 
-    for (const item of state.bagItemQuantity) {
+    if (state.bagItemQuantity.length === 1 || state.bagItemQuantity.length === 0) {
+        state.totalAmount = 0
+        render()
+    }
 
-        let numberValueDiscount = Number(item.discountPrice)
-        let numberValue = Number(item.price)
+    else {
 
-        if (item.discountPrice === undefined) {
-            state.totalAmount = state.totalAmount - numberValue
-            console.log(state.totalAmount)
-            render()
-        }
+        for (const item of state.bagItemQuantity) {
 
-        else if (item.discountPrice !== undefined) {
-            state.totalAmount = state.totalAmount -  numberValueDiscount
-            render()
+            let numberValueDiscount = Number(item.discountPrice)
+            let numberValue = Number(item.price)
+
+            if (item.discountPrice === undefined) {
+                state.totalAmount = state.totalAmount - numberValue
+                console.log(state.totalAmount)
+                render()
+            }
+
+            else if (item.discountPrice !== undefined) {
+                state.totalAmount = state.totalAmount -  numberValueDiscount
+                render()
+            }
+
         }
 
     }
-
-    console.log(state.totalAmount)
 
 }
 // #endregion
