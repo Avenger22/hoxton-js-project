@@ -664,11 +664,60 @@ function showItems() {
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'Default') {
-        itemToDisplaySorted = state.items
+        itemToDisplaySorted = initialStateItems
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
  
-    
+    // #region 'search ---default category on search--- with sorting'
+    else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'price-asc') {
+        itemsToDisplay = initialStateItems
+        itemToDisplaySorted = searchByName(itemsToDisplay)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceAsc()  
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'price-desc') {
+        itemsToDisplay = initialStateItems
+        itemToDisplaySorted = searchByName(itemsToDisplay)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByPriceDesc()  
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'name-asc') {
+        itemsToDisplay = initialStateItems
+        itemToDisplaySorted = searchByName(itemsToDisplay)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameAsc()  
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'name-desc') {
+        itemsToDisplay = initialStateItems
+        itemToDisplaySorted = searchByName(itemsToDisplay)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByNameDesc()  
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'date-asc') {
+        itemsToDisplay = state.items
+        itemToDisplaySorted = searchByName(itemsToDisplay)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateAsc() 
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'date-desc') {
+        itemsToDisplay = state.items
+        itemToDisplaySorted = searchByName(itemsToDisplay)
+        globalItemsToDisplay = itemToDisplaySorted
+        
+        itemToDisplaySorted = getSortedByDateDesc() 
+    }
+    // #endregion
+
     // #region 'search ---proteins--- with sorting'
     else if (state.search !== '' && state.searchOnCategory === 'Proteins' && state.selectType === 'Default') {
         itemToDisplaySorted = getProteinProducts()
