@@ -25,7 +25,7 @@ let ulSub2CatcherEl = null
 let paginationHolderEl = null
 let productImgElHolder = null
 
-let totalAmount = 0
+let initialStateItems = []
 
 let globalItemsToDisplay = []
 
@@ -47,7 +47,6 @@ const state = {
     bagItemQuantity: [],
 
     //super crucial for catching each name and passing it in render in else if, problem is because the filter function had param and passing was hard so this solved
-    searchCatcher: [],
     userCatcher: [],
 
     //checking to show the username after login USER SPAN
@@ -64,14 +63,19 @@ const state = {
     payModalClicked: false,
 
     specificItemClicked: false,
-    selectType: '',
+    selectType: 'Default',
 
-    // totalAmount: 0,
+    totalAmount: null,
 
     //selected category
-    category: '',
+    category: 'Default',
+
     //searched item
-    search: ''
+    search: '',
+
+    // searched item based on category
+    searchOnCategory: 'Default'
+
     //experimental for pagination from js not server
     // page: 1,
     // perPage: 10
@@ -142,7 +146,9 @@ window.onload = function () {
 }
 // #endregion
 
-// #region 'event listener for modals'
+// #region 'event listener for MODALS'
+
+// #region 'event listener for user
 function listenToUserEvent(userElParam) {
 
     userElParam.addEventListener('click', function (event) {
@@ -195,8 +201,9 @@ function listenToRemoveUser(btnRemoveElParam) {
     })
 
 }
+// #endregion
 
-
+// #region 'event listener for popup
 function listenToRemovePopUp(btnRemovePopElParam) {
 
     btnRemovePopElParam.addEventListener('click', function (event) {
@@ -204,8 +211,9 @@ function listenToRemovePopUp(btnRemovePopElParam) {
         popUpModalEl.classList.remove('show')
     })
 }
+// #endregion
 
-
+// #region 'event listener for signup'
 function listenToGoToSignUp(btnSignUpElParam) {
 
     btnSignUpElParam.addEventListener('click', function (event) {
@@ -213,6 +221,7 @@ function listenToGoToSignUp(btnSignUpElParam) {
 
         userModalEl.classList.remove('show')
         signUpModalEl.classList.add('show')
+        state.signUpModalClicked = true
 
     })
 }
@@ -222,11 +231,13 @@ function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
     btnRemoveSignUpElParam.addEventListener('click', function (event) {
         event.preventDefault()
         signUpModalEl.classList.remove('show')
+        state.signUpModalClicked = false
     })
 
 }
+// #endregion
 
-
+// #region 'event listener for bag'
 function listenToBagEvent(bagElParam) {
 
     bagElParam.addEventListener('click', function (event) {
@@ -325,8 +336,9 @@ function listenToRemoveBagItem(btnRemoveItemElParam, itemObjectParam, divItemPar
 
 
 }
+// #endregion
 
-
+// #region 'event listener for pay'
 function listenToGoToPay(btnPayParam) {
 
     btnPayParam.addEventListener('click', function (event) {
@@ -345,6 +357,8 @@ function listenToRemovePayModal(btnRemovePayElParam) {
     })
 
 }
+// #endregion
+
 // #endregion
 
 // #region 'event listener for categories'
@@ -377,11 +391,14 @@ function listenToGoBackBtn(goBackBtnElParam) {
 
 }
 
+
 function listenToProteinsCategory(proteinsLink) {
+
     proteinsLink.addEventListener('click', function () {
         state.category = 'Proteins'
         render()
     })
+
 }
 
 function listenToDefaultCategory(showAllLink) {
@@ -392,52 +409,66 @@ function listenToDefaultCategory(showAllLink) {
 }
 
 function listenToMultivitaminsCategory(multivitaminsLink) {
+
     multivitaminsLink.addEventListener('click', function () {
         state.category = 'Multivitamins'
         render()
     })
+
 }
 
 function listenToPreWorkoutsCategory(workoutsLink) {
+
     workoutsLink.addEventListener('click', function () {
         state.category = 'Pre-Workouts'
         render()
     })
+
 }
 
 function listenToAminoacidsCategory(aminoacidsLink) {
+
     aminoacidsLink.addEventListener('click', function () {
         state.category = 'Aminoacids'
         render()
     })
+
 }
 
 function listenToWeightBurnerCategory(weightBurnerLink) {
+
     weightBurnerLink.addEventListener('click', function () {
         state.category = 'Weight-Burner'
         render()
     })
+
 }
 
 function listenToCreatineCategory(creatinesLink) {
+
     creatinesLink.addEventListener('click', function () {
         state.category = 'Creatine'
         render()
     })
+
 }
 
 function listenToTestosteroneBoostersCategory(boostersLink) {
+
     boostersLink.addEventListener('click', function () {
         state.category = 'Testosterone-Boosters'
         render()
     })
+
 }
 
 function listenToWeightGainersCategory(weightLink) {
+
     weightLink.addEventListener('click', function () {
         state.category = 'Weight-Gainers'
         render()
     })
+
 }
 
 
@@ -445,7 +476,6 @@ function listenToSelectChanges(selectElParam) {
 
     selectElParam.addEventListener('change', function () {
         state.selectType = selectElParam.value
-        state.selectedItem = ''
         render()
     })
 
@@ -454,11 +484,23 @@ function listenToSelectChanges(selectElParam) {
 
 // #region 'event listener for search'
 function listenToSearch(formWrapperEl) {
+
     formWrapperEl.addEventListener('submit', function (event) {
         event.preventDefault()
         state.search = formWrapperEl['search-product'].value
         render()
     })
+
+}
+
+function listenToSelectChangesSearch(categoriesSelectEl) {
+
+    categoriesSelectEl.addEventListener('change', function(event) {
+        event.preventDefault()
+        state.searchOnCategory = categoriesSelectEl.value
+        render()
+    })
+
 }
 // #endregion
 
@@ -474,6 +516,7 @@ function getBagArrayByNameFromState(objectNameParam) {
 
 }
 
+
 function getDeletedItemsFromBagQuantity(itemObjectNameParam) {
 
     let bagQuantityArrayFiltered = []
@@ -488,6 +531,7 @@ function getDeletedItemsFromBag(itemObjectNameParam) {
     return bagArrayFiltered = state.bagItems.filter((item) => item.name !== itemObjectNameParam)
 
 }
+
 
 function getQuantityValue(objectNameParam) {
 
@@ -505,6 +549,7 @@ function getUserCredentialsFromStateFilter(emailParam, passwordParam) {
     return userCredentialsArray = state.users.filter((item) => item.id === emailParam && item.password === passwordParam)
 
 }
+
 
 function getBagSpanEl(bagSpanElParam) {
     return bagSpanElParam
@@ -570,45 +615,66 @@ function showItems() {
     let itemsToDisplay = state.items
     let itemToDisplaySorted = []
 
-    // #region 'CONDITIONALS FOR DEFFAULT VALUES AND CASES IF VOID SOMETHING ETC
-    if (state.category === '' && state.selectType === '') {
+    // #region 'Conditionals for search select based on cagetories with searched item'
+    if (state.search === '' && state.category === 'Default' && state.selectType === 'Default') {
+        itemsToDisplay = initialStateItems
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getUnSortedArrayState()
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'Default') {
         itemToDisplaySorted = state.items
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
 
-    else if (state.category === '' && state.selectType === 'price-asc') {
-        globalItemsToDisplay = state.items
-        itemToDisplaySorted = getSortedByPriceAsc()
+    else if (state.search !== '' && state.searchOnCategory === 'Proteins') {
+        itemToDisplaySorted = getProteinProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
 
-    else if (state.category === '' && state.selectType === 'price-desc') {
-        globalItemsToDisplay = state.items
-        itemToDisplaySorted = getSortedByPriceDesc()
+    else if (state.search !== '' && state.searchOnCategory === 'MultiVitamins') {
+        itemToDisplaySorted = getMultivitaminsProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
 
-    else if (state.category === '' && state.selectType === 'name-asc') {
-        globalItemsToDisplay = state.items
-        itemToDisplaySorted = getSortedByNameAsc()
+    else if (state.search !== '' && state.searchOnCategory === 'Creatines') {
+        itemToDisplaySorted = getCreatineProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
 
-    else if (state.category === '' && state.selectType === 'name-desc') {
-        globalItemsToDisplay = state.items
-        itemToDisplaySorted = getSortedByNameDesc()
+    else if (state.search !== '' && state.searchOnCategory === 'WeightBurners') {
+        itemToDisplaySorted = getWeightBurnerProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
 
-    else if (state.category === '' && state.selectType === 'date-asc') {
-        globalItemsToDisplay = state.items
-        itemToDisplaySorted = getSortedByDateAsc()
+    else if (state.search !== '' && state.searchOnCategory === 'Aminoacids') {
+        itemToDisplaySorted = getAminoacidsProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
 
-    else if (state.category === '' && state.selectType === 'date-desc') {
-        globalItemsToDisplay = state.items
-        itemToDisplaySorted = getSortedByDateDesc()
+    else if (state.search !== '' && state.searchOnCategory === 'PreWorkouts') {
+        itemToDisplaySorted = getPreWorkoutProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'TestosteroneBoosters') {
+        itemToDisplaySorted = getTestosteroneBoostersProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    }
+
+    else if (state.search !== '' && state.searchOnCategory === 'WeightGainers') {
+        itemToDisplaySorted = getWeightGainersProducts()
+        itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
     // #endregion
 
-    // #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
-    else if (state.category === 'Default' && state.selectType === '') {
-        itemToDisplaySorted = state.items
+    // #region 'CONDITIONALS FOR DEFAULT SORTING OPTION AND THEIR SORTING OPTIONS
+    else if (state.category === 'Default' && state.selectType === 'Default') {
+        itemsToDisplay = initialStateItems
+        globalItemsToDisplay = itemsToDisplay
+
+        itemToDisplaySorted = getUnSortedArrayState()
     }
 
     else if (state.category === 'Default' && state.selectType === 'price-asc') {
@@ -655,7 +721,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR PROTEINS AND THEIR SORTING OPTIONS
-    else if (state.category === 'Proteins' && state.selectType === '') {
+    else if (state.category === 'Proteins' && state.selectType === 'Default') {
         itemToDisplaySorted = getProteinProducts()
     }
 
@@ -703,7 +769,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR MULTIVITAMINS AND THEIR SORTING OPTIONS
-    else if (state.category === 'Multivitamins' && state.selectType === '') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'Default') {
         itemToDisplaySorted = getMultivitaminsProducts()
     }
 
@@ -745,7 +811,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR PRE-WORKOUT AND THEIR SORTING OPTIONS
-    else if (state.category === 'Pre-Workouts' && state.selectType === '') {
+    else if (state.category === 'Pre-Workouts' && state.selectType === 'Default') {
         itemToDisplaySorted = getPreWorkoutProducts()
     }
 
@@ -787,7 +853,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR WEIGHT-GAINERS AND THEIR SORTING OPTIONS
-    else if (state.category === 'Weight-Gainers' && state.selectType === '') {
+    else if (state.category === 'Weight-Gainers' && state.selectType === 'Default') {
         itemToDisplaySorted = getWeightGainersProducts()
     }
 
@@ -829,7 +895,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR CREATINE AND THEIR SORTING OPTIONS
-    else if (state.category === 'Creatine' && state.selectType === '') {
+    else if (state.category === 'Creatine' && state.selectType === 'Default') {
         itemToDisplaySorted = getCreatineProducts()
     }
 
@@ -871,7 +937,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR AMINOACIDS AND THEIR SORTING OPTIONS
-    else if (state.category === 'Aminoacids' && state.selectType === '') {
+    else if (state.category === 'Aminoacids' && state.selectType === 'Default') {
         itemToDisplaySorted = getAminoacidsProducts()
     }
 
@@ -913,7 +979,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR WEIGHT-BURNERS AND THEIR SORTING OPTIONS
-    else if (state.category === 'Weight-Burner' && state.selectType === '') {
+    else if (state.category === 'Weight-Burner' && state.selectType === 'Default') {
         itemToDisplaySorted = getWeightBurnerProducts()
     }
 
@@ -955,7 +1021,7 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR TESTOSTERONE-BOOSTERS AND THEIR SORTING OPTIONS
-    else if (state.category === 'Testosterone-Boosters' && state.selectType === '') {
+    else if (state.category === 'Testosterone-Boosters' && state.selectType === 'Default') {
         itemToDisplaySorted = getTestosteroneBoostersProducts()
     }
 
@@ -995,20 +1061,21 @@ function showItems() {
         itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
-    itemToDisplaySorted = searchByName(itemToDisplaySorted)
+    
+    // itemToDisplaySorted = searchByName(itemToDisplaySorted)
 
     return itemToDisplaySorted
 
 }
-
-
 // #endregion
 
 // #region 'filter search'
 function searchByName(itemToDisplaySorted) {
+
     return itemToDisplaySorted.filter(function (item) {
         return item.name.toLowerCase().includes(state.search.toLowerCase())
     })
+
 }
 // #endregion
 
@@ -1043,16 +1110,16 @@ function calculateTotalAddingAmount() {
         let numberValue = Number(item.price)
 
         if (item.discountPrice === undefined) {
-            totalAmount = totalAmount +  numberValueDiscount
+            state.totalAmount = state.totalAmount +  numberValueDiscount
         }
 
         else {
-            totalAmount = totalAmount + numberValue
+            state.totalAmount = state.totalAmount + numberValue
         }
 
     }
 
-    console.log(totalAmount)
+    console.log(state.totalAmount)
 
 }
 
@@ -1064,21 +1131,28 @@ function calculateTotalRemovingAmount() {
         let numberValue = Number(item.price)
 
         if (item.discountPrice === undefined) {
-            totalAmount = totalAmount -  numberValueDiscount
+            state.totalAmount = state.totalAmount -  numberValueDiscount
         }
 
         else {
-            totalAmount = totalAmount - numberValue
+            state.totalAmount = state.totalAmount - numberValue
         }
 
     }
 
-    console.log(totalAmount)
+    console.log(state.totalAmount)
 
 }
 // #endregion
 
 // #region 'filter sorting'
+function getUnSortedArrayState() {
+
+    let unSorted = []
+    return unSorted = globalItemsToDisplay
+
+}
+
 function getSortedByPriceAsc() {
 
     return globalItemsToDisplay.sort((a, b) => (a.price > b.price) ? 1 : (a.price === b.price) ? ((a.name > b.name) ? 1 : -1) : -1)
@@ -1283,7 +1357,7 @@ function renderBagModal() {
     // calculateTotalAmount() //experimental
 
     const btnPay = document.createElement('button')
-    btnPay.textContent = `Pay now .... ${totalAmount}`
+    btnPay.textContent = `Pay now .... ${state.totalAmount}`
 
     divRemovingEl.append(btnPay, btnRemoveModal)
     divBagModalWrapper.append(divBagHeaderEl, divBagItemWrapperEl, divRemovingEl)
@@ -1500,19 +1574,19 @@ function renderHeader() {
     categoriesSelectEl.setAttribute('id', 'filter-by-categories')
 
     const optionCategories1El = document.createElement('option')
-    optionCategories1El.setAttribute('value', 'categories')
+    optionCategories1El.setAttribute('value', 'Default')
     optionCategories1El.textContent = 'Categories'
 
     const optionCategories2El = document.createElement('option')
-    optionCategories2El.setAttribute('value', 'multivitamins')
+    optionCategories2El.setAttribute('value', 'MultiVitamins')
     optionCategories2El.textContent = 'MultiVitamins and essentials minerals'
 
     const optionCategories3El = document.createElement('option')
-    optionCategories3El.setAttribute('value', 'preWorkout')
+    optionCategories3El.setAttribute('value', 'PreWorkouts')
     optionCategories3El.textContent = 'Pre-Workout'
 
     const optionCategories4El = document.createElement('option')
-    optionCategories4El.setAttribute('value', 'proteins')
+    optionCategories4El.setAttribute('value', 'Proteins')
     optionCategories4El.textContent = 'Proteins'
 
     const optionCategories5El = document.createElement('option')
@@ -1520,23 +1594,23 @@ function renderHeader() {
     optionCategories5El.textContent = 'Testosterone Boosters'
 
     const optionCategories6El = document.createElement('option')
-    optionCategories6El.setAttribute('value', 'weight-gainers')
+    optionCategories6El.setAttribute('value', 'WeightGainers')
     optionCategories6El.textContent = 'Weigh Gainers'
 
     const optionCategories7El = document.createElement('option')
-    optionCategories7El.setAttribute('value', 'aminoacids')
+    optionCategories7El.setAttribute('value', 'Aminoacids')
     optionCategories7El.textContent = 'Aminoacids'
 
     const optionCategories8El = document.createElement('option')
-    optionCategories8El.setAttribute('value', 'creatines')
+    optionCategories8El.setAttribute('value', 'Creatines')
     optionCategories8El.textContent = 'Creatines'
 
     const optionCategories9El = document.createElement('option')
-    optionCategories9El.setAttribute('value', 'weightBurners')
+    optionCategories9El.setAttribute('value', 'WeightBurners')
     optionCategories9El.textContent = 'Weigh Burners'
 
     categoriesSelectEl.append(optionCategories1El, optionCategories2El, optionCategories3El, optionCategories4El,
-        optionCategories5El, optionCategories6El, optionCategories7El, optionCategories8El, optionCategories9El)
+    optionCategories5El, optionCategories6El, optionCategories7El, optionCategories8El, optionCategories9El)
 
     // #endregion
 
@@ -1552,6 +1626,10 @@ function renderHeader() {
 
     formWrapperEl.append(categoriesSelectEl, searchInputEl, searchButtonEl)
 
+    categoriesSelectEl.value = state.searchOnCategory //linking state and DOM
+    listenToSelectChangesSearch(categoriesSelectEl)
+
+    formWrapperEl['search-product'].value = state.search // linking state and DOM
     listenToSearch(formWrapperEl)
 
     const userButton = document.createElement('button')
@@ -1715,7 +1793,7 @@ function renderMain() {
     selectEl.setAttribute('id', 'filter-by-sort')
 
     const option1El = document.createElement('option')
-    option1El.setAttribute('value', '')
+    option1El.setAttribute('value', 'Default')
     option1El.textContent = 'No Sorting (Deffault)'
 
     const option2El = document.createElement('option')
@@ -1750,8 +1828,6 @@ function renderMain() {
     selectEl.value = state.selectType
 
     listenToSelectChanges(selectEl)
-
-    // selectEl.value = state.selectType
 
 
     const itemsDivEl = document.createElement('div')
@@ -2087,6 +2163,7 @@ function init() {
     //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
     getItemsArrayFromServer().then(function (itemsArrayFromServer) {
         state.items = itemsArrayFromServer
+        initialStateItems = state.items
         render()
     })
 
