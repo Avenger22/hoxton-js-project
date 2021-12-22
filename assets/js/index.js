@@ -19,6 +19,9 @@ signUpModalEl.setAttribute('class', 'modal-sign_up-container')
 const popUpModalEl = document.createElement('div')
 popUpModalEl.setAttribute('class', 'modal-pop_up-container')
 
+const aboutUsModalEl = document.createElement('div')
+aboutUsModalEl.setAttribute('class', 'modal-about_us-container')
+
 let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
@@ -61,6 +64,7 @@ const state = {
     bagModalClicked: false,
     signUpModalClicked: false,
     payModalClicked: false,
+    aboutUsModalClicked: false,
 
     specificItemClicked: false,
     selectType: 'Default',
@@ -260,7 +264,16 @@ function listenToBagEvent(bagElParam) {
     })
 
 }
+function listenToAboutUsEvent(aboutLinkEl) {
 
+    aboutLinkEl.addEventListener('click', function () {
+
+        state.aboutUsModalClicked = true
+        aboutUsModalEl.classList.add('show')
+        // render()
+    })
+
+}
 function listenToRemoveBag(buttonElParam) {
 
     buttonElParam.addEventListener('click', function (event) {
@@ -522,6 +535,7 @@ function listenToSearch(formWrapperEl) {
 }
 
 function listenToSelectChangesSearch(categoriesSelectEl) {
+
     categoriesSelectEl.addEventListener('change', function (event) {
         event.preventDefault()
         state.searchOnCategory = categoriesSelectEl.value
@@ -1686,8 +1700,7 @@ function showItems() {
         itemToDisplaySorted = getSortedByDateDesc()
     }
     // #endregion
-  
-  
+
     return itemToDisplaySorted
 
 }
@@ -2174,6 +2187,36 @@ function renderPayModal() {
     listenToRemovePayModal(removePayBtnEl)
 
 }
+
+function renderAboutUsModal() {
+
+    const divAboutUsModalEl = document.createElement('div')
+    divAboutUsModalEl.setAttribute('class', 'modal-about-us')
+
+    const spanAboutEl = document.createElement('span')
+    spanAboutEl.setAttribute('class', 'span-about')
+    spanAboutEl.textContent = 'About Us'
+
+    const divWrapperSubs = document.createElement('div')
+    divWrapperSubs.setAttribute('class', 'wrapper-subs')
+    const pEl = document.createElement('p')
+    pEl.setAttribute('class', 'about-us')
+    pEl.textContent = 'We offer only the best American & British products for all Fintess and Bodybuilding enthusiasts! Our products are of the highest quality and guarantee Effect and Safety for anyone who consumes them Regardless of whether you are a passionate Athlete, or just looking to keep your body in shape.Exclusive distributor in Albania of Nutrex Research, Animal, Universal Nutrion, Evogen Nutrition, Servivita Usa, Applied Nutrition & Bpi Sports We grow with your passion for Sport!'
+
+    const removeAboutUsEl = document.createElement('button')
+    removeAboutUsEl.textContent = 'X'
+    removeAboutUsEl.setAttribute('class', 'remove-about')
+    removeAboutUsEl.addEventListener('click', function () {
+        aboutUsModalEl.classList.remove('show')
+    })
+
+    divWrapperSubs.append(spanAboutEl, pEl)
+    divAboutUsModalEl.append(divWrapperSubs, removeAboutUsEl)
+
+    aboutUsModalEl.append(divAboutUsModalEl)
+    sectionContainerMenusEl.append(aboutUsModalEl)
+
+}
 // #endregion
 
 // #region 'RENDER PAGE HTML'
@@ -2348,6 +2391,8 @@ function renderHeader() {
     aboutLinkEl.textContent = 'About Us'
 
     liAboutEl.append(aboutLinkEl)
+
+    listenToAboutUsEvent(aboutLinkEl)
 
     const liBlogEl = document.createElement('li')
 
@@ -2752,6 +2797,7 @@ function render() {
     payModalEl.innerHTML = ''
     popUpModalEl.innerHTML = ''
     signUpModalEl.innerHTML = ''
+    aboutUsModalEl.innerHTML = ''
 
     //rerendering the HTML page after each render call
     renderHeader()
@@ -2762,6 +2808,7 @@ function render() {
     renderPopUpModal()
     renderSignUpModal()
     renderPayModal()
+    renderAboutUsModal()
 
 }
 
