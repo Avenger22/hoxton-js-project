@@ -657,34 +657,34 @@ function getOffersFromState() {
 //THIS DOES EVERYTHING CONDITIONALS THE MOST IMPORTaNT FUNCTION
 function showItems() {
 
-    let itemsToDisplay = state.items
+    let itemsToDisplay = []
     let itemToDisplaySorted = []
 
     
 
     // #region 'Conditionals for ---search select--- based on cagetories with searched item'
     if (state.search === '' && state.category === 'Default' && state.selectType === 'Default') {
-        itemsToDisplay = initialStateItems
+        itemsToDisplay = state.items
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getUnSortedArrayState()
     }
 
     else if (state.search === '' && state.category === 'Offers' && state.selectType === 'Default') {
-        itemsToDisplay = initialStateItems
+        itemsToDisplay = state.items
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getOffersFromState()
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'Default') {
-        itemToDisplaySorted = initialStateItems
+        itemToDisplaySorted = state.items
         itemToDisplaySorted = searchByName(itemToDisplaySorted)
     }
  
     // #region 'search ---default category on search--- with sorting'
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'price-asc') {
-        itemsToDisplay = initialStateItems
+        itemsToDisplay = state.items
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
         
@@ -692,7 +692,7 @@ function showItems() {
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'price-desc') {
-        itemsToDisplay = initialStateItems
+        itemsToDisplay = state.items
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
         
@@ -700,7 +700,7 @@ function showItems() {
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'name-asc') {
-        itemsToDisplay = initialStateItems
+        itemsToDisplay = state.items
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
         
@@ -708,7 +708,7 @@ function showItems() {
     }
 
     else if (state.search !== '' && state.searchOnCategory === 'Default' && state.selectType === 'name-desc') {
-        itemsToDisplay = initialStateItems
+        itemsToDisplay = state.items
         itemToDisplaySorted = searchByName(itemsToDisplay)
         globalItemsToDisplay = itemToDisplaySorted
         
@@ -1308,13 +1308,13 @@ function showItems() {
 
     // #region 'CONDITIONALS FOR ---DEFAULT--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Default' && state.selectType === 'Default') {
-        itemsToDisplay = initialStateItems
+        itemsToDisplay = state.items
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getUnSortedArrayState()
     }
 
-    else if (state.category === 'Default' && state.selectType === 'price-asc') {
+    else if (state.category === 'Default' && state.selectType === 'price-asc' || state.selectType === 'price-asc' && state.category === 'Default') {
         itemsToDisplay = state.items
         globalItemsToDisplay = itemsToDisplay
 
@@ -1409,46 +1409,46 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR ---PROTEINS--- AND THEIR SORTING OPTIONS
-    else if (state.category === 'Proteins' && state.selectType === 'Default') {
+    else if (state.category === 'Proteins' && state.selectType === 'Default' || state.selectType === 'Default' && state.category === 'Default') {
         itemToDisplaySorted = getProteinProducts()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'price-asc') {
+    else if (state.category === 'Proteins' && state.selectType === 'price-asc' || state.selectType === 'price-asc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByPriceAsc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'price-desc') {
+    else if (state.category === 'Proteins' && state.selectType === 'price-desc' || state.selectType === 'price-desc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByPriceDesc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'name-asc') {
+    else if (state.category === 'Proteins' && state.selectType === 'name-asc' || state.selectType === 'name-asc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByNameAsc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'name-desc') {
+    else if (state.category === 'Proteins' && state.selectType === 'name-desc' || state.selectType === 'name-desc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByNameDesc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'date-asc') {
+    else if (state.category === 'Proteins' && state.selectType === 'date-asc' || state.selectType === 'date-asc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByDateAsc()
     }
 
-    else if (state.category === 'Proteins' && state.selectType === 'date-desc') {
+    else if (state.category === 'Proteins' && state.selectType === 'date-desc' || state.selectType === 'date-desc' && state.category === 'Proteins') {
         itemsToDisplay = getProteinProducts()
         globalItemsToDisplay = itemsToDisplay
 
@@ -1457,42 +1457,42 @@ function showItems() {
     // #endregion
 
     // #region 'CONDITIONALS FOR ---MULTIVITAMINS--- AND THEIR SORTING OPTIONS
-    else if (state.category === 'Multivitamins' && state.selectType === 'Default') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'Default' || state.selectType === 'Default' && state.category === 'Multivitamins') {
         itemToDisplaySorted = getMultivitaminsProducts()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'price-asc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'price-asc' || state.selectType === 'price-asc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByPriceAsc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'price-desc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'price-desc' || state.selectType === 'price-desc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         itemToDisplaySorted = getSortedByPriceDesc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'name-asc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'name-asc' || state.selectType === 'name-asc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByNameAsc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'name-desc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'name-desc' || state.selectType === 'name-desc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         itemToDisplaySorted = getSortedByNameDesc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'date-asc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'date-asc' || state.selectType === 'date-asc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         globalItemsToDisplay = itemsToDisplay
 
         itemToDisplaySorted = getSortedByDateAsc()
     }
 
-    else if (state.category === 'Multivitamins' && state.selectType === 'date-desc') {
+    else if (state.category === 'Multivitamins' && state.selectType === 'date-desc' || state.selectType === 'date-desc' && state.category === 'MultiVitamins') {
         itemsToDisplay = getMultivitaminsProducts()
         itemToDisplaySorted = getSortedByDateDesc()
     }
@@ -2428,7 +2428,7 @@ function renderHeader() {
     const liOffersEl = document.createElement('li')
 
     const offersLinkEl = document.createElement('a')
-    offersLinkEl.setAttribute('href', '#')
+    offersLinkEl.setAttribute('href', '')
     offersLinkEl.textContent = 'Offers'
 
     liOffersEl.append(offersLinkEl)
@@ -2704,7 +2704,7 @@ function renderMain() {
     const multivitaminsLi = document.createElement('li')
 
     const multivitaminsLink = document.createElement('a')
-    multivitaminsLink.setAttribute('href', '#')
+    // multivitaminsLink.setAttribute('href', '')
     multivitaminsLink.textContent = 'Multivitamins & essentials minerals'
 
     multivitaminsLi.append(multivitaminsLink)
@@ -2712,7 +2712,7 @@ function renderMain() {
     const workoutsLi = document.createElement('li')
 
     const workoutsLink = document.createElement('a')
-    workoutsLink.setAttribute('href', '#')
+    // workoutsLink.setAttribute('href', '')
     workoutsLink.textContent = 'Pre-Workouts'
 
     workoutsLi.append(workoutsLink)
@@ -2720,7 +2720,7 @@ function renderMain() {
     const proteinsLi = document.createElement('li')
 
     const proteinsLink = document.createElement('a')
-    proteinsLink.setAttribute('href', '#')
+    // proteinsLink.setAttribute('href', '')
     proteinsLink.textContent = 'Proteins'
 
     proteinsLi.append(proteinsLink)
@@ -2728,7 +2728,7 @@ function renderMain() {
     const boostersLi = document.createElement('li')
 
     const boostersLink = document.createElement('a')
-    boostersLink.setAttribute('href', '#')
+    // boostersLink.setAttribute('href', '')
     boostersLink.textContent = 'Testosterone Boosters'
 
     boostersLi.append(boostersLink)
@@ -2736,7 +2736,7 @@ function renderMain() {
     const weightLi = document.createElement('li')
 
     const weightLink = document.createElement('a')
-    weightLink.setAttribute('href', '#')
+    // weightLink.setAttribute('href', '')
     weightLink.textContent = 'Weight gainers'
 
     weightLi.append(weightLink)
@@ -2744,7 +2744,7 @@ function renderMain() {
     const aminoacidsLi = document.createElement('li')
 
     const aminoacidsLink = document.createElement('a')
-    aminoacidsLink.setAttribute('href', '#')
+    // aminoacidsLink.setAttribute('href', '')
     aminoacidsLink.textContent = 'Aminoacids'
 
     aminoacidsLi.append(aminoacidsLink)
@@ -2752,7 +2752,7 @@ function renderMain() {
     const creatinesLi = document.createElement('li')
 
     const creatinesLink = document.createElement('a')
-    creatinesLink.setAttribute('href', '#')
+    // creatinesLink.setAttribute('href', '')
     creatinesLink.textContent = 'Creatines'
 
     creatinesLi.append(creatinesLink)
@@ -2760,7 +2760,7 @@ function renderMain() {
     const weightBurnerLi = document.createElement('li')
 
     const weightBurnerLink = document.createElement('a')
-    weightBurnerLink.setAttribute('href', '#')
+    // weightBurnerLink.setAttribute('href', '')
     weightBurnerLink.textContent = 'Weight Burner'
 
     weightBurnerLi.append(weightBurnerLink)
@@ -2768,7 +2768,7 @@ function renderMain() {
     const showAllLi = document.createElement('li')
 
     const showAllLink = document.createElement('a')
-    showAllLink.setAttribute('href', '#')
+    // showAllLink.setAttribute('href', '')
     showAllLink.textContent = 'Deffault no categories'
 
     showAllLi.append(showAllLink)
