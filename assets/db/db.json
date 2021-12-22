@@ -1,350 +1,350 @@
 {
-    "items": [
+  "items": [
+    {
+      "id": 1,
+      "name": "Animal Pak Powder",
+      "price": "55",
+      "image": "./assets/images/animal-pak-powder.png",
+      "stock": 7,
+      "type": "multivitamins",
+      "date": "2021/12/20",
+      "description": "The True Original since 1983, Animal Pack was developed to meet the needs of the world's most extreme athletes as well as the most extreme training sessions. The Ultimate Training Package is much more than just a multivitamin, but it is the credible, courageous foundation on which the most dedicated weightlifters and extreme athletes have built their diets."
+    },
+    {
+      "id": 2,
+      "name": "Artichoke Premium",
+      "price": "10",
+      "image": "./assets/images/artichoke-premium.jpg",
+      "stock": 5,
+      "type": "multivitamins",
+      "date": "2021/12/12",
+      "description": "Artichoke Premium is a supplement containing high quality artichoke extracts with 5% standardized cinnar content.Research has shown that the extract of artichoke leaves:Helps in detoxification"
+    },
+    {
+      "id": 3,
+      "name": "Argi Power 1500 Mega Caps",
+      "price": "30",
+      "image": "./assets/images/argi-power.jpg",
+      "stock": 12,
+      "type": "aminoacids",
+      "date": "2021/11/20",
+      "description": "Argi Power 1500 Mega Caps, mega capsules contain 1500 mg L-Arginine with the highest pharmaceutical quality in one capsule. How does L-Arginine HCl work and what is it used for? L-arginine is a dietary supplement that participates in many processes of formation of substances in the body: eg nitric oxide. Furthermore it provides the formamide group that serves in creatine biosynthesis.",
+      "discountPrice": "24"
+    },
+    {
+      "id": 4,
+      "name": "Beta-Alanine Xplode Powder",
+      "price": "28",
+      "image": "./assets/images/beta-alanine.jpg",
+      "stock": 6,
+      "type": "aminoacids",
+      "date": "2021/12/14",
+      "description": "Beta-Alanine Xplode Powder supplement is a preparation in the form of a powder with perfect solubility, which contains very high quality Beta-Alanine, enriched with vitamin B6 and L-Histidine."
+    },
+    {
+      "id": 5,
+      "name": "Dymatize Elite 100 % Whey",
+      "price": "65",
+      "image": "./assets/images/Chocolate-Fudge.jpg",
+      "stock": 3,
+      "type": "proteins",
+      "date": "2021/10/08",
+      "description": "The perfect whey protein anytime! Are you looking for a high value whey protein? Whether you seek to support muscle growth after an intense workout or simply seek to increase your daily protein intake."
+    },
+    {
+      "id": 6,
+      "name": "ON Gold Standard 100% Whey",
+      "price": "85",
+      "image": "./assets/images/gold-standard.jpg",
+      "stock": 6,
+      "type": "proteins",
+      "date": "2021/10/15",
+      "description": "Gold Standard 100% Whey is considered the best whey protein in the world based on its combination of flavor, high protein content, and easy digestion. Gold Standard 100% Whey contains whey isolated protein, or WPI. Rated with over 90% pure protein, WPI is known as the highest quality ingredient."
+    },
+    {
+      "id": 7,
+      "name": "BSN True Mass 1200",
+      "price": "75",
+      "image": "./assets/images/bsn-true-mass.png",
+      "stock": 4,
+      "type": "weight-gainers",
+      "date": "2021/12/16",
+      "description": "TRUE-MASS® 1200 contains the unique ultra premium protein formula to nourish an athlete's muscles with the essential building blocks of protein. The unique mix of carbohydrates provides the caloric support needed to support extreme physical activity, helping the body prepare as well as supporting regeneration from intense exercise. Carbohydrates and fats provide energy that burns quickly during strenuous physical activity",
+      "discountPrice": "64"
+    },
+    {
+      "id": 8,
+      "name": "Gain Bolic 6000G",
+      "price": "19",
+      "image": "./assets/images/gain-bolic.jpg",
+      "stock": 10,
+      "type": "weight-gainers",
+      "date": "2021/09/20",
+      "description": "It is a mixture of carbohydrates with different glycemic index with protein complexes that help increase muscle mass, enriched with carefully selected portions of creatine monohydrate and taurine. Creatine use helps increase physical capacity during short,high-intensity workouts. "
+    },
+    {
+      "id": 9,
+      "name": "Animal M-Stak",
+      "price": "64",
+      "image": "./assets/images/animal-m-stak.png",
+      "stock": 6,
+      "type": "testosterone-boosters",
+      "date": "2021/10/10",
+      "description": "What is Animal M-Stak? A natural, non-hormonal supplement designed for the most stubborn of all hard-gainers, from beginners to diehards themselves, we've been through it all. You can not gain another pound, the workouts are stagnant, the weights are static. This is hard-gainer syndrome, and from the thinnest ectomorphs to the most muscular endomorph, we’ve all been there."
+    },
+    {
+      "id": 10,
+      "name": "BCAA-X",
+      "price": "17",
+      "image": "./assets/images/bcaa-x.jpg",
+      "stock": 8,
+      "type": "aminoacids",
+      "date": "2021/12/12",
+      "description": "Branched chain amino acids (BCAAs) are an important group of essential amino acids consisting of Leucine, Isoleucine and Valine. BCAAs are among the nine essential amino acids for humans because our bodies cannot produce them.",
+      "discountPrice": "12"
+    },
+    {
+      "id": 11,
+      "name": "Beta- Carotene",
+      "price": "12",
+      "image": "./assets/images/beta-carotene.jpg",
+      "stock": 5,
+      "type": "multivitamins",
+      "date": "2021/11/05",
+      "description": "In nature, Beta Carotene is the precursor of vitamin A (inactive form). Plant carotenoids are the main dietary source of provitamin A.One molecule of Beta Carotene can be broken down by an intestinal enzyme into two molecules of Vitamin A."
+    },
+    {
+      "id": 12,
+      "name": "Daily Vita-min",
+      "price": "20",
+      "image": "./assets/images/daily-vitamin.jpg",
+      "stock": 0,
+      "type": "multivitamins",
+      "date": "2021/11/28",
+      "description": "Daily Vita-Min is an advanced multi-vitamin and mineral formula with 27 active ingredients! It contains a complex of B vitamins, vitamin C and a higher level of Vitamin D (up to 1000% NRV), plus essential minerals including Selenium, Zinc and Chromium."
+    },
+    {
+      "id": 13,
+      "name": "MuscleTech Nitro-Tech",
+      "price": "86",
+      "image": "./assets/images/muscle-tech.jpg",
+      "stock": 2,
+      "type": "proteins",
+      "date": "2021/07/20",
+      "description": "NITRO-TECH® is a scientifically created whey protein formula that improves with the most studied form of creatine for results and better muscle and strength. It also contains whey protein, which is the most popular type of protein."
+    },
+    {
+      "id": 14,
+      "name": "Scitec 100 % Kompleks Casein",
+      "price": "32",
+      "image": "./assets/images/scitec.jpg",
+      "stock": 1,
+      "type": "proteins",
+      "date": "2021/06/10",
+      "description": "100% Casein Complex is a blend of milk proteins with predominant micellar casein, exclusively from caseit milk proteins. Casein is rich in branched-chain essential amino acids (BCAAs) and has a very high content (more than serum) of L-glutamine, the most abundant free-form amino acid in human blood.",
+      "discountPrice": "21"
+    },
+    {
+      "id": 15,
+      "name": "Blackweiler Shred",
+      "price": "40",
+      "image": "./assets/images/blackweiler-shred.jpg",
+      "stock": 0,
+      "type": "pre-workouts",
+      "date": "2021/06/15",
+      "description": "You will feel the dark power of BLACKWEILER SHRED, which will illuminate you from within. Nothing can stop you now before you undergo the best training in your life! You stand together, you and your new ally in the fight to build your dreams. Remember one thing - you will not be prepared for what will happen now! Your muscles will fill with blood, your body will burst into sweat and your mind will open up to new sensations!"
+    },
+    {
+      "id": 16,
+      "name": "L-carnitine 1500 extreme mega caps",
+      "price": "45",
+      "image": "./assets/images/carnitine.jpg",
+      "stock": 3,
+      "type": "weight-burner",
+      "date": "2021/06/17",
+      "description": "1000 mg L- Carnitine in its purest form which transports free fatty acids to the mitochondria where the oxygenation process takes place."
+    },
+    {
+      "id": 17,
+      "name": "Scitec Shredex",
+      "price": "35",
+      "image": "./assets/images/shredex.jpg",
+      "stock": 5,
+      "type": "weight-burner",
+      "date": "2021/08/14",
+      "description": "SHREDEX is a stimulant, Sinefirine for weight loss and body management. It provides 16 ingredients, including L-Carnitine, Hydroxycitric Acid (HCA) from Garcinia Cambodia extract and Epigalocatechin galate (EGCG) from Green Tea Extract and contributes to body weight control and hunger."
+    },
+    {
+      "id": 18,
+      "name": "Scitec Restyle",
+      "price": "30",
+      "image": "./assets/images/restyle.jpg",
+      "stock": 4,
+      "type": "weight-burner",
+      "date": "2021/09/17",
+      "description": "When you want to get in better shape, you need to reform your life: your eating habits and your level of physical activity. When you do, we suggest you get our ReStyle formula too! It is a complex of 12 ingredients, stimulus of body weight and body management.",
+      "discountPrice": "16"
+    },
+    {
+      "id": 19,
+      "name": "Caffeine 100 Caps",
+      "price": "10",
+      "image": "./assets/images/cafeine.jpg",
+      "stock": 6,
+      "type": "weight-burner",
+      "date": "2021/09/10",
+      "description": "Coffee has hundreds of chemical ingredients in it, some of which can counteract the positive effects of caffeine. However, with pure caffeine, the desired doses can be obtained without any possible hindrance. Our caffeine capsules allow an efficient, accurate and high-dose use."
+    },
+    {
+      "id": 20,
+      "name": "Creatine monohydrate powder",
+      "price": "25",
+      "image": "./assets/images/creatine-powder.jpg",
+      "stock": 1,
+      "type": "creatine",
+      "date": "2021/09/19",
+      "description": "Creatine monohydrate powder is a supplement that aims to meet the expenditures that come from intense muscular exercise, especially in athletes. This product delivers a pure pharmaceutical grade monohydrate creatine."
+    },
+    {
+      "id": 21,
+      "name": "MuscleTech Platinum 100% Creatine",
+      "price": "30",
+      "image": "./assets/images/muscletech-platinum.jpg",
+      "stock": 2,
+      "type": "creatine",
+      "date": "2021/12/17",
+      "description": "Ultra-pure micronized creatine that helps define defined muscle growth!Pure creatine monohydrate powder"
+    },
+    {
+      "id": 22,
+      "name": "Scitec 100% Creatine Monohydrate",
+      "price": "15",
+      "image": "./assets/images/scitec-creatine.jpg",
+      "stock": 4,
+      "type": "creatine",
+      "date": "2021/06/05",
+      "description": "Creatine is an organic nitric acid that occurs in vertebrates. Approximately 95% of creatine in the body is found in skeletal muscle. It helps supply energy to all cells, mainly muscles, by increasing the formation of Adenosine TriPhosphate (ATP) which acts as a cellular energy reserve, for muscle contractions.",
+      "discountPrice": "7"
+    },
+    {
+      "id": 23,
+      "name": "Scitec Jumbo",
+      "price": "90",
+      "image": "./assets/images/jumbo.jpg",
+      "stock": 1,
+      "type": "weight-gainers",
+      "date": "2021/05/13",
+      "description": "It has been proven that people overestimate their current nutrient intake when trying to gain muscle mass. In other words, they eat less than they think they need sustainable and significant progress!"
+    },
+    {
+      "id": 24,
+      "name": "ON Serious Mass",
+      "price": "90",
+      "image": "./assets/images/seriousmass.jpg",
+      "stock": 3,
+      "type": "weight-gainers",
+      "date": "2021/03/10",
+      "description": "A serious weight gain requires serious calories. However, those who need extra calories often find it difficult to consume those calories. For those who aspire to be bigger but who have a very active metabolism or have little appetite make consuming enough calories just through whole foods a real challenge. With SERIUOS MAS, you will have nothing to lose and much to gain.",
+      "discountPrice": "60"
+    },
+    {
+      "id": 25,
+      "name": "MuscleTech Mass-Tech Extreme 2000",
+      "price": "70",
+      "image": "./assets/images/extreme.jpg",
+      "stock": 4,
+      "type": "weight-gainers",
+      "date": "2021/01/16",
+      "description": "Bodybuilders and weightlifters are always looking for a supplement to help them break the doors of size game. Whether you are stuck in a frustrating mass building program or just have a hard time building muscle mass, you now have a help to break your blockade. It is called MASS-TECH EXTREME 2000!"
+    },
+    {
+      "id": 26,
+      "name": "Tribusterone 90",
+      "price": "30",
+      "image": "./assets/images/tribusteron.jpg",
+      "stock": 2,
+      "type": "testosterone-boosters",
+      "date": "2021/04/25",
+      "description": "Contains an aqueous, powdered extract of a plant root.Source of plant steroids, alkaloids and flavonoids."
+    },
+    {
+      "id": 27,
+      "name": "Stanabol-X",
+      "price": "45",
+      "image": "./assets/images/stanabol-X.jpg",
+      "stock": 8,
+      "type": "testosterone-boosters",
+      "date": "2021/07/20",
+      "description": "Stanabol - X is a synergistic complex of 25 known anabolic substrates, Anabolic Stack modulates testosterone and other anabolic hormones such as insulin, growth hormone HGH and IGF-1 and thyroid hormones T3 and T4.",
+      "discountPrice": "33"
+    },
+    {
+      "id": 28,
+      "name": "Testo Punch",
+      "price": "35",
+      "image": "./assets/images/testo-punch.jpg",
+      "stock": 6,
+      "type": "testosterone-boosters",
+      "date": "2021/06/17",
+      "description": "TESTO PUNCH is an ultra-sophisticated, comprehensive matrix of Testosterone, Estrogen and Libido, with 12 powerful carefully selected ingredients! In addition to DAA (D-Aspartic Acid) and herbal ingredients - including Maca - it provides important vitamins and minerals!"
+    },
+    {
+      "id": 29,
+      "name": "Scitec 100% Plant Protein",
+      "price": "22",
+      "image": "./assets/images/plant-protein.jpg",
+      "stock": 5,
+      "type": "proteins",
+      "date": "2021/03/21",
+      "description": "Pea protein is among the highest plant proteins in terms of nutritional value. According to scientific data the main amino acid profile makes it ideal for human consumption. The emergence of special amino acids that positively affect nutrition make it ideal for athletes."
+    },
+    {
+      "id": 30,
+      "name": "Scitec 100% Whey Isolate",
+      "price": "65",
+      "image": "./assets/images/whey-isolate.jpg",
+      "stock": 5,
+      "type": "proteins",
+      "date": "2021/07/29",
+      "description": "100% Whey Isolate is an excellent quality whey protein isolated and fortified with the fastest absorption hydrolysis of whey. This formula is lower in carbohydrates than ever before!"
+    }
+  ],
+  "users": [
+    {
+      "firstName": "Jurgen",
+      "lastName": "Hasmeta",
+      "id": "jurgenhasmeta@email.com",
+      "password": "jurgen",
+      "bag": [
         {
-            "id": 1,
-            "name": "Animal Pak Powder",
-            "price": "55",
-            "image": "./assets/images/animal-pak-powder.png",
-            "stock": 7,
-            "type": "multivitamins",
-            "date": "2021/12/20",
-            "description": "The True Original since 1983, Animal Pack was developed to meet the needs of the world's most extreme athletes as well as the most extreme training sessions. The Ultimate Training Package is much more than just a multivitamin, but it is the credible, courageous foundation on which the most dedicated weightlifters and extreme athletes have built their diets."
+          "id": 1,
+          "quantity": 3
         },
         {
-            "id": 2,
-            "name": "Artichoke Premium",
-            "price": "10",
-            "image": "./assets/images/artichoke-premium.jpg",
-            "stock": 5,
-            "type": "multivitamins",
-            "date": "2021/12/12",
-            "description": "Artichoke Premium is a supplement containing high quality artichoke extracts with 5% standardized cinnar content.Research has shown that the extract of artichoke leaves:Helps in detoxification"
-        },
-        {
-            "id": 3,
-            "name": "Argi Power 1500 Mega Caps",
-            "price": "30",
-            "image": "./assets/images/argi-power.jpg",
-            "stock": 12,
-            "type": "aminoacids",
-            "date": "2021/11/20",
-            "description": "Argi Power 1500 Mega Caps, mega capsules contain 1500 mg L-Arginine with the highest pharmaceutical quality in one capsule. How does L-Arginine HCl work and what is it used for? L-arginine is a dietary supplement that participates in many processes of formation of substances in the body: eg nitric oxide. Furthermore it provides the formamide group that serves in creatine biosynthesis.",
-            "discountPrice": "24"
-        },
-        {
-            "id": 4,
-            "name": "Beta-Alanine Xplode Powder",
-            "price": "28",
-            "image": "./assets/images/beta-alanine.jpg",
-            "stock": 6,
-            "type": "aminoacids",
-            "date": "2021/12/14",
-            "description": "Beta-Alanine Xplode Powder supplement is a preparation in the form of a powder with perfect solubility, which contains very high quality Beta-Alanine, enriched with vitamin B6 and L-Histidine."
-        },
-        {
-            "id": 5,
-            "name": "Dymatize Elite 100 % Whey",
-            "price": "65",
-            "image": "./assets/images/Chocolate-Fudge.jpg",
-            "stock": 3,
-            "type": "proteins",
-            "date": "2021/10/08",
-            "description": "The perfect whey protein anytime! Are you looking for a high value whey protein? Whether you seek to support muscle growth after an intense workout or simply seek to increase your daily protein intake."
-        },
-        {
-            "id": 6,
-            "name": "ON Gold Standard 100% Whey",
-            "price": "85",
-            "image": "./assets/images/gold-standard.jpg",
-            "stock": 6,
-            "type": "proteins",
-            "date": "2021/10/15",
-            "description": "Gold Standard 100% Whey is considered the best whey protein in the world based on its combination of flavor, high protein content, and easy digestion. Gold Standard 100% Whey contains whey isolated protein, or WPI. Rated with over 90% pure protein, WPI is known as the highest quality ingredient."
-        },
-        {
-            "id": 7,
-            "name": "BSN True Mass 1200",
-            "price": "75",
-            "image": "./assets/images/bsn-true-mass.png",
-            "stock": 4,
-            "type": "weight-gainers",
-            "date": "2021/12/16",
-            "description": "TRUE-MASS® 1200 contains the unique ultra premium protein formula to nourish an athlete's muscles with the essential building blocks of protein. The unique mix of carbohydrates provides the caloric support needed to support extreme physical activity, helping the body prepare as well as supporting regeneration from intense exercise. Carbohydrates and fats provide energy that burns quickly during strenuous physical activity",
-            "discountPrice": "64"
-        },
-        {
-            "id": 8,
-            "name": "Gain Bolic 6000G",
-            "price": "19",
-            "image": "./assets/images/gain-bolic.jpg",
-            "stock": 10,
-            "type": "weight-gainers",
-            "date": "2021/09/20",
-            "description": "It is a mixture of carbohydrates with different glycemic index with protein complexes that help increase muscle mass, enriched with carefully selected portions of creatine monohydrate and taurine. Creatine use helps increase physical capacity during short,high-intensity workouts. "
-        },
-        {
-            "id": 9,
-            "name": "Animal M-Stak",
-            "price": "64",
-            "image": "./assets/images/animal-m-stak.png",
-            "stock": 6,
-            "type": "testosterone-boosters",
-            "date": "2021/10/10",
-            "description": "What is Animal M-Stak? A natural, non-hormonal supplement designed for the most stubborn of all hard-gainers, from beginners to diehards themselves, we've been through it all. You can not gain another pound, the workouts are stagnant, the weights are static. This is hard-gainer syndrome, and from the thinnest ectomorphs to the most muscular endomorph, we’ve all been there."
-        },
-        {
-            "id": 10,
-            "name": "BCAA-X",
-            "price": "17",
-            "image": "./assets/images/bcaa-x.jpg",
-            "stock": 8,
-            "type": "aminoacids",
-            "date": "2021/12/12",
-            "description": "Branched chain amino acids (BCAAs) are an important group of essential amino acids consisting of Leucine, Isoleucine and Valine. BCAAs are among the nine essential amino acids for humans because our bodies cannot produce them.",
-            "discountPrice": "12"
-        },
-        {
-            "id": 11,
-            "name": "Beta- Carotene",
-            "price": "12",
-            "image": "./assets/images/beta-carotene.jpg",
-            "stock": 10,
-            "type": "multivitamins",
-            "date": "2021/11/05",
-            "description": "In nature, Beta Carotene is the precursor of vitamin A (inactive form). Plant carotenoids are the main dietary source of provitamin A.One molecule of Beta Carotene can be broken down by an intestinal enzyme into two molecules of Vitamin A."
-        },
-        {
-            "id": 12,
-            "name": "Daily Vita-min",
-            "price": "20",
-            "image": "./assets/images/daily-vitamin.jpg",
-            "stock": 0,
-            "type": "multivitamins",
-            "date": "2021/11/28",
-            "description": "Daily Vita-Min is an advanced multi-vitamin and mineral formula with 27 active ingredients! It contains a complex of B vitamins, vitamin C and a higher level of Vitamin D (up to 1000% NRV), plus essential minerals including Selenium, Zinc and Chromium."
-        },
-        {
-            "id": 13,
-            "name": "MuscleTech Nitro-Tech",
-            "price": "86",
-            "image": "./assets/images/muscle-tech.jpg",
-            "stock": 2,
-            "type": "proteins",
-            "date": "2021/07/20",
-            "description": "NITRO-TECH® is a scientifically created whey protein formula that improves with the most studied form of creatine for results and better muscle and strength. It also contains whey protein, which is the most popular type of protein."
-        },
-        {
-            "id": 14,
-            "name": "Scitec 100 % Kompleks Casein",
-            "price": "32",
-            "image": "./assets/images/scitec.jpg",
-            "stock": 1,
-            "type": "proteins",
-            "date": "2021/06/10",
-            "description": "100% Casein Complex is a blend of milk proteins with predominant micellar casein, exclusively from caseit milk proteins. Casein is rich in branched-chain essential amino acids (BCAAs) and has a very high content (more than serum) of L-glutamine, the most abundant free-form amino acid in human blood.",
-            "discountPrice": "21"
-        },
-        {
-            "id": 15,
-            "name": "Blackweiler Shred",
-            "price": "40",
-            "image": "./assets/images/blackweiler-shred.jpg",
-            "stock": 0,
-            "type": "pre-workouts",
-            "date": "2021/06/15",
-            "description": "You will feel the dark power of BLACKWEILER SHRED, which will illuminate you from within. Nothing can stop you now before you undergo the best training in your life! You stand together, you and your new ally in the fight to build your dreams. Remember one thing - you will not be prepared for what will happen now! Your muscles will fill with blood, your body will burst into sweat and your mind will open up to new sensations!"
-        },
-        {
-            "id": 16,
-            "name": "L-carnitine 1500 extreme mega caps",
-            "price": "45",
-            "image": "./assets/images/carnitine.jpg",
-            "stock": 3,
-            "type": "weight-burner",
-            "date": "2021/06/17",
-            "description": "1000 mg L- Carnitine in its purest form which transports free fatty acids to the mitochondria where the oxygenation process takes place."
-        },
-        {
-            "id": 17,
-            "name": "Scitec Shredex",
-            "price": "35",
-            "image": "./assets/images/shredex.jpg",
-            "stock": 5,
-            "type": "weight-burner",
-            "date": "2021/08/14",
-            "description": "SHREDEX is a stimulant, Sinefirine for weight loss and body management. It provides 16 ingredients, including L-Carnitine, Hydroxycitric Acid (HCA) from Garcinia Cambodia extract and Epigalocatechin galate (EGCG) from Green Tea Extract and contributes to body weight control and hunger."
-        },
-        {
-            "id": 18,
-            "name": "Scitec Restyle",
-            "price": "30",
-            "image": "./assets/images/restyle.jpg",
-            "stock": 4,
-            "type": "weight-burner",
-            "date": "2021/09/17",
-            "description": "When you want to get in better shape, you need to reform your life: your eating habits and your level of physical activity. When you do, we suggest you get our ReStyle formula too! It is a complex of 12 ingredients, stimulus of body weight and body management.",
-            "discountPrice": "16"
-        },
-        {
-            "id": 19,
-            "name": "Caffeine 100 Caps",
-            "price": "10",
-            "image": "./assets/images/cafeine.jpg",
-            "stock": 6,
-            "type": "weight-burner",
-            "date": "2021/09/10",
-            "description": "Coffee has hundreds of chemical ingredients in it, some of which can counteract the positive effects of caffeine. However, with pure caffeine, the desired doses can be obtained without any possible hindrance. Our caffeine capsules allow an efficient, accurate and high-dose use."
-        },
-        {
-            "id": 20,
-            "name": "Creatine monohydrate powder",
-            "price": "25",
-            "image": "./assets/images/creatine-powder.jpg",
-            "stock": 1,
-            "type": "creatine",
-            "date": "2021/09/19",
-            "description": "Creatine monohydrate powder is a supplement that aims to meet the expenditures that come from intense muscular exercise, especially in athletes. This product delivers a pure pharmaceutical grade monohydrate creatine."
-        },
-        {
-            "id": 21,
-            "name": "MuscleTech Platinum 100% Creatine",
-            "price": "30",
-            "image": "./assets/images/muscletech-platinum.jpg",
-            "stock": 2,
-            "type": "creatine",
-            "date": "2021/12/17",
-            "description": "Ultra-pure micronized creatine that helps define defined muscle growth!Pure creatine monohydrate powder"
-        },
-        {
-            "id": 22,
-            "name": "Scitec 100% Creatine Monohydrate",
-            "price": "15",
-            "image": "./assets/images/scitec-creatine.jpg",
-            "stock": 7,
-            "type": "creatine",
-            "date": "2021/06/05",
-            "description": "Creatine is an organic nitric acid that occurs in vertebrates. Approximately 95% of creatine in the body is found in skeletal muscle. It helps supply energy to all cells, mainly muscles, by increasing the formation of Adenosine TriPhosphate (ATP) which acts as a cellular energy reserve, for muscle contractions.",
-            "discountPrice": "7"
-        },
-        {
-            "id": 23,
-            "name": "Scitec Jumbo",
-            "price": "90",
-            "image": "./assets/images/jumbo.jpg",
-            "stock": 1,
-            "type": "weight-gainers",
-            "date": "2021/05/13",
-            "description": "It has been proven that people overestimate their current nutrient intake when trying to gain muscle mass. In other words, they eat less than they think they need sustainable and significant progress!"
-        },
-        {
-            "id": 24,
-            "name": "ON Serious Mass",
-            "price": "90",
-            "image": "./assets/images/seriousmass.jpg",
-            "stock": 3,
-            "type": "weight-gainers",
-            "date": "2021/03/10",
-            "description": "A serious weight gain requires serious calories. However, those who need extra calories often find it difficult to consume those calories. For those who aspire to be bigger but who have a very active metabolism or have little appetite make consuming enough calories just through whole foods a real challenge. With SERIUOS MAS, you will have nothing to lose and much to gain.",
-            "discountPrice": "60"
-        },
-        {
-            "id": 25,
-            "name": "MuscleTech Mass-Tech Extreme 2000",
-            "price": "70",
-            "image": "./assets/images/extreme.jpg",
-            "stock": 4,
-            "type": "weight-gainers",
-            "date": "2021/01/16",
-            "description": "Bodybuilders and weightlifters are always looking for a supplement to help them break the doors of size game. Whether you are stuck in a frustrating mass building program or just have a hard time building muscle mass, you now have a help to break your blockade. It is called MASS-TECH EXTREME 2000!"
-        },
-        {
-            "id": 26,
-            "name": "Tribusterone 90",
-            "price": "30",
-            "image": "./assets/images/tribusteron.jpg",
-            "stock": 2,
-            "type": "testosterone-boosters",
-            "date": "2021/04/25",
-            "description": "Contains an aqueous, powdered extract of a plant root.Source of plant steroids, alkaloids and flavonoids."
-        },
-        {
-            "id": 27,
-            "name": "Stanabol-X",
-            "price": "45",
-            "image": "./assets/images/stanabol-X.jpg",
-            "stock": 8,
-            "type": "testosterone-boosters",
-            "date": "2021/07/20",
-            "description": "Stanabol - X is a synergistic complex of 25 known anabolic substrates, Anabolic Stack modulates testosterone and other anabolic hormones such as insulin, growth hormone HGH and IGF-1 and thyroid hormones T3 and T4.",
-            "discountPrice": "33"
-        },
-        {
-            "id": 28,
-            "name": "Testo Punch",
-            "price": "35",
-            "image": "./assets/images/testo-punch.jpg",
-            "stock": 6,
-            "type": "testosterone-boosters",
-            "date": "2021/06/17",
-            "description": "TESTO PUNCH is an ultra-sophisticated, comprehensive matrix of Testosterone, Estrogen and Libido, with 12 powerful carefully selected ingredients! In addition to DAA (D-Aspartic Acid) and herbal ingredients - including Maca - it provides important vitamins and minerals!"
-        },
-        {
-            "id": 29,
-            "name": "Scitec 100% Plant Protein",
-            "price": "22",
-            "image": "./assets/images/plant-protein.jpg",
-            "stock": 5,
-            "type": "proteins",
-            "date": "2021/03/21",
-            "description": "Pea protein is among the highest plant proteins in terms of nutritional value. According to scientific data the main amino acid profile makes it ideal for human consumption. The emergence of special amino acids that positively affect nutrition make it ideal for athletes."
-        },
-        {
-            "id": 30,
-            "name": "Scitec 100% Whey Isolate",
-            "price": "65",
-            "image": "./assets/images/whey-isolate.jpg",
-            "stock": 5,
-            "type": "proteins",
-            "date": "2021/07/29",
-            "description": "100% Whey Isolate is an excellent quality whey protein isolated and fortified with the fastest absorption hydrolysis of whey. This formula is lower in carbohydrates than ever before!"
+          "id": 3,
+          "quantity": 1
         }
-    ],
-    "users": [
+      ]
+    },
+    {
+      "firstName": "Desintila",
+      "lastName": "Luzi",
+      "id": "desintila@email.com",
+      "password": "desintila",
+      "bag": [
         {
-            "firstName": "Jurgen",
-            "lastName": "Hasmeta",
-            "id": "jurgenhasmeta@email.com",
-            "password": "jurgen",
-            "bag": [
-                {
-                    "id": 1,
-                    "quantity": 3
-                },
-                {
-                    "id": 3,
-                    "quantity": 1
-                }
-            ]
+          "id": 2,
+          "quantity": 2
         },
         {
-            "firstName": "Desintila",
-            "lastName": "Luzi",
-            "id": "desintila@email.com",
-            "password": "desintila",
-            "bag": [
-                {
-                    "id": 2,
-                    "quantity": 2
-                },
-                {
-                    "id": 3,
-                    "quantity": 2
-                },
-                {
-                    "id": 12,
-                    "quantity": 1
-                }
-            ]
+          "id": 3,
+          "quantity": 2
+        },
+        {
+          "id": 12,
+          "quantity": 1
         }
-    ]
+      ]
+    }
+  ]
 }
