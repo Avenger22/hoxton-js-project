@@ -136,6 +136,20 @@ function createUser(name, lastname, email, password) {
         return resp.json()
     })
 }
+
+function subscribe(email) {
+    return fetch('http://localhost:3000/subscribe', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: email
+        })
+    }).then(function (resp) {
+        return resp.json()
+    })
+}
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -2149,6 +2163,7 @@ function renderPopUpModal() {
 
     btnPopEl.addEventListener('click', function (event) {
         event.preventDefault()
+        subscribe(inputPopEl.value)
         alert('The newsletter is sended to your email')
     })
 
