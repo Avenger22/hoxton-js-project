@@ -118,6 +118,24 @@ function updateStock(item) {
         body: JSON.stringify(item)
     })
 }
+function createUser(name, lastname, email, password) {
+
+    return fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstName: name,
+            lastname: lastname,
+            id: email,
+            password: password,
+            bag: []
+        })
+    }).then(function (resp) {
+        return resp.json()
+    })
+}
 // #endregion
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -163,10 +181,10 @@ function listenToPreviousBtn(prevBtnEl) {
 
     prevBtnEl.addEventListener('click', function () {
         if (state.page > 1) {
-          state.page--
-          render()
+            state.page--
+            render()
         }
-      })
+    })
 
 }
 
@@ -174,10 +192,10 @@ function listenToNextBtn(nextBtnEl) {
 
     nextBtnEl.addEventListener('click', function () {
         if (state.page * state.perPage < state.items.length) {
-          state.page++
-          render()
+            state.page++
+            render()
         }
-      })
+    })
 
 }
 // #endregion
@@ -308,56 +326,59 @@ function listenToRemoveBag(buttonElParam) {
 function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 
     buttonItemParam.addEventListener('click', function (event) {
+        if (state.userCatcher.length > 0) {
+            event.preventDefault()
+            console.log("item button is Clicked, so now its ready to go to bag from page")
 
-        event.preventDefault()
-        console.log("item button is Clicked, so now its ready to go to bag from page")
-
-        if (itemObjectParam.stock === 0) {
-            console.log('We dont add items to bag cause no stock')
-            alert('We dont add items to bag cause no stock')
-        }
-
-        else {
-
-            state.stockShowClass = 'show'
-            spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
-
-
-            spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
-
-            if (itemObjectParam.stock < 0) {
-                itemObjectParam.stock = 0 //removing negative values from span and stock ruining the state object
+            if (itemObjectParam.stock === 0) {
+                console.log('We dont add items to bag cause no stock')
+                alert('We dont add items to bag cause no stock')
             }
 
             else {
-                state.stockSpanValue += 1
+                state.stockShowClass = 'show'
+                spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
+
+
+                spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
+
+                if (itemObjectParam.stock < 0) {
+                    itemObjectParam.stock = 0 //removing negative values from span and stock ruining the state object
+                }
+
+                else {
+                    state.stockSpanValue += 1
+                }
+
+                let quantityBag = 0
+                quantityBag++
+
+                const itemNameValue = itemObjectParam.name
+                const itemPrice = itemObjectParam.price
+                const itemDiscountPrice = itemObjectParam.discountPrice
+
+                const objectBag = {
+                    itemName: itemNameValue,
+                    quantity: quantityBag,
+                    price: itemPrice,
+                    discountPrice: itemDiscountPrice
+                }
+
+                //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
+                state.bagItemQuantity.push(objectBag)
+                state.bagItems.push(itemObjectParam)
+
+                state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
+
+                //experimental
+                calculateTotalAddingAmount()
+                render()
+
             }
-
-            let quantityBag = 0
-            quantityBag++
-
-            const itemNameValue = itemObjectParam.name
-            const itemPrice = itemObjectParam.price
-            const itemDiscountPrice = itemObjectParam.discountPrice
-
-            const objectBag = {
-                itemName: itemNameValue,
-                quantity: quantityBag,
-                price: itemPrice,
-                discountPrice: itemDiscountPrice
-            }
-
-            //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
-            state.bagItemQuantity.push(objectBag)
-            state.bagItems.push(itemObjectParam)
-            state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
-
-            //experimental
-            calculateTotalAddingAmount()
-            render()
-
         }
-
+        else {
+            alert('Account required to add products to cart')
+        }
     })
 
 }
@@ -571,7 +592,6 @@ function listenToSelectChangesSearch(categoriesSelectEl) {
 
 // #region 'filter modals'
 function getBagArrayByNameFromState(objectNameParam) {
-
     let quantityBasedOnName = []
     return quantityBasedOnName = state.bagItemQuantity.filter((object) => object.itemName === objectNameParam)
 
@@ -1770,7 +1790,7 @@ function showItems() {
     return itemToDisplaySorted.slice(
         (state.page - 1) * state.perPage,
         state.page * state.perPage
-      )
+    )
 
 }
 // #endregion
@@ -2150,6 +2170,15 @@ function renderSignUpModal() {
     nameSignUpEl.setAttribute('placeholder', 'Enter name:')
     nameSignUpEl.setAttribute('required', '')
 
+    const labelLastNameSignUpEl = document.createElement('label')
+    labelLastNameSignUpEl.textContent = 'Last Name '
+
+    const lastnameSignUpEl = document.createElement('input')
+    lastnameSignUpEl.setAttribute('name', 'lastname-signUp')
+    lastnameSignUpEl.setAttribute('type', 'text')
+    lastnameSignUpEl.setAttribute('placeholder', 'Enter last name:')
+    lastnameSignUpEl.setAttribute('required', '')
+
     const labelEmailSignUpEl = document.createElement('label')
     labelEmailSignUpEl.textContent = 'Email: '
 
@@ -2174,7 +2203,7 @@ function renderSignUpModal() {
     const btnRemoveSignUp = document.createElement('button')
     btnRemoveSignUp.textContent = 'X'
 
-    formSignUpEl.append(labelNameSignUpEl, nameSignUpEl, labelEmailSignUpEl, emailSignUpEl,
+    formSignUpEl.append(labelNameSignUpEl, nameSignUpEl, labelLastNameSignUpEl, lastnameSignUpEl, labelEmailSignUpEl, emailSignUpEl,
         labelPasswordSignUpEl, passwordSignUpEl, btnSignUp, btnRemoveSignUp)
 
     divSignUpModalEl.append(formSignUpEl)
@@ -2184,6 +2213,10 @@ function renderSignUpModal() {
 
     btnSignUp.addEventListener('click', function (event) {
         event.preventDefault()
+
+        createUser(nameSignUpEl.value, lastnameSignUpEl.value, emailSignUpEl.value, passwordSignUpEl.value).then(function (user) {
+            state.users.push(user)
+        })
         alert('We are sending the verification code to the email')
     })
 
@@ -2293,6 +2326,7 @@ function renderAboutUsModal() {
 }
 // #endregion
 
+
 // #region 'RENDER PAGE HTML'
 function renderHeader() {
 
@@ -2396,7 +2430,11 @@ function renderHeader() {
     spanButtonUser.textContent = state.userName
 
     userButton.append(userIconEl, spanButtonUser)
-
+    userButton.addEventListener('click', function () {
+        state.userCatcher = []
+        state.userName = null
+        render()
+    })
 
     const shoppingBagButton = document.createElement('button')
     shoppingBagButton.setAttribute('class', 'button-image')
@@ -2630,12 +2668,11 @@ function renderMain() {
         const cartButton = document.createElement('button')
         cartButton.textContent = 'Add to cart'
         cartButton.addEventListener('click', function () {
-
-            item.stock--
-
-            updateStock(item)
-
-            render()
+            if (state.userCatcher.length > 0) {
+                item.stock--
+                updateStock(item)
+                render()
+            }
         })
 
 
