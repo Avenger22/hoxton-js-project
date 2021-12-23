@@ -370,15 +370,16 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 
                 state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
 
-                //experimental
                 calculateTotalAddingAmount()
                 render()
 
             }
         }
+
         else {
             alert('Account required to add products to cart')
         }
+
     })
 
 }
@@ -1787,10 +1788,12 @@ function showItems() {
     }
     // #endregion
 
-    return itemToDisplaySorted.slice(
-        (state.page - 1) * state.perPage,
-        state.page * state.perPage
-    )
+    // return itemToDisplaySorted.slice(
+    //     (state.page - 1) * state.perPage,
+    //     state.page * state.perPage
+    // )
+
+    return itemToDisplaySorted
 
 }
 // #endregion
@@ -2325,7 +2328,6 @@ function renderAboutUsModal() {
 
 }
 // #endregion
-
 
 // #region 'RENDER PAGE HTML'
 function renderHeader() {
@@ -2885,7 +2887,7 @@ function renderFooter() {
 
 }
 
-function renderMainItemClicked(storeItemParam, itemWrapperParam, cartButtonParam, itemParam) {
+function renderMainItemClicked(storeItemParam, itemWrapperParam, itemParam) {
 
     itemWrapperParam.innerHTML = ''
 
