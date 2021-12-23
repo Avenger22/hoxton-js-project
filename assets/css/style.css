@@ -420,19 +420,14 @@ footer.footer-menu {
 }
 
 .store-item:hover {
-    /* border: 1px solid transparent; */
-    transform: scale(1.1);
-    margin-right: 3%;
-    margin-left: 3%;
-    transition: 1s;
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    -ms-transition: 1s;
-    -o-transition: 1s;
+    border: 1px solid #d40a0a;
+    margin-right: 2%;
+    margin-left: 2%;
+    transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
 }
 
 .store-item:hover .span-2 {
@@ -825,8 +820,8 @@ span.new-item-date {
     grid-gap: 35px;
 
     background-color: #f1f1f6;
-    height: 350px;
-    width: 550px;
+    height: 450px;
+    width: 650px;
 
     place-content: center;
     place-items: center;
@@ -891,20 +886,26 @@ span.new-item-date {
     grid-gap: 35px;
 
     background-color: #f1f1f6;
-    height: 350px;
-    width: 550px;
+    height: 550px;
+    width: 650px;
 
     place-content: center;
     place-items: center;
     position: relative;
 }
+
 .remove-about{
     position: absolute;
     top:0;
     right: 0;
     padding: 0.2rem;
+    color: #fff;
+    background-color: #d40a0a;
+    outline: none;
+    border: none;
 }
-.wrapper-subs {
+
+.modal-about-us .wrapper-subs {
     display: grid;
     grid-template-rows: 1fr;
     place-items: center;
@@ -914,6 +915,19 @@ span.new-item-date {
     margin-top: 2rem;
     font-family: sans-serif;
     line-height: 22px;
+}
+
+.modal-about-us .wrapper-subs p {
+    font-size: 16px;
+    font-weight: 700;
+    width: 60ch;
+}
+
+.modal-about-us .wrapper-subs span {
+    font-size: 26px;
+    font-weight: 900;
+    padding-bottom: 50px;
+    color: #d40a0a;
 }
 /* #endregion /*
 
