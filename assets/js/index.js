@@ -118,8 +118,8 @@ function updateStock(item) {
         body: JSON.stringify(item)
     })
 }
-function createUser(name, lastname, email, password) {
 
+function createUser(name, lastname, email, password) {
     return fetch('http://localhost:3000/users', {
         method: 'POST',
         headers: {
@@ -135,6 +135,7 @@ function createUser(name, lastname, email, password) {
     }).then(function (resp) {
         return resp.json()
     })
+
 }
 // #endregion
 

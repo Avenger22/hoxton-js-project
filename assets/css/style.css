@@ -820,8 +820,8 @@ span.new-item-date {
     grid-gap: 35px;
 
     background-color: #f1f1f6;
-    height: 350px;
-    width: 550px;
+    height: 450px;
+    width: 650px;
 
     place-content: center;
     place-items: center;
@@ -886,20 +886,26 @@ span.new-item-date {
     grid-gap: 35px;
 
     background-color: #f1f1f6;
-    height: 350px;
-    width: 550px;
+    height: 550px;
+    width: 650px;
 
     place-content: center;
     place-items: center;
     position: relative;
 }
+
 .remove-about{
     position: absolute;
     top:0;
     right: 0;
     padding: 0.2rem;
+    color: #fff;
+    background-color: #d40a0a;
+    outline: none;
+    border: none;
 }
-.wrapper-subs {
+
+.modal-about-us .wrapper-subs {
     display: grid;
     grid-template-rows: 1fr;
     place-items: center;
@@ -909,6 +915,19 @@ span.new-item-date {
     margin-top: 2rem;
     font-family: sans-serif;
     line-height: 22px;
+}
+
+.modal-about-us .wrapper-subs p {
+    font-size: 16px;
+    font-weight: 700;
+    width: 60ch;
+}
+
+.modal-about-us .wrapper-subs span {
+    font-size: 26px;
+    font-weight: 900;
+    padding-bottom: 50px;
+    color: #d40a0a;
 }
 /* #endregion /*
 
