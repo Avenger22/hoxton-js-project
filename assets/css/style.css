@@ -420,19 +420,14 @@ footer.footer-menu {
 }
 
 .store-item:hover {
-    /* border: 1px solid transparent; */
-    transform: scale(1.1);
-    margin-right: 3%;
-    margin-left: 3%;
-    transition: 1s;
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    -ms-transition: 1s;
-    -o-transition: 1s;
+    border: 1px solid #d40a0a;
+    margin-right: 2%;
+    margin-left: 2%;
+    transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
 }
 
 .store-item:hover .span-2 {

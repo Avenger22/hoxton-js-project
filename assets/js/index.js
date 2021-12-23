@@ -579,9 +579,20 @@ function listenToSearch(formWrapperEl) {
 function listenToSelectChangesSearch(categoriesSelectEl) {
 
     categoriesSelectEl.addEventListener('change', function (event) {
+
         event.preventDefault()
-        state.searchOnCategory = categoriesSelectEl.value
-        render()
+
+        if (state.search === '') {
+            alert('you cant select based on categories without a search string')
+            state.searchOnCategory = 'Default'
+            render()
+        }
+
+        else {
+            state.searchOnCategory = categoriesSelectEl.value
+            render()
+        }
+
     })
 
 }
@@ -2887,7 +2898,7 @@ function renderFooter() {
 
 }
 
-function renderMainItemClicked(storeItemParam, itemWrapperParam, itemParam) {
+function renderMainItemClicked(storeItemParam, itemWrapperParam, cartButtonParam, itemParam) {
 
     itemWrapperParam.innerHTML = ''
 
@@ -2899,6 +2910,7 @@ function renderMainItemClicked(storeItemParam, itemWrapperParam, itemParam) {
     descriptionEl.setAttribute('class', 'span-description')
 
     storeItemParam.append(goBackBtnEl, descriptionEl)
+
     itemWrapperParam.append(storeItemParam)
 
     itemWrapperParam.style.gridTemplateColumns = '1fr'
