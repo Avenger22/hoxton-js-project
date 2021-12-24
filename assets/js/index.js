@@ -348,6 +348,7 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
             if (itemObjectParam.stock === 0) {
                 console.log('We dont add items to bag cause no stock')
                 alert('We dont add items to bag cause no stock')
+                itemObjectParam.stock = 0
             }
 
             else {
@@ -381,6 +382,14 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 
                 //so here i just put the entry name of the bag item with quantity 1 so when i have to calculate i just filter and find the length based on the name
                 state.bagItemQuantity.push(objectBag)
+
+                let quantityAdding = 0
+                for (const element of state.bagItemQuantity) {
+                    if (element.quantity === 1) quantityAdding += 1
+                }
+
+                itemObjectParam.quantity = Number(quantityAdding)
+
                 state.bagItems.push(itemObjectParam)
 
                 state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
