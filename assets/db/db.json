@@ -315,32 +315,14 @@
       "lastName": "Hasmeta",
       "id": "jurgenhasmeta@email.com",
       "password": "jurgen",
-      "bag": [
-        {
-          "id": 1,
-          "quantity": 3
-        },
-        {
-          "id": 3,
-          "quantity": 1
-        }
-      ]
+      "bag": []
     },
     {
       "firstName": "Desintila",
       "lastName": "Luzi",
       "id": "desintila@email.com",
       "password": "desintila",
-      "bag": [
-        {
-          "id": 2,
-          "quantity": 1
-        },
-        {
-          "id": 3,
-          "quantity": 1
-        }
-      ]
+      "bag": []
     }
   ],
   "subscribe": [

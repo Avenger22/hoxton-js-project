@@ -111,6 +111,7 @@ function getUsersArrayFromServer() {
 }
 
 function updateStock(item) {
+
     return fetch(`http://localhost:3000/items/${item.id}`, {
         method: 'PATCH',
         headers: {
@@ -118,9 +119,11 @@ function updateStock(item) {
         },
         body: JSON.stringify(item)
     })
+
 }
 
 function createUser(name, lastname, email, password) {
+
     return fetch('http://localhost:3000/users', {
         method: 'POST',
         headers: {
@@ -140,6 +143,7 @@ function createUser(name, lastname, email, password) {
 }
 
 function subscribe(email) {
+
     return fetch('http://localhost:3000/subscribe', {
         method: 'POST',
         headers: {
@@ -151,6 +155,7 @@ function subscribe(email) {
     }).then(function (resp) {
         return resp.json()
     })
+
 }
 
 function getItems() {
@@ -169,6 +174,26 @@ function getUsers() {
     getUsersArrayFromServer().then(function (usersArrayFromServer) {
         state.users = usersArrayFromServer
         render()
+    })
+
+}
+
+function pushBagItemsToServer(userObject, id) {
+
+    return fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstName: userObject.firstName,
+            lastName: userObject.lastName,
+            id: userObject.id,
+            password: userObject.password,
+            bag: userObject.bag
+        })
+    }).then(function (resp) {
+        return resp.json()
     })
 
 }
@@ -441,13 +466,37 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
                 state.bagItemQuantity.push(objectBag)
 
                 let quantityAdding = 0
+
                 for (const element of state.bagItemQuantity) {
-                    if (element.quantity === 1) quantityAdding += 1
+                    if (element.quantity === 1 && element.itemName === itemNameValue) {
+                        quantityAdding += 1
+                    }
                 }
 
-                itemObjectParam.quantity = Number(quantityAdding)
+                itemObjectParam.quantity = Number(quantityAdding) //creating the new property in item with value above
+
                 state.bagItems.push(itemObjectParam)
                 state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
+
+                const bagItemFragmented = {
+                    id: null,
+                    quantity: null
+                }
+
+                let id = null
+
+                for (const item of state.bagItems) {
+                    if (item.name === itemNameValue) {
+                        bagItemFragmented.id = item.id
+                        bagItemFragmented.quantity = item.quantity
+                        id = item.id
+                    }
+                }
+
+                for (const item of state.users) {
+                    item.bag.push(bagItemFragmented)
+                    // pushBagItemsToServer(item, id)
+                }
 
                 calculateTotalAddingAmount()
                 render()
@@ -2792,84 +2841,7 @@ function renderMain() {
     // #region 'RENDERING MAIN ITEM IN A FOR LOOP'
     for (const item of showItems()) {
 
-        const storeItem = document.createElement('div')
-        storeItem.setAttribute('class', 'store-item')
-
-        const productImgEl = document.createElement('img')
-        productImgEl.setAttribute('src', item.image)
-        productImgEl.setAttribute('alt', '')
-
-        productImgElHolder = productImgEl
-
-        const productNameEl = document.createElement('h2')
-        productNameEl.textContent = item.name
-
-        const divWrapperEl = document.createElement('div')
-        divWrapperEl.setAttribute('class', 'span-wrapper-item')
-
-        const span1El = document.createElement('span')
-        span1El.setAttribute('class', 'span-1')
-        span1El.textContent = `price: $${item.price}`
-
-        const span2El = document.createElement('span')
-        span2El.setAttribute('class', 'span-2')
-        span2El.textContent = `Discounted Price: $${item.discountPrice}`
-
-        const span3El = document.createElement('span')
-        span3El.setAttribute('class', 'span-3-item')
-        span3El.textContent = `Stock: ${item.stock}`
-
-        const span4El = document.createElement('span')
-        span4El.setAttribute('class', 'span-4-item')
-        span4El.textContent = `Type: ${item.type}`
-
-        const cartButton = document.createElement('button')
-        cartButton.textContent = 'Add to cart'
-
-        cartButton.addEventListener('click', function () {
-            if (state.userCatcher.length > 0) {
-                item.stock--
-                updateStock(item)
-                render()
-            }
-        })
-
-
-        //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
-        const newSpanEl = document.createElement('span')
-        newSpanEl.setAttribute('class', 'new-item-date')
-        newSpanEl.textContent = 'New Item'
-
-        //here i call the function to check the date, i need to pass the span, the div to append in that function and then the date from state
-        checkDateEnteredNew(item.date, newSpanEl, storeItem)
-
-        //now we check if an propery in in the object to see discounted price or not
-        if (item.hasOwnProperty('discountPrice')) {
-
-            divWrapperEl.append(span1El, span2El, span3El, span4El)
-            storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
-
-            itemsWrapper.append(storeItem)
-
-            listenToSubmitItemToBag(cartButton, item)
-            listenToClickItem(storeItem, item) //this renders specific click on item 
-
-        }
-
-        else {
-
-            span1El.style.color = '#000'
-            span1El.style.textDecoration = 'none'
-
-            divWrapperEl.append(span1El, span3El, span4El)
-            storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
-
-            itemsWrapper.append(storeItem)
-
-            listenToSubmitItemToBag(cartButton, item)
-            listenToClickItem(storeItem, item) //this renders specific click on item 
-
-        }
+        renderMainItem(item, itemsWrapper)
 
     }
 
@@ -3028,6 +3000,89 @@ function renderFooter() {
     footerEl.append(spanEl)
 
     sectionContainerMenusEl.append(footerEl)
+
+}
+
+function renderMainItem(item, itemsWrapper) {
+
+    const storeItem = document.createElement('div')
+    storeItem.setAttribute('class', 'store-item')
+
+    const productImgEl = document.createElement('img')
+    productImgEl.setAttribute('src', item.image)
+    productImgEl.setAttribute('alt', '')
+
+    productImgElHolder = productImgEl
+
+    const productNameEl = document.createElement('h2')
+    productNameEl.textContent = item.name
+
+    const divWrapperEl = document.createElement('div')
+    divWrapperEl.setAttribute('class', 'span-wrapper-item')
+
+    const span1El = document.createElement('span')
+    span1El.setAttribute('class', 'span-1')
+    span1El.textContent = `price: $${item.price}`
+
+    const span2El = document.createElement('span')
+    span2El.setAttribute('class', 'span-2')
+    span2El.textContent = `Discounted Price: $${item.discountPrice}`
+
+    const span3El = document.createElement('span')
+    span3El.setAttribute('class', 'span-3-item')
+    span3El.textContent = `Stock: ${item.stock}`
+
+    const span4El = document.createElement('span')
+    span4El.setAttribute('class', 'span-4-item')
+    span4El.textContent = `Type: ${item.type}`
+
+    const cartButton = document.createElement('button')
+    cartButton.textContent = 'Add to cart'
+
+    cartButton.addEventListener('click', function () {
+        if (state.userCatcher.length > 0) {
+            item.stock--
+            updateStock(item)
+            render()
+        }
+    })
+
+
+    //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
+    const newSpanEl = document.createElement('span')
+    newSpanEl.setAttribute('class', 'new-item-date')
+    newSpanEl.textContent = 'New Item'
+
+    //here i call the function to check the date, i need to pass the span, the div to append in that function and then the date from state
+    checkDateEnteredNew(item.date, newSpanEl, storeItem)
+
+    //now we check if an propery in in the object to see discounted price or not
+    if (item.hasOwnProperty('discountPrice')) {
+
+        divWrapperEl.append(span1El, span2El, span3El, span4El)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+
+        itemsWrapper.append(storeItem)
+
+        listenToSubmitItemToBag(cartButton, item)
+        listenToClickItem(storeItem, item) //this renders specific click on item 
+
+    }
+
+    else {
+
+        span1El.style.color = '#000'
+        span1El.style.textDecoration = 'none'
+
+        divWrapperEl.append(span1El, span3El, span4El)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+
+        itemsWrapper.append(storeItem)
+
+        listenToSubmitItemToBag(cartButton, item)
+        listenToClickItem(storeItem, item) //this renders specific click on item 
+
+    }
 
 }
 
