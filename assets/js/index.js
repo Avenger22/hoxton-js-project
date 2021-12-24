@@ -47,6 +47,7 @@ const state = {
     //two important arrays for fetching and updating the state
     items: [],
     users: [],
+    bagItemsServer: [],
 
     //additional array for items in the bag
     bagItems: [],
@@ -104,6 +105,15 @@ function getItemsArrayFromServer() {
 function getUsersArrayFromServer() {
 
     return fetch('http://localhost:3000/users')
+        .then(function (response) {
+            return response.json()
+        })
+
+}
+
+function getBagArrayFromServer() {
+
+    return fetch('http://localhost:3000/bag')
         .then(function (response) {
             return response.json()
         })
@@ -178,22 +188,35 @@ function getUsers() {
 
 }
 
-function pushBagItemsToServer(userObject, id) {
+function pushBagItemsToServer(bagItemsParam) {
 
-    return fetch('http://localhost:3000/users', {
+    return fetch('http://localhost:3000/bag', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            firstName: userObject.firstName,
-            lastName: userObject.lastName,
-            id: userObject.id,
-            password: userObject.password,
-            bag: userObject.bag
+            id: bagItemsParam.id,
+            name: bagItemsParam.name,
+            price: bagItemsParam.price,
+            quantity: bagItemsParam.quantity,
+            stock: bagItemsParam.stock,
+            type: bagItemsParam.type,
+            date: bagItemsParam.date,
+            image: bagItemsParam.image,
+            description: bagItemsParam.description
         })
     }).then(function (resp) {
         return resp.json()
+    })
+
+}
+
+function getBagItems() {
+
+    getBagArrayFromServer().then(function (bagArrayFromServer) {
+        state.bagItemsServer = bagArrayFromServer
+        render()
     })
 
 }
@@ -478,24 +501,22 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
                 state.bagItems.push(itemObjectParam)
                 state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
 
+                for (const element of state.bagItems) {
+                    state.bagItemsServer.push(element)
+                }
+        
+                pushBagItemsToServer(state.bagItems)
+                
                 const bagItemFragmented = {
                     id: null,
                     quantity: null
                 }
 
-                let id = null
-
                 for (const item of state.bagItems) {
                     if (item.name === itemNameValue) {
                         bagItemFragmented.id = item.id
                         bagItemFragmented.quantity = item.quantity
-                        id = item.id
                     }
-                }
-
-                for (const item of state.users) {
-                    item.bag.push(bagItemFragmented)
-                    // pushBagItemsToServer(item, id)
                 }
 
                 calculateTotalAddingAmount()
@@ -2221,9 +2242,9 @@ function renderBagModal() {
     const divBagItemWrapperEl = document.createElement('div')
     divBagItemWrapperEl.setAttribute('class', 'wrapper-items-bag')
     divBagItemWrapperEl.innerHTML = ''
-    //destroy after each rerender then recreate
 
-    for (const item of state.bagItems) {
+    //destroy after each rerender then recreate
+    for (const item of state.bagItemsServer) {
 
         const divBagItemEl = document.createElement('div')
         divBagItemEl.setAttribute('class', 'item-bag')
@@ -3211,6 +3232,7 @@ function init() {
     render() //renders initial page without items but laoded the first html
     getItems() //get items from server 
     getUsers() // get users from server
+    getBagItems()
 
 }
 
