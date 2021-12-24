@@ -30,6 +30,9 @@ let productImgElHolder = null
 
 let initialStateItems = []
 
+let mainHolderEl = null
+let itemHolderObject = null
+
 let globalItemsToDisplay = []
 
 let spanUserHolderEl = null //this is important to hold the stock span EL when its rendered so i can acces it and use it in other parts of app
@@ -63,7 +66,8 @@ const state = {
     selectedModal: '',
     popUpShowed: false,
 
-    specificItemClicked: false,
+    selectedPage: 'mainMenu',
+
     selectType: 'Default',
 
     totalAmount: 0,
@@ -147,6 +151,26 @@ function subscribe(email) {
     }).then(function (resp) {
         return resp.json()
     })
+}
+
+function getItems() {
+    
+    //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
+    getItemsArrayFromServer().then(function (itemsArrayFromServer) {
+        state.items = itemsArrayFromServer
+        initialStateItems = state.items
+        render()
+    })
+
+}
+
+function getUsers() {
+
+    getUsersArrayFromServer().then(function (usersArrayFromServer) {
+        state.users = usersArrayFromServer
+        render()
+    })
+
 }
 // #endregion
 
@@ -279,7 +303,7 @@ function listenToRemovePopUp(btnRemovePopElParam) {
 
     btnRemovePopElParam.addEventListener('click', function (event) {
         event.preventDefault()
-        
+
         popUpModalEl.classList.remove('show')
         state.selectedModal = ''
         render()
@@ -319,6 +343,7 @@ function listenToBagEvent(bagElParam) {
 
     bagElParam.addEventListener('click', function (event) {
         event.preventDefault()
+
         state.selectedModal = 'bag'
         bagModalEl.classList.add('show')
         render()
@@ -351,8 +376,12 @@ function listenToRemoveBag(buttonElParam) {
 function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 
     buttonItemParam.addEventListener('click', function (event) {
+
         if (state.userCatcher.length > 0) {
+
             event.preventDefault()
+            event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
+
             console.log("item button is Clicked, so now its ready to go to bag from page")
 
             if (itemObjectParam.stock === 0) {
@@ -399,15 +428,14 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
                 }
 
                 itemObjectParam.quantity = Number(quantityAdding)
-
                 state.bagItems.push(itemObjectParam)
-
                 state.bagItems = [...new Set(state.bagItems)] //removes duplicate from an aray uses set also spread operator
 
                 calculateTotalAddingAmount()
                 render()
 
             }
+
         }
 
         else {
@@ -473,18 +501,16 @@ function listenToRemovePayModal(btnRemovePayElParam) {
 // #endregion
 
 // #region 'event listener for categories'
-function listenToClickItem(storeItemParam, itemsWrapperParam, cartButtonParam, itemParam) {
+function listenToClickItem(storeItemParam, itemParam) {
 
     storeItemParam.addEventListener('click', function (event) {
 
         event.preventDefault()
         console.log('Listen to click item function activated')
 
-        renderMainItemClicked(storeItemParam, itemsWrapperParam, cartButtonParam, itemParam)
-
-        state.specificItemClicked = true //change state
-
-        // render() 
+        state.selectedPage = 'mainMenuItem' //change state
+        itemHolderObject = itemParam
+        render() 
 
     })
 
@@ -495,7 +521,7 @@ function listenToGoBackBtn(goBackBtnElParam) {
     goBackBtnElParam.addEventListener('click', function (event) {
 
         event.preventDefault()
-        state.specificItemClicked = false
+        state.selectedPage = 'mainMenu'
         render()
 
     })
@@ -2623,10 +2649,23 @@ function renderHeader() {
 
 }
 
+function renderMainPage() {
+
+    if (state.selectedPage === 'mainMenu') {
+        renderMain()
+    }
+
+    else if (state.selectedPage === 'mainMenuItem') {
+        renderMainItemClicked()
+    }
+}
+
 function renderMain() {
 
     const mainEl = document.createElement('main')
     mainEl.setAttribute('class', 'main-menu')
+
+    mainHolderEl = mainEl
 
     const ribbon1El = document.createElement('div')
     ribbon1El.setAttribute('class', 'main-ribbon-1')
@@ -2713,9 +2752,7 @@ function renderMain() {
     ribbon2El.append(boxWrapperEl, filterFormEl)
 
     selectEl.value = state.selectType
-
     listenToSelectChanges(selectEl)
-
 
     const itemsDivEl = document.createElement('div')
     itemsDivEl.setAttribute('class', 'items-container')
@@ -2759,6 +2796,7 @@ function renderMain() {
 
         const cartButton = document.createElement('button')
         cartButton.textContent = 'Add to cart'
+
         cartButton.addEventListener('click', function () {
             if (state.userCatcher.length > 0) {
                 item.stock--
@@ -2766,7 +2804,6 @@ function renderMain() {
                 render()
             }
         })
-
 
 
         //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
@@ -2786,7 +2823,7 @@ function renderMain() {
             itemsWrapper.append(storeItem)
 
             listenToSubmitItemToBag(cartButton, item)
-            listenToClickItem(storeItem, itemsWrapper, cartButton, item) //this renders specific click on item 
+            listenToClickItem(storeItem, item) //this renders specific click on item 
 
         }
 
@@ -2801,7 +2838,7 @@ function renderMain() {
             itemsWrapper.append(storeItem)
 
             listenToSubmitItemToBag(cartButton, item)
-            listenToClickItem(storeItem, itemsWrapper, cartButton, item) //this renders specific click on item 
+            listenToClickItem(storeItem, item) //this renders specific click on item 
 
         }
 
@@ -2848,7 +2885,6 @@ function renderMain() {
     listenToNextBtn(nextBtnEl)
 
     paginationWrapperEl.append(prevBtnEl, nextBtnEl)
-
     paginationContainerEl.append(paginationWrapperEl)
 
 
@@ -2871,7 +2907,6 @@ function renderMain() {
     const multivitaminsLi = document.createElement('li')
 
     const multivitaminsLink = document.createElement('a')
-    // multivitaminsLink.setAttribute('href', '')
     multivitaminsLink.textContent = 'Multivitamins & essentials minerals'
 
     multivitaminsLi.append(multivitaminsLink)
@@ -2879,7 +2914,6 @@ function renderMain() {
     const workoutsLi = document.createElement('li')
 
     const workoutsLink = document.createElement('a')
-    // workoutsLink.setAttribute('href', '')
     workoutsLink.textContent = 'Pre-Workouts'
 
     workoutsLi.append(workoutsLink)
@@ -2887,15 +2921,12 @@ function renderMain() {
     const proteinsLi = document.createElement('li')
 
     const proteinsLink = document.createElement('a')
-    // proteinsLink.setAttribute('href', '')
     proteinsLink.textContent = 'Proteins'
 
     proteinsLi.append(proteinsLink)
 
     const boostersLi = document.createElement('li')
-
     const boostersLink = document.createElement('a')
-    // boostersLink.setAttribute('href', '')
     boostersLink.textContent = 'Testosterone Boosters'
 
     boostersLi.append(boostersLink)
@@ -2903,7 +2934,6 @@ function renderMain() {
     const weightLi = document.createElement('li')
 
     const weightLink = document.createElement('a')
-    // weightLink.setAttribute('href', '')
     weightLink.textContent = 'Weight gainers'
 
     weightLi.append(weightLink)
@@ -2911,15 +2941,12 @@ function renderMain() {
     const aminoacidsLi = document.createElement('li')
 
     const aminoacidsLink = document.createElement('a')
-    // aminoacidsLink.setAttribute('href', '')
     aminoacidsLink.textContent = 'Aminoacids'
 
     aminoacidsLi.append(aminoacidsLink)
 
     const creatinesLi = document.createElement('li')
-
     const creatinesLink = document.createElement('a')
-    // creatinesLink.setAttribute('href', '')
     creatinesLink.textContent = 'Creatines'
 
     creatinesLi.append(creatinesLink)
@@ -2927,15 +2954,12 @@ function renderMain() {
     const weightBurnerLi = document.createElement('li')
 
     const weightBurnerLink = document.createElement('a')
-    // weightBurnerLink.setAttribute('href', '')
     weightBurnerLink.textContent = 'Weight Burner'
 
     weightBurnerLi.append(weightBurnerLink)
 
     const showAllLi = document.createElement('li')
-
     const showAllLink = document.createElement('a')
-    // showAllLink.setAttribute('href', '')
     showAllLink.textContent = 'Deffault no categories'
 
     showAllLi.append(showAllLink)
@@ -2943,24 +2967,25 @@ function renderMain() {
     //event listeners for categories
     listenToDefaultCategory(showAllLink)
     listenToProteinsCategory(proteinsLink)
+
     listenToMultivitaminsCategory(multivitaminsLink)
     listenToPreWorkoutsCategory(workoutsLink)
+
     listenToAminoacidsCategory(aminoacidsLink)
     listenToWeightBurnerCategory(weightBurnerLink)
+
     listenToCreatineCategory(creatinesLink)
     listenToTestosteroneBoostersCategory(boostersLink)
     listenToWeightGainersCategory(weightLink)
 
     asideUl.append(categoriesLi, showAllLi, multivitaminsLi, workoutsLi, proteinsLi, boostersLi, weightLi, aminoacidsLi, creatinesLi, weightBurnerLi)
-
     asideContainerEl.append(asideUl)
-
     asideWrapperEl.append(asideContainerEl, asideContainerEl2)
 
 
     mainEl.append(ribbon1El, ribbon2El, itemsDivEl, paginationContainerEl, asideWrapperEl)
-
     sectionContainerMenusEl.append(mainEl)
+
 }
 
 function renderFooter() {
@@ -2977,28 +3002,105 @@ function renderFooter() {
 
 }
 
-function renderMainItemClicked(storeItemParam, itemWrapperParam, cartButtonParam, itemParam) {
+function renderMainItemClicked() {
 
-    itemWrapperParam.innerHTML = ''
+    mainHolderEl.innerHTML = ''
+
+    const itemsDivEl = document.createElement('div')
+    itemsDivEl.setAttribute('class', 'items-container')
+
+    const itemsWrapper = document.createElement('div')
+    itemsWrapper.setAttribute('class', 'store-items-wrapper')
+
+    const storeItem = document.createElement('div')
+    storeItem.setAttribute('class', 'store-item')
+
+    const productImgEl = document.createElement('img')
+    productImgEl.setAttribute('src', itemHolderObject.image)
+    productImgEl.setAttribute('alt', '')
+
+    const productNameEl = document.createElement('h2')
+    productNameEl.textContent = itemHolderObject.name
+
+    const divWrapperEl = document.createElement('div')
+    divWrapperEl.setAttribute('class', 'span-wrapper-item')
+
+    const span1El = document.createElement('span')
+    span1El.setAttribute('class', 'span-1')
+    span1El.textContent = `price: $${itemHolderObject.price}`
+
+    const span2El = document.createElement('span')
+    span2El.setAttribute('class', 'span-2')
+    span2El.textContent = `Discounted Price: $${itemHolderObject.discountPrice}`
+
+    const span3El = document.createElement('span')
+    span3El.setAttribute('class', 'span-3-item')
+    span3El.textContent = `Stock: ${itemHolderObject.stock}`
+
+    const span4El = document.createElement('span')
+    span4El.setAttribute('class', 'span-4-item')
+    span4El.textContent = `Type: ${itemHolderObject.type}`
+
+    const cartButton = document.createElement('button')
+    cartButton.textContent = 'Add to cart'
+
+    cartButton.addEventListener('click', function () {
+        if (state.userCatcher.length > 0) {
+            itemHolderObject.stock--
+            updateStock(itemHolderObject)
+            render()
+        }
+    })
+
+
+    //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
+    const newSpanEl = document.createElement('span')
+    newSpanEl.setAttribute('class', 'new-item-date')
+    newSpanEl.textContent = 'New Item'
+
+    //here i call the function to check the date, i need to pass the span, the div to append in that function and then the date from state
+    checkDateEnteredNew(itemHolderObject.date, newSpanEl, storeItem)
+
+    //now we check if an propery in in the object to see discounted price or not
+    if (itemHolderObject.hasOwnProperty('discountPrice')) {
+
+        divWrapperEl.append(span1El, span2El, span3El, span4El)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        listenToSubmitItemToBag(cartButton, itemHolderObject)
+
+    }
+
+    else {
+
+        span1El.style.color = '#000'
+        span1El.style.textDecoration = 'none'
+
+        divWrapperEl.append(span1El, span3El, span4El)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        listenToSubmitItemToBag(cartButton, itemHolderObject)
+
+    }
 
     const goBackBtnEl = document.createElement('button')
     goBackBtnEl.textContent = 'Go Back'
 
     const descriptionEl = document.createElement('span')
-    descriptionEl.textContent = itemParam.description
+    descriptionEl.textContent = itemHolderObject.description
     descriptionEl.setAttribute('class', 'span-description')
 
-    storeItemParam.append(goBackBtnEl, descriptionEl)
+    storeItem.append(goBackBtnEl, descriptionEl)
+    itemsWrapper.append(storeItem)
 
-    itemWrapperParam.append(storeItemParam)
+    itemsWrapper.style.gridTemplateColumns = '1fr'
+    itemsWrapper.style.placeItems = 'center'
 
-    itemWrapperParam.style.gridTemplateColumns = '1fr'
-    itemWrapperParam.style.placeItems = 'center'
-
-    storeItemParam.style.width = '350px'
+    storeItem.style.width = '650px'
     paginationHolderEl.style.display = 'none' //this removes pagination when an individual item is rendered
 
-    // listenToSubmitItemToBag(cartButtonParam, itemParam) fixed a bug when adding to cart from here added 2 not 1
+    itemsDivEl.append(itemsWrapper)
+    mainHolderEl.append(itemsDivEl)
+    sectionContainerMenusEl.append(mainHolderEl)
+
     listenToGoBackBtn(goBackBtnEl)
 
 }
@@ -3012,7 +3114,7 @@ function render() {
 
     //rerendering the HTML page after each render call
     renderHeader()
-    renderMain()
+    renderMainPage()
     renderFooter()
 
     //rendering the modals on condition
@@ -3022,19 +3124,9 @@ function render() {
 
 function init() {
 
-    render()
-
-    //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
-    getItemsArrayFromServer().then(function (itemsArrayFromServer) {
-        state.items = itemsArrayFromServer
-        initialStateItems = state.items
-        render()
-    })
-
-    getUsersArrayFromServer().then(function (usersArrayFromServer) {
-        state.users = usersArrayFromServer
-        render()
-    })
+    render() //renders initial page without items but laoded the first html
+    getItems() //get items from server 
+    getUsers() // get users from server
 
 }
 
