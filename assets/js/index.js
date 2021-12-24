@@ -210,7 +210,7 @@ window.onload = function () {
     setTimeout(function () {
 
         popUpModalEl.classList.add('show');
-        state.selectedModal = 'popUp'
+        state.popUpShowed = true
         render()
 
     }, 5000);
@@ -259,15 +259,30 @@ function listenToSubmitUser(formUserElParam) {
     formUserElParam.addEventListener('submit', function (event) {
 
         event.preventDefault()
-        console.log("Submit user is Clicked or sumbit")
+        console.log("Submit user is Clicked or submit")
 
         state.userCatcher.pop()
         state.userCatcher.push(getUserCredentialsFromStateFilter(formUserElParam['email'].value, formUserElParam['password'].value))
 
+        let notInArray = null
+
+        for (const user of state.users) {
+
+            if (user.id !== formUserElParam['email'].value 
+            && user.password !== formUserElParam['password'].value) {
+                notInArray = false
+            }
+
+        }
+
+        if (notInArray === false) {
+            alert('The username or password is wrong please try again')
+        }
+        
         if (state.userCatcher.length === 0) {
             alert('No email or user found with these credentials')
         }
-
+        
         else {
             alert(`The email is : ${state.userCatcher['0'][0].id} and also the password is : ${state.userCatcher['0'][0].password}`)
         }
@@ -305,7 +320,7 @@ function listenToRemovePopUp(btnRemovePopElParam) {
         event.preventDefault()
 
         popUpModalEl.classList.remove('show')
-        state.selectedModal = ''
+        state.popUpShowed = false
         render()
     })
 
@@ -379,40 +394,34 @@ function listenToRemoveBag(buttonElParam) {
 function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
 
     buttonItemParam.addEventListener('click', function (event) {
-
+        //conditional is the user array is not empty then we can start to add items to the cart bag
         if (state.userCatcher.length > 0) {
 
             event.preventDefault()
             event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
-
             console.log("item button is Clicked, so now its ready to go to bag from page")
 
-            if (itemObjectParam.stock === 0) {
+            if (itemObjectParam.stock < 0) {
                 event.preventDefault()
-                event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
+                event.stopPropagation()
 
-                console.log('We dont add items to bag cause no stock')
-                alert('We dont add items to bag cause no stock')
-                itemObjectParam.stock = 0
+                alert('No negative values in stoack')
+                itemObjectParam.stock =  0
+                spanBagHolderEl.textContent = itemObjectParam.stock //removing negative values from span and stock ruining the state object
+                render()
             }
 
-            else {
+            //if the item is not empty in stock
+            else if (itemObjectParam.stock >= 0) {
 
                 event.preventDefault()
                 event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
 
                 state.stockShowClass = 'show'
                 spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
-
                 spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
 
-                if (itemObjectParam.stock < 0) {
-                    itemObjectParam.stock = 0 //removing negative values from span and stock ruining the state object
-                }
-
-                else {
-                    state.stockSpanValue += 1
-                }
+                state.stockSpanValue += 1
 
                 let quantityBag = 0
                 quantityBag++
@@ -444,17 +453,17 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
                 render()
 
             }
-
+            
         }
 
+        // if the user array is empty we dont allow to add to the cart bag the items
         else {
 
             event.preventDefault()
             event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
             alert('Account required to add products to cart')
-            
-        }
 
+        }
     })
 
 }
@@ -2035,7 +2044,11 @@ function renderModals() {
         renderAboutUsModal()
     }
 
-    else if (state.selectedModal === 'popUp') {
+    else if (state.popUpShowed === true && state.selectedModal === '') {
+        renderPopUpModal()
+    }
+
+    else if (state.popUpShowed === true && state.selectedModal !== '') {
         renderPopUpModal()
     }
 
