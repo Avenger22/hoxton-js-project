@@ -60,11 +60,8 @@ const state = {
     stockSpanValue: null,
     stockShowClass: null,
 
-    userModalClicked: false,
-    bagModalClicked: false,
-    signUpModalClicked: false,
-    payModalClicked: false,
-    aboutUsModalClicked: false,
+    selectedModal: '',
+    popUpShowed: false,
 
     specificItemClicked: false,
     selectType: 'Default',
@@ -187,7 +184,11 @@ window.onscroll = function () {
 window.onload = function () {
 
     setTimeout(function () {
+
         popUpModalEl.classList.add('show');
+        state.selectedModal = 'popUp'
+        render()
+
     }, 5000);
 
 }
@@ -222,9 +223,9 @@ function listenToUserEvent(userElParam) {
 
     userElParam.addEventListener('click', function (event) {
         event.preventDefault()
-        state.userModalClicked = true
+        state.selectedModal = 'user'
         userModalEl.classList.add('show')
-        // render()
+        render()
     })
 
 }
@@ -264,9 +265,10 @@ function listenToRemoveUser(btnRemoveElParam) {
     btnRemoveElParam.addEventListener('click', function (event) {
         event.preventDefault()
 
-        state.userModalClicked = false
         userModalEl.classList.remove('show')
-        // render()
+        state.selectedModal = ''
+        render()
+
     })
 
 }
@@ -277,8 +279,12 @@ function listenToRemovePopUp(btnRemovePopElParam) {
 
     btnRemovePopElParam.addEventListener('click', function (event) {
         event.preventDefault()
+        
         popUpModalEl.classList.remove('show')
+        state.selectedModal = ''
+        render()
     })
+
 }
 // #endregion
 
@@ -290,7 +296,8 @@ function listenToGoToSignUp(btnSignUpElParam) {
 
         userModalEl.classList.remove('show')
         signUpModalEl.classList.add('show')
-        state.signUpModalClicked = true
+        state.selectedModal = 'signUp'
+        render()
 
     })
 }
@@ -300,7 +307,8 @@ function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
     btnRemoveSignUpElParam.addEventListener('click', function (event) {
         event.preventDefault()
         signUpModalEl.classList.remove('show')
-        state.signUpModalClicked = false
+        state.selectedModal = ''
+        render()
     })
 
 }
@@ -311,29 +319,31 @@ function listenToBagEvent(bagElParam) {
 
     bagElParam.addEventListener('click', function (event) {
         event.preventDefault()
-        state.bagModalClicked = true
+        state.selectedModal = 'bag'
         bagModalEl.classList.add('show')
-        // render()
+        render()
     })
 
 }
+
 function listenToAboutUsEvent(aboutLinkEl) {
 
     aboutLinkEl.addEventListener('click', function () {
 
-        state.aboutUsModalClicked = true
+        state.selectedModal = 'aboutUs'
         aboutUsModalEl.classList.add('show')
-        // render()
+        render()
     })
 
 }
+
 function listenToRemoveBag(buttonElParam) {
 
     buttonElParam.addEventListener('click', function (event) {
         event.preventDefault()
-        state.bagModalClicked = false
         bagModalEl.classList.remove('show')
-        // render()
+        state.selectedModal = ''
+        render()
     })
 
 }
@@ -442,6 +452,8 @@ function listenToGoToPay(btnPayParam) {
         event.preventDefault()
         bagModalEl.classList.remove('show')
         payModalEl.classList.add('show')
+        state.selectedModal = 'pay'
+        render()
     })
 
 }
@@ -451,6 +463,8 @@ function listenToRemovePayModal(btnRemovePayElParam) {
     btnRemovePayElParam.addEventListener('click', function (event) {
         event.preventDefault()
         payModalEl.classList.remove('show')
+        state.selectedModal = ''
+        render()
     })
 
 }
@@ -1974,7 +1988,37 @@ function getSortedByDateDesc() {
 // #region 'RENDER FUNCTIONS'
 
 // #region 'RENDER MODALS'
+function renderModals() {
+
+    if (state.selectedModal === 'aboutUs') {
+        renderAboutUsModal()
+    }
+
+    else if (state.selectedModal === 'popUp') {
+        renderPopUpModal()
+    }
+
+    else if (state.selectedModal === 'pay') {
+        renderPayModal()
+    }
+
+    else if (state.selectedModal === 'signUp') {
+        renderSignUpModal()
+    }
+
+    else if (state.selectedModal === 'bag') {
+        renderBagModal()
+    }
+
+    else if (state.selectedModal === 'user') {
+        renderUserModal()
+    }
+
+}
+
 function renderUserModal() {
+
+    userModalEl.innerHTML = ''
 
     const divUserModalEl = document.createElement('div')
     divUserModalEl.setAttribute('class', 'modal-user')
@@ -2054,6 +2098,8 @@ function renderUserModal() {
 }
 
 function renderBagModal() {
+
+    bagModalEl.innerHTML = ''
 
     const divBagModalEl = document.createElement('div')
     divBagModalEl.setAttribute('class', 'modal-bag')
@@ -2155,6 +2201,8 @@ function renderBagModal() {
 
 function renderPopUpModal() {
 
+    popUpModalEl.innerHTML = ''
+
     const divPopUpModalEl = document.createElement('div')
     divPopUpModalEl.setAttribute('class', 'modal-pop_up')
 
@@ -2193,6 +2241,8 @@ function renderPopUpModal() {
 }
 
 function renderSignUpModal() {
+
+    signUpModalEl.innerHTML = ''
 
     const divSignUpModalEl = document.createElement('div')
     divSignUpModalEl.setAttribute('class', 'modal-sign_up')
@@ -2265,6 +2315,8 @@ function renderSignUpModal() {
 
 function renderPayModal() {
 
+    payModalEl.innerHTML = ''
+
     const divPayModalEl = document.createElement('div')
     divPayModalEl.setAttribute('class', 'modal-pay')
 
@@ -2335,6 +2387,8 @@ function renderPayModal() {
 }
 
 function renderAboutUsModal() {
+
+    aboutUsModalEl.innerHTML = ''
 
     const divAboutUsModalEl = document.createElement('div')
     divAboutUsModalEl.setAttribute('class', 'modal-about-us')
@@ -2955,23 +3009,14 @@ function render() {
 
     //destroy everything these are GLOBAL VARIABLES then recreate each time you render
     sectionContainerMenusEl.innerHTML = ''
-    userModalEl.innerHTML = ''
-    bagModalEl.innerHTML = ''
-    payModalEl.innerHTML = ''
-    popUpModalEl.innerHTML = ''
-    signUpModalEl.innerHTML = ''
-    aboutUsModalEl.innerHTML = ''
 
     //rerendering the HTML page after each render call
     renderHeader()
     renderMain()
     renderFooter()
-    renderUserModal()
-    renderBagModal()
-    renderPopUpModal()
-    renderSignUpModal()
-    renderPayModal()
-    renderAboutUsModal()
+
+    //rendering the modals on condition
+    renderModals()
 
 }
 
