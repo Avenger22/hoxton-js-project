@@ -331,7 +331,10 @@ function listenToRemoveSignUpModal(btnRemoveSignUpElParam) {
     btnRemoveSignUpElParam.addEventListener('click', function (event) {
         event.preventDefault()
         signUpModalEl.classList.remove('show')
-        state.selectedModal = ''
+
+        state.selectedModal = 'user'
+        userModalEl.classList.add('show')
+
         render()
     })
 
@@ -385,15 +388,21 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
             console.log("item button is Clicked, so now its ready to go to bag from page")
 
             if (itemObjectParam.stock === 0) {
+                event.preventDefault()
+                event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
+
                 console.log('We dont add items to bag cause no stock')
                 alert('We dont add items to bag cause no stock')
                 itemObjectParam.stock = 0
             }
 
             else {
+
+                event.preventDefault()
+                event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
+
                 state.stockShowClass = 'show'
                 spanBagHolderEl.classList.add(state.stockShowClass) //linking DOM AND STATE
-
 
                 spanBagHolderEl.textContent = state.stockSpanValue //linking DON AND STATE, when rerendered the value works not negative etc
 
@@ -439,7 +448,11 @@ function listenToSubmitItemToBag(buttonItemParam, itemObjectParam) {
         }
 
         else {
+
+            event.preventDefault()
+            event.stopPropagation() //fixed the bug when button is clicked the div is clicked worked
             alert('Account required to add products to cart')
+            
         }
 
     })
@@ -491,7 +504,9 @@ function listenToRemovePayModal(btnRemovePayElParam) {
     btnRemovePayElParam.addEventListener('click', function (event) {
         event.preventDefault()
         payModalEl.classList.remove('show')
-        state.selectedModal = ''
+
+        state.selectedModal = 'bag'
+        bagModalEl.classList.add('show')
         render()
     })
 
@@ -2649,6 +2664,7 @@ function renderHeader() {
 
 }
 
+//conditional wich main to render 
 function renderMainPage() {
 
     if (state.selectedPage === 'mainMenu') {
@@ -3114,9 +3130,9 @@ function render() {
 
     //rerendering the HTML page after each render call
     renderHeader()
+    //rendering main based on condition
     renderMainPage()
     renderFooter()
-
     //rendering the modals on condition
     renderModals()
 
