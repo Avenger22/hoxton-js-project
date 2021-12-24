@@ -15,31 +15,34 @@
       "name": "Artichoke Premium",
       "price": "10",
       "image": "./assets/images/artichoke-premium.jpg",
-      "stock": 5,
+      "stock": 1,
       "type": "multivitamins",
       "date": "2021/12/12",
-      "description": "Artichoke Premium is a supplement containing high quality artichoke extracts with 5% standardized cinnar content.Research has shown that the extract of artichoke leaves:Helps in detoxification"
+      "description": "Artichoke Premium is a supplement containing high quality artichoke extracts with 5% standardized cinnar content.Research has shown that the extract of artichoke leaves:Helps in detoxification",
+      "quantity": 3
     },
     {
       "id": 3,
       "name": "Argi Power 1500 Mega Caps",
       "price": "30",
       "image": "./assets/images/argi-power.jpg",
-      "stock": 5,
+      "stock": 2,
       "type": "aminoacids",
       "date": "2021/11/20",
       "description": "Argi Power 1500 Mega Caps, mega capsules contain 1500 mg L-Arginine with the highest pharmaceutical quality in one capsule. How does L-Arginine HCl work and what is it used for? L-arginine is a dietary supplement that participates in many processes of formation of substances in the body: eg nitric oxide. Furthermore it provides the formamide group that serves in creatine biosynthesis.",
-      "discountPrice": "24"
+      "discountPrice": "24",
+      "quantity": 2
     },
     {
       "id": 4,
       "name": "Beta-Alanine Xplode Powder",
       "price": "28",
       "image": "./assets/images/beta-alanine.jpg",
-      "stock": 5,
+      "stock": 2,
       "type": "aminoacids",
       "date": "2021/12/14",
-      "description": "Beta-Alanine Xplode Powder supplement is a preparation in the form of a powder with perfect solubility, which contains very high quality Beta-Alanine, enriched with vitamin B6 and L-Histidine."
+      "description": "Beta-Alanine Xplode Powder supplement is a preparation in the form of a powder with perfect solubility, which contains very high quality Beta-Alanine, enriched with vitamin B6 and L-Histidine.",
+      "quantity": 2
     },
     {
       "id": 5,
@@ -314,21 +317,62 @@
       "firstName": "Jurgen",
       "lastName": "Hasmeta",
       "id": "jurgenhasmeta@email.com",
-      "password": "jurgen",
-      "bag": []
+      "password": "jurgen"
     },
     {
       "firstName": "Desintila",
       "lastName": "Luzi",
       "id": "desintila@email.com",
-      "password": "desintila",
-      "bag": []
+      "password": "desintila"
     }
   ],
   "subscribe": [
     {
       "email": "desintila@email.com",
       "id": 1
+    }
+  ],
+  "bag": [
+    {
+      "id": 1,
+      "name": "Scitec 100% Plant Protein",
+      "price": "22",
+      "image": "./assets/images/plant-protein.jpg",
+      "stock": 4,
+      "type": "proteins",
+      "date": "2021/03/21",
+      "quantity": 1,
+      "description": "Pea protein is among the highest plant proteins in terms of nutritional value. According to scientific data the main amino acid profile makes it ideal for human consumption. The emergence of special amino acids that positively affect nutrition make it ideal for athletes."
+    },
+    {
+      "id": 30
+    },
+    {
+      "id": 31
+    },
+    {
+      "id": 32
+    },
+    {
+      "id": 33
+    },
+    {
+      "id": 34
+    },
+    {
+      "id": 35
+    },
+    {
+      "id": 36
+    },
+    {
+      "id": 37
+    },
+    {
+      "id": 38
+    },
+    {
+      "id": 39
     }
   ]
 }
