@@ -416,18 +416,88 @@ footer.footer-menu {
     grid-template-rows: 0.6fr 0.1fr 0.2fr 40px;
     grid-gap: 10px 15px;
     cursor: pointer;
-    padding: 10px 10px;
+    padding: 15px 15px;
+    border: 1px solid #d40a0a;
+
+}
+
+.store-item-clicked {
+    display: grid;
+    grid-template-rows: 0.6fr 0.1fr 0.2fr 40px;
+    grid-gap: 10px 15px;
+}
+
+.store-item-clicked img {
+    width: 550px;
+    height: 400px;
+}
+
+.store-item-clicked button {
+    padding: 10px;
+    border: none;
+    outline: none;
+    color: #000;
+    background-color: #d40a0a;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.store-item-clicked button:hover {
+    color: #fff;
+    background-color: #022335;
+    transition: 1s;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -ms-transition: 1s;
+    -o-transition: 1s;
+}
+
+.store-item-clicked span.span-1 {
+    grid-area: span-1;
+    color: #95848a;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: line-through;
+}
+
+.store-item-clicked span.span-2 {
+    grid-area: span-2;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.store-item-clicked span.span-3-item {
+    grid-area: span-3-item;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.store-item-clicked span.span-4-item {
+    grid-area: span-4-item;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .store-item:hover {
-    border: 1px solid #d40a0a;
-    margin-right: 2%;
-    margin-left: 2%;
-    transform: scale(1.05);
-    -webkit-transform: scale(1.05);
-    -moz-transform: scale(1.05);
-    -ms-transform: scale(1.05);
-    -o-transform: scale(1.05);
+    border: 3px solid #d40a0a;
+    margin-right: 3%;
+    margin-left: 3%;
+    transform: scale(1.15);
+    -webkit-transform: scale(1.15);
+    -moz-transform: scale(1.15);
+    -ms-transform: scale(1.15);
+    -o-transform: scale(1.15);
+    transition: 1s;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -ms-transition: 1s;
+    -o-transition: 1s;
 }
 
 .store-item:hover .span-2 {
@@ -1095,6 +1165,100 @@ span.new-item-date {
     padding: 10px 10px;
     border: none;
     background-color: #d40a0a;
+}
+/* #endregion */
+
+/* #region 'QUICK-VIEW-MODAL */
+.modal-quick_view-container {
+    height: 100vh;
+    width: 100%;
+    pointer-events: none;
+    position: fixed;
+    display: none;
+    z-index: 1;
+}
+
+.modal-quick_view-container.show {
+    pointer-events: auto;
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+    place-content: center;
+    opacity: 1;
+    background-color: rgba(230, 90, 50, 0.3);
+}
+
+.modal-quick_view {
+    display: grid;
+    grid-template-rows: 200px 100px;
+    grid-gap: 35px;
+
+    background-color: #f1f1f6;
+    height: 600px;
+    width: 750px;
+
+    place-content: center;
+    place-items: center;
+    position: relative;
+}
+
+.modal-quick_view .store-item {
+    padding-top: 50px;
+    border: none;
+    margin-top: 70px;
+}
+
+.modal-quick_view .store-item:hover {
+    border: none;
+    transform: none;
+    margin-right: 0%;
+    margin-left: 0%;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transition: none;
+    -webkit-transition:;
+    -moz-transition:;
+    -ms-transition:;
+    -o-transition:;
+}
+
+.modal-quick_view .modal-quick_view {
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+    place-content: center;
+}
+
+.modal-quick_view .wrapper-subs {
+    display: grid;
+    grid-template-rows: 1fr;
+    place-items: center;
+    grid-gap: 20px;
+    font-size: 1.2rem;
+    /* padding: 1rem; */
+    /* margin-top: 2rem; */
+    font-family: sans-serif;
+    line-height: 22px;
+}
+
+.modal-quick_view img {
+    height: 100px;
+    width: 100px;
+}
+
+.modal-quick_view .wrapper-subs p {
+    font-size: 14px;
+    font-weight: 700;
+    width: 85ch;
+}
+
+.modal-quick_view .wrapper-subs span {
+    font-size: 14px;
+    font-weight: 900;
+    padding-bottom: 50px;
+    color: #d40a0a;
 }
 /* #endregion */
 

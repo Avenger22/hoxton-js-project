@@ -22,6 +22,9 @@ popUpModalEl.setAttribute('class', 'modal-pop_up-container')
 const aboutUsModalEl = document.createElement('div')
 aboutUsModalEl.setAttribute('class', 'modal-about_us-container')
 
+const quickViewModalEl = document.createElement('div')
+quickViewModalEl.setAttribute('class', 'modal-quick_view-container')
+
 let headerSub2CatcherEl = null
 let headerCatcherEl = null
 let ulSub2CatcherEl = null
@@ -565,6 +568,37 @@ function listenToRemovePayModal(btnRemovePayElParam) {
 
         state.selectedModal = 'bag'
         bagModalEl.classList.add('show')
+        render()
+    })
+
+}
+// #endregion
+
+// #region 'event listener for quickView'
+function listenToGoToQuickView(quickViewBtn, item) {
+
+    quickViewBtn.addEventListener('click', function (event) {
+        event.preventDefault()
+        event.stopPropagation()
+
+        state.selectedModal = 'quickView'
+        quickViewModalEl.classList.add('show')
+
+        itemHolderObject = item
+        render()
+    })
+
+}
+
+function listenToRemoveQuickView(removeBtn) {
+
+    removeBtn.addEventListener('click', function (event) {
+        event.preventDefault()
+        event.stopPropagation()
+
+        state.selectedModal = ''
+        quickViewModalEl.classList.remove('show')
+        
         render()
     })
 
@@ -1954,6 +1988,15 @@ function searchByName(itemToDisplaySorted) {
     })
 
 }
+
+function checkItems(itemToDisplaySorted) {
+
+    if (itemToDisplaySorted.length === 0) {
+        state.selectedPage = 'notFound'
+        render()
+    }
+
+}
 // #endregion
 
 // #region 'filter other'
@@ -2091,6 +2134,10 @@ function renderModals() {
 
     if (state.selectedModal === 'aboutUs') {
         renderAboutUsModal()
+    }
+
+    else if (state.selectedModal === 'quickView') {
+        renderQuickViewModal()
     }
 
     else if (state.popUpShowed === true && state.selectedModal === '') {
@@ -2520,6 +2567,114 @@ function renderAboutUsModal() {
     sectionContainerMenusEl.append(aboutUsModalEl)
 
 }
+
+function renderQuickViewModal() {
+
+    quickViewModalEl.innerHTML = ''
+
+    const divQuickViewModalEl = document.createElement('div')
+    divQuickViewModalEl.setAttribute('class', 'modal-quick_view')
+
+    const itemsDivEl = document.createElement('div')
+    itemsDivEl.setAttribute('class', 'items-container-quick')
+
+    const itemsWrapper = document.createElement('div')
+    itemsWrapper.setAttribute('class', 'store-items-wrapper-quick')
+
+    const storeItem = document.createElement('div')
+    storeItem.setAttribute('class', 'store-item')
+
+    const productImgEl = document.createElement('img')
+    productImgEl.setAttribute('src', itemHolderObject.image)
+    productImgEl.setAttribute('alt', '')
+
+    const productNameEl = document.createElement('h2')
+    productNameEl.textContent = itemHolderObject.name
+
+    const divWrapperEl = document.createElement('div')
+    divWrapperEl.setAttribute('class', 'span-wrapper-item')
+
+    const span1El = document.createElement('span')
+    span1El.setAttribute('class', 'span-1')
+    span1El.textContent = `price: $${itemHolderObject.price}`
+
+    const span2El = document.createElement('span')
+    span2El.setAttribute('class', 'span-2')
+    span2El.textContent = `Discounted Price: $${itemHolderObject.discountPrice}`
+
+    const span3El = document.createElement('span')
+    span3El.setAttribute('class', 'span-3-item')
+    span3El.textContent = `Stock: ${itemHolderObject.stock}`
+
+    const span4El = document.createElement('span')
+    span4El.setAttribute('class', 'span-4-item')
+    span4El.textContent = `Type: ${itemHolderObject.type}`
+
+    const cartButton = document.createElement('button')
+    cartButton.textContent = 'Add to cart'
+
+    cartButton.addEventListener('click', function () {
+        if (state.userCatcher.length > 0) {
+            itemHolderObject.stock--
+            updateStock(itemHolderObject)
+            render()
+        }
+    })
+
+
+    //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
+    const newSpanEl = document.createElement('span')
+    newSpanEl.setAttribute('class', 'new-item-date')
+    newSpanEl.textContent = 'New Item'
+
+    //here i call the function to check the date, i need to pass the span, the div to append in that function and then the date from state
+    checkDateEnteredNew(itemHolderObject.date, newSpanEl, storeItem)
+
+    //now we check if an propery in in the object to see discounted price or not
+    if (itemHolderObject.hasOwnProperty('discountPrice')) {
+
+        divWrapperEl.append(span1El, span2El, span3El, span4El)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        listenToSubmitItemToBag(cartButton, itemHolderObject)
+
+    }
+
+    else {
+
+        span1El.style.color = '#000'
+        span1El.style.textDecoration = 'none'
+
+        divWrapperEl.append(span1El, span3El, span4El)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        listenToSubmitItemToBag(cartButton, itemHolderObject)
+
+    }
+
+    const removeBtn = document.createElement('button')
+    removeBtn.textContent = 'X'
+
+    const descriptionEl = document.createElement('span')
+    descriptionEl.textContent = itemHolderObject.description
+    descriptionEl.setAttribute('class', 'span-description')
+
+    storeItem.append(removeBtn, descriptionEl)
+    itemsWrapper.append(storeItem)
+
+    itemsWrapper.style.gridTemplateColumns = '1fr'
+    itemsWrapper.style.placeItems = 'center'
+
+    storeItem.style.width = '350px'
+    paginationHolderEl.style.display = 'none' //this removes pagination when an individual item is rendered
+
+    itemsDivEl.append(itemsWrapper)
+    divQuickViewModalEl.append(itemsDivEl)
+    quickViewModalEl.append(divQuickViewModalEl)
+
+    sectionContainerMenusEl.append(quickViewModalEl)
+
+    listenToRemoveQuickView(removeBtn)
+
+}
 // #endregion
 
 // #region 'RENDER PAGE HTML'
@@ -2729,13 +2884,18 @@ function renderHeader() {
 //conditional wich main to render 
 function renderMainPage() {
 
-    if (state.selectedPage === 'mainMenu') {
+    if (state.selectedPage === 'notFound') {
+        renderNotFound()
+    }
+
+    else if (state.selectedPage === 'mainMenu') {
         renderMain()
     }
 
     else if (state.selectedPage === 'mainMenuItem') {
         renderMainItemClicked()
     }
+
 }
 
 function renderMain() {
@@ -3039,6 +3199,9 @@ function renderMainItem(item, itemsWrapper) {
     const cartButton = document.createElement('button')
     cartButton.textContent = 'Add to cart'
 
+    const quickViewBtn = document.createElement('button')
+    quickViewBtn.textContent = 'Quick view the product'
+
     cartButton.addEventListener('click', function () {
         if (state.userCatcher.length > 0) {
             item.stock--
@@ -3047,6 +3210,7 @@ function renderMainItem(item, itemsWrapper) {
         }
     })
 
+    listenToGoToQuickView(quickViewBtn, item)
 
     //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
     const newSpanEl = document.createElement('span')
@@ -3060,7 +3224,7 @@ function renderMainItem(item, itemsWrapper) {
     if (item.hasOwnProperty('discountPrice')) {
 
         divWrapperEl.append(span1El, span2El, span3El, span4El)
-        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton, quickViewBtn)
 
         itemsWrapper.append(storeItem)
 
@@ -3075,7 +3239,7 @@ function renderMainItem(item, itemsWrapper) {
         span1El.style.textDecoration = 'none'
 
         divWrapperEl.append(span1El, span3El, span4El)
-        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton)
+        storeItem.append(productImgEl, productNameEl, divWrapperEl, cartButton, quickViewBtn)
 
         itemsWrapper.append(storeItem)
 
@@ -3097,7 +3261,7 @@ function renderMainItemClicked() {
     itemsWrapper.setAttribute('class', 'store-items-wrapper')
 
     const storeItem = document.createElement('div')
-    storeItem.setAttribute('class', 'store-item')
+    storeItem.setAttribute('class', 'store-item-clicked')
 
     const productImgEl = document.createElement('img')
     productImgEl.setAttribute('src', itemHolderObject.image)
@@ -3135,7 +3299,6 @@ function renderMainItemClicked() {
             render()
         }
     })
-
 
     //CREATING THE NEW SPAN TO CHECK DATE IF ENTERED ITEM IN THE STORE WITH THE STATE CHECK
     const newSpanEl = document.createElement('span')
@@ -3186,6 +3349,22 @@ function renderMainItemClicked() {
     sectionContainerMenusEl.append(mainHolderEl)
 
     listenToGoBackBtn(goBackBtnEl)
+
+}
+
+function renderNotFound() {
+
+    mainHolderEl.innerHTML = ''
+
+    const divNotFoundWrapper = document.createElement('div')
+    divNotFoundWrapper.setAttribute('class', 'not-found-container')
+
+    const pNotFoundEl = document.createElement('p')
+    pNotFoundEl.textContent = 'No products were found with this criteria'
+
+    divNotFoundWrapper.append(pNotFoundEl)
+    mainHolderEl.append(divNotFoundWrapper)
+    sectionContainerMenusEl.append(mainHolderEl)
 
 }
 // #endregion
