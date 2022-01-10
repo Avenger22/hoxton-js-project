@@ -50,6 +50,7 @@ const state = {
     //two important arrays for fetching and updating the state
     items: [],
     users: [],
+    initialItems: [],
 
     //additional array for items in the bag
     bagItems: [],
@@ -96,6 +97,15 @@ const state = {
 
 // #region 'SERVER FUNCTIONS'
 function getItemsArrayFromServer() {
+
+    return fetch('http://localhost:3000/items')
+        .then(function (response) {
+            return response.json()
+        })
+
+}
+
+function getInitialItemsArrayFromServer() {
 
     return fetch('http://localhost:3000/items')
         .then(function (response) {
@@ -166,7 +176,16 @@ function getItems() {
     //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
     getItemsArrayFromServer().then(function (itemsArrayFromServer) {
         state.items = itemsArrayFromServer
-        initialStateItems = state.items
+        render()
+    })
+
+}
+
+function getItemsInitial() {
+    
+    //FETCHING AND STORING DATA FROM SERVER TO STATE both arrays from json server
+    getInitialItemsArrayFromServer().then(function (itemsArrayFromServer) {
+        state.initialItems = itemsArrayFromServer
         render()
     })
 
@@ -883,12 +902,14 @@ function showItems() {
     let itemsToDisplay = []
     let itemToDisplaySorted = []
 
+    let initialFilteredItems = JSON.parse(JSON.stringify(state.initialItems))
+    // console.log(initialFilteredItems) //great for having initial withotu mutating array from state
+
+
     // #region 'Conditionals for ---search select--- based on cagetories with searched item'
     if (state.search === '' && state.category === 'Default' && state.selectType === 'Default') {
-        itemsToDisplay = state.items
-        globalItemsToDisplay = itemsToDisplay
-
-        itemToDisplaySorted = getUnSortedArrayState()
+        console.log(initialFilteredItems)
+        return initialFilteredItems
     }
 
     else if (state.search === '' && state.category === 'Offers' && state.selectType === 'Default') {
@@ -1528,10 +1549,8 @@ function showItems() {
 
     // #region 'CONDITIONALS FOR ---DEFAULT--- AND THEIR SORTING OPTIONS
     else if (state.category === 'Default' && state.selectType === 'Default') {
-        itemsToDisplay = state.items
-        globalItemsToDisplay = itemsToDisplay
-
-        itemToDisplaySorted = getUnSortedArrayState()
+        console.log(initialFilteredItems)
+        return initialFilteredItems
     }
 
     else if (state.category === 'Default' && state.selectType === 'price-asc' || state.selectType === 'price-asc' && state.category === 'Default') {
@@ -1970,11 +1989,6 @@ function showItems() {
     }
     // #endregion
 
-    // return itemToDisplaySorted.slice(
-    //     (state.page - 1) * state.perPage,
-    //     state.page * state.perPage
-    // )
-
     return itemToDisplaySorted
 
 }
@@ -2077,13 +2091,6 @@ function calculateTotalRemovingAmount() {
 // #endregion
 
 // #region 'filter sorting'
-function getUnSortedArrayState() {
-
-    let unSorted = []
-    return unSorted = globalItemsToDisplay
-
-}
-
 function getSortedByPriceAsc() {
 
     return globalItemsToDisplay.sort((a, b) => (a.price > b.price) ? 1 : (a.price === b.price) ? ((a.name > b.name) ? 1 : -1) : -1)
@@ -3390,6 +3397,7 @@ function init() {
     render() //renders initial page without items but laoded the first html
     getItems() //get items from server 
     getUsers() // get users from server
+    getItemsInitial()
 
 }
 
